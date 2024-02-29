@@ -5,23 +5,23 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api.Endpoints;
 
-public class GetTodoRequestDto
-{
-    [BindFrom(nameof(Id))]
-    public int Id { get; set; }
-}
+// public class GetTodoRequestDto
+// {
+//     [BindFrom(nameof(Id))]
+//     public int Id { get; set; }
+// }
 
-public class GetTodo(Db db) : Endpoint<GetTodoRequestDto, Todo>
+public class GetTodo(Db db) : EndpointWithoutRequest<Todo>
 {
     public override void Configure()
     {
-        Get("/api/todo/id");
+        Get("/api/todo/{id}");
         AllowAnonymous();
     }
     
-    public override async Task HandleAsync(GetTodoRequestDto dto, CancellationToken ct)
+    public override async Task HandleAsync( CancellationToken ct)
     {
-
-        await SendAsync(db.GetTodo(dto.Id), cancellation: ct);
+        int id = Route<int>("id");
+        await SendAsync(db.GetTodo(id), cancellation: ct);
     }
 }
