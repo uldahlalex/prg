@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text.Json;
 using api.StaticHelpers;
 using FastEndpoints;
@@ -30,6 +31,8 @@ public class Program
             .AddSingleton<Db>()
             .AddFastEndpoints()
             .SwaggerDocument();
+        if(Env.ASPNETCORE_ENVIRONMENT.Equals("Testing"))
+            bld.WebHost.UseUrls("http://localhost:9999");
 
         var app = bld.Build();
         if (!Env.ASPNETCORE_ENVIRONMENT.Equals("Production"))
