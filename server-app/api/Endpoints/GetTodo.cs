@@ -1,5 +1,6 @@
 using FastEndpoints;
 using infrastructure;
+using infrastructure.DomainModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Endpoints;
