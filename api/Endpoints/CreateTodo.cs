@@ -1,13 +1,15 @@
+using System.ComponentModel.DataAnnotations;
 using FastEndpoints;
 using infrastructure;
-using infrastructure.Repositories;
 
 public class CreateTodoRequestDto
 {
     public string? Title { get; set; }
+    public string? Description { get; set; }
+    public DateTime? DueDate { get; set; }
 }
 
-public class CreateTodo(ProductRepository repo) : Endpoint<CreateTodoRequestDto, Todo>
+public class CreateTodo(Db db) : Endpoint<CreateTodoRequestDto, Todo>
 {
     public override void Configure()
     {
@@ -17,7 +19,12 @@ public class CreateTodo(ProductRepository repo) : Endpoint<CreateTodoRequestDto,
     
     public override async Task HandleAsync(CreateTodoRequestDto dto, CancellationToken c)
     {
-        var resp =repo.CreateTodo(new CreateTodoParams() { });
+        var resp =db.CreateTodo(new CreateTodoParams()
+        {
+            Title = dto.Title,
+            Description = dto.Description,
+            DueDate = dto.DueDate,
+        });
         await SendAsync(resp);
     }
 }

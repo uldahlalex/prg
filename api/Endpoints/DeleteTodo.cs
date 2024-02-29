@@ -1,22 +1,24 @@
 using FastEndpoints;
 using infrastructure;
+using Microsoft.AspNetCore.Mvc;
 
 public class DeleteTodoRequestDto
 {
-    [BindFrom("id")]
+    [FromRoute]
     public int Id { get; set; }
 }
 
-public class DeleteTodo : Endpoint<DeleteTodoRequestDto, Todo>
+public class DeleteTodo(Db db) : EndpointWithoutRequest<bool>
 {
     public override void Configure()
     {
-        Delete("/api/todo/id");
+        Delete("/api/todo/{id}");
         AllowAnonymous();
     }
 
-    public override async Task HandleAsync(DeleteTodoRequestDto req, CancellationToken ct)
+    public override async Task HandleAsync(CancellationToken ct)
     {
-        await SendOkAsync(new Todo(), ct);
+        db.DeleteTodo(Route<int>("id"));
+        await SendAsync(true);
     }
 }

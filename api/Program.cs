@@ -1,17 +1,29 @@
+using System.Text.Json;
+using api.StaticHelpers;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using infrastructure;
-using infrastructure.Repositories;
+using Serilog;
+
+Console.WriteLine("BUILDING API WITH ENVIRONMENT: +"+JsonSerializer.Serialize(Environment.GetEnvironmentVariables()));
 
 var bld = WebApplication.CreateBuilder();
 
-
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console(
+        outputTemplate: "\n{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level}] {Message}{NewLine}{Exception}\n")
+    .CreateLogger();
+Db.StartDbInContainer().Wait();
 bld.Services
-    .AddSingleton<ProductRepository>()
+    .AddNpgsqlDataSource(Env.PG_CONN, cfg => cfg.EnableParameterLogging())
+    .AddSingleton<Db>()
     .AddFastEndpoints()
-    .SwaggerDocument(); 
+    .SwaggerDocument();
 
 var app = bld.Build();
+if (!Env.ASPNETCORE_ENVIRONMENT.Equals("Production"))
+    app.Services.GetService<Db>()!.RebuildDbSchema();
 app.UseFastEndpoints()
-    .UseSwaggerGen(); 
+    .UseSwaggerGen();
+Env.PrintInMemoryEnvironment();
 app.Run();

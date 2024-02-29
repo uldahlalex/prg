@@ -10,7 +10,7 @@ public class GetTodoRequestDto
     public int Id { get; set; }
 }
 
-public class GetTodo : Endpoint<GetTodoRequestDto, Todo>
+public class GetTodo(Db db) : Endpoint<GetTodoRequestDto, Todo>
 {
     public override void Configure()
     {
@@ -20,9 +20,7 @@ public class GetTodo : Endpoint<GetTodoRequestDto, Todo>
     
     public override async Task HandleAsync(GetTodoRequestDto dto, CancellationToken ct)
     {
-        await SendAsync(new Todo()
-        {
-            Id = dto.Id
-        });
+
+        await SendAsync(db.GetTodo(dto.Id), cancellation: ct);
     }
 }
