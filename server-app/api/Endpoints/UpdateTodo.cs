@@ -12,17 +12,17 @@ using infrastructure.DomainModels;
 //     public DateTime DueDate { get; set; }
 // }
 
-public class UpdateTask(Db db) : Endpoint<Todo, Todo>
+namespace api.Endpoints;
+
+public class UpdateTodo(Db db) : Endpoint<Todo, Todo>
 {
     public override void Configure()
     {
-        Put("/api/todo/id");
+        Put("/api/todo/{id}");
         AllowAnonymous();
     }
 
-    public override async Task HandleAsync(Todo todo, CancellationToken ct)
-    {
-        // Your handling logic here
-        await SendOkAsync(db.UpdateTodo(todo));
-    }
+    public override async Task HandleAsync(Todo todo, CancellationToken ct) 
+        => await SendOkAsync(db.UpdateTodo(todo));
+    
 }

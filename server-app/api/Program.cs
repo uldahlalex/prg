@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Text.Json;
+using api.Security;
 using api.StaticHelpers;
 using FastEndpoints;
 using FastEndpoints.Swagger;
@@ -25,10 +26,18 @@ public class Program
             .WriteTo.Console(
                 outputTemplate: "\n{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level}] {Message}{NewLine}{Exception}\n")
             .CreateLogger();
-        DbHelper.StartDbInContainer().Wait();
+        if (!Env.ASPNETCORE_ENVIRONMENT.Equals("Production") && !Env.SKIP_DB_CONTAINER_BUILDING.Equals("true"))
+        {
+            Log.Information("Building DB in container...");
+            BuildDbContainer.StartDbInContainer().Wait();
+        }
+            
         bld.Services
             .AddNpgsqlDataSource(Env.PG_CONN, cfg => cfg.EnableParameterLogging())
             .AddSingleton<Db>()
+            .AddSingleton<DbScripts>()
+            .AddSingleton<CredentialService>()
+            .AddSingleton<TokenService>()
             .AddFastEndpoints()
             .SwaggerDocument();
         if(Env.ASPNETCORE_ENVIRONMENT.Equals("Testing"))
@@ -36,7 +45,12 @@ public class Program
 
         var app = bld.Build();
         if (!Env.ASPNETCORE_ENVIRONMENT.Equals("Production"))
-            app.Services.GetService<Db>()!.RebuildDbSchema();
+        {
+            app.Services.GetService<DbScripts>()!.RebuildDbSchema();
+            if(!Env.ASPNETCORE_ENVIRONMENT.Equals("Testing")) 
+                app.Services.GetService<DbScripts>()!.SeedDB();
+        }
+            
         app.UseFastEndpoints()
             .UseSwaggerGen();
         Env.PrintInMemoryEnvironment();

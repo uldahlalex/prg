@@ -5,7 +5,7 @@ using Docker.DotNet.Models;
 
 namespace infrastructure;
 
-public static class DbHelper
+public static class BuildDbContainer
 {
     public static async Task StartDbInContainer()
     {

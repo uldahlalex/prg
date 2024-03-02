@@ -22,6 +22,6 @@ public class GetTodo(Db db) : EndpointWithoutRequest<Todo>
     public override async Task HandleAsync( CancellationToken ct)
     {
         int id = Route<int>("id");
-        await SendAsync(db.GetTodo(id), cancellation: ct);
+        await SendAsync(db.GetTodoWithTags(id), cancellation: ct);
     }
 }

@@ -10,5 +10,5 @@ public class Todo
     public DateTime CreatedAt { get; set; }
     public int Priority { get; set; }
     public int UserId { get; set; }
-    public List<Tag> Tags { get; set; } = [];
+    public IEnumerable<Tag> Tags { get; set; }
 }

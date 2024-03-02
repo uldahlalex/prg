@@ -1,17 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # 
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api", "api\api.csproj", "{6A554011-8A3A-4AB6-B9F7-7714B8993727}"
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api", "api\api.csproj", "{099827CD-F81D-4AD2-9769-77C6561417BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "infrastructure", "infrastructure\infrastructure.csproj", "{2B9DD74D-93F6-4403-B24A-5A614DD5EBF5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "infrastructure", "infrastructure\infrastructure.csproj", "{B185DE17-EE1E-40A4-94A5-9162EE03FD59}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server-app", "server-app", "{25DE05E7-A203-46EF-BF5E-92FB3C270D96}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api", "server-app\api\api.csproj", "{099827CD-F81D-4AD2-9769-77C6561417BD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "infrastructure", "server-app\infrastructure\infrastructure.csproj", "{B185DE17-EE1E-40A4-94A5-9162EE03FD59}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "server-app\tests\tests.csproj", "{5E43013B-E99E-4A02-BA5E-B1E46BC7E2DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{5E43013B-E99E-4A02-BA5E-B1E46BC7E2DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

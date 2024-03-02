@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace tests;
 
-public static class TestHelper
+public static class ExtensionMethods
 {
     public static T Deserialize<T>(this string jsonText)
     {
@@ -11,5 +11,12 @@ public static class TestHelper
         {
             PropertyNameCaseInsensitive = true
         }) ?? throw new InvalidCastException("Could not deserialize from "+jsonText + " to " + typeof(T).Name);
+    }
+    public static string Serialize<T>(this T obj)
+    {
+        return JsonSerializer.Serialize(obj, new JsonSerializerOptions()
+        {
+            WriteIndented = true
+        });
     }
 }
