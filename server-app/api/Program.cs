@@ -1,5 +1,5 @@
-using System.Collections.Immutable;
 using System.Text.Json;
+using api.Endpoints.CreateTodo;
 using api.Security;
 using api.StaticHelpers;
 using FastEndpoints;
@@ -34,10 +34,10 @@ public class Program
             
         bld.Services
             .AddNpgsqlDataSource(Env.PG_CONN, cfg => cfg.EnableParameterLogging())
-            .AddSingleton<Db>()
             .AddSingleton<DbScripts>()
             .AddSingleton<CredentialService>()
             .AddSingleton<TokenService>()
+            .AddSingleton<CreateTodoQueries>()
             .AddFastEndpoints()
             .SwaggerDocument();
         if(Env.ASPNETCORE_ENVIRONMENT.Equals("Testing"))

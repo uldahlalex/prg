@@ -1,4 +1,4 @@
-namespace infrastructure.DomainModels;
+namespace api;
 
 public class Tag
 {
