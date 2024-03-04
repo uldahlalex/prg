@@ -18,5 +18,10 @@
   <ItemGroup>
     <ProjectReference Include="..\infrastructure\infrastructure.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Endpoints\User\" />
+    <Folder Include="Reusables\" />
+  </ItemGroup>
   
 </Project>

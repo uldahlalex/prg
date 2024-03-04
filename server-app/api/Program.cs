@@ -37,7 +37,6 @@ public class Program
             .AddSingleton<DbScripts>()
             .AddSingleton<CredentialService>()
             .AddSingleton<TokenService>()
-            .AddSingleton<CreateTodoQueries>()
             .AddFastEndpoints()
             .SwaggerDocument();
         if(Env.ASPNETCORE_ENVIRONMENT.Equals("Testing"))

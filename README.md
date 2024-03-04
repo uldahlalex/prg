@@ -2,11 +2,10 @@
 
 # Programming II, Technology II, Systems Development II pilot program 2024
 
-- Server application development starts after the React + PostREST development the first weeks
-- Server application uses a non-domain driven approach with hyper specialized models and endpoints (hyper-distinct from what postgREST offers and more in line with what most complex business cases require)
-- Extremely single-responsibility to a degree where DRY-ness is compromised for the sake of clarity and maintainability
-- Anti persistence abstraction
-- Client application is as minimal as possible with most data manipulation and business logic happening on the server
+- "Contract based" API Development
+- REPR pattern
+- No persistence abstraction
+- Feature-per-endpoint (iteration of vertical slicing)
 
 ## Data model:
 ![Data model](datamodel.png)
