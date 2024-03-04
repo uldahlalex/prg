@@ -10,17 +10,15 @@
   <ItemGroup>
     <PackageReference Include="Carter" Version="8.0.0" />
     <PackageReference Include="JWT" Version="10.1.1" />
+    <PackageReference Include="Docker.DotNet" Version="3.125.15" />
     <PackageReference Include="Npgsql.DependencyInjection" Version="8.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.*-*" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.2" />
+    <PackageReference Include="Dapper" Version="2.1.28" />
 
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Dapper">
-      <HintPath>..\..\..\..\.nuget\packages\dapper\2.1.28\lib\net7.0\Dapper.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+
 
 
 

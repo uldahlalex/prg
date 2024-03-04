@@ -1,7 +1,7 @@
 using Dapper;
 using Npgsql;
 
-namespace infrastructure;
+namespace api.DbHelpers;
 
 public class DbScripts(NpgsqlDataSource dataSource)
 {

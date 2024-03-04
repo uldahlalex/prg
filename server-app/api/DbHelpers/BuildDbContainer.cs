@@ -3,7 +3,7 @@ using System.Net.NetworkInformation;
 using Docker.DotNet;
 using Docker.DotNet.Models;
 
-namespace infrastructure;
+namespace api.DbHelpers;
 
 public static class BuildDbContainer
 {
@@ -50,7 +50,7 @@ public static class BuildDbContainer
         }
     }
 
-    private static async Task<bool> StartExistingContainer(IList<ContainerListResponse> existingContainer,
+    private static async Task StartExistingContainer(IList<ContainerListResponse> existingContainer,
         DockerClient client)
     {
         var containerId = existingContainer[0].ID;
@@ -68,13 +68,10 @@ public static class BuildDbContainer
             Console.WriteLine("Port 5432 is available. Container will be reused.");
             await client.Containers.StartContainerAsync(containerId, new ContainerStartParameters());
             Console.WriteLine("PostgreSQL container started.");
-            return true;
+            return;
         }
 
         await client.Containers.StartContainerAsync(containerId, new ContainerStartParameters());
-
-        Console.WriteLine("PostgreSQL container started.");
-        return false;
     }
 
     private static async Task CreateContainerFromImage(DockerClient client, string imageName, string containerName)
@@ -103,7 +100,6 @@ public static class BuildDbContainer
         });
 
         await client.Containers.StartContainerAsync(response.ID, new ContainerStartParameters());
-        Task.Delay(4000).Wait();
     }
 
     private static string GetDockerSocketPath()

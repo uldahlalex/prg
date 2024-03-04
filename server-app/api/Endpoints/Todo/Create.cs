@@ -1,8 +1,9 @@
+using api.ReusableHelpers.GlobalModels;
 using Carter;
 using Dapper;
 using Npgsql;
 
-namespace api.Endpoints.CreateTodo;
+namespace api.Endpoints.Todo;
 
 public class Create : ICarterModule
 {
@@ -44,9 +45,9 @@ VALUES (@Title, @Description, @DueDate, @UserId, @Priority) returning *;
 
 public class CreateTodoRequestDto
 {
-    public string Title { get; set; }
-    public string Description { get; set; }
+    public string Title { get; set; } = default!;
+    public string Description { get; set; } = default!;
     public DateTime DueDate { get; set; }
     public int Priority { get; set; }
-    public List<Tag> Tags { get; set; }
+    public List<Tag> Tags { get; set; } = default!;
 }

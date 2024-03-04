@@ -1,7 +1,4 @@
-using System.Reflection;
-
-
-namespace api.StaticHelpers;
+namespace api.ReusableHelpers.GlobalValues;
 
 public static class Env
 {
@@ -15,21 +12,5 @@ public static class Env
 
     public static string JWT_KEY = Environment.GetEnvironmentVariable(nameof(JWT_KEY)) ??
                                    "hdsfkyudsfksahfkdsahfffukdsafhkdsaufhidsafhkdsahfkdsahfiudsahfkdsahfkudsahfkudsahfkudsahfkudsahfkdsahfkuds";
-
-    // public static void PrintInMemoryEnvironment()
-    // {
-    //     FieldInfo[] staticFields = typeof(Env).GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
-    //     Dictionary<string,string> map = new Dictionary<string,string>();
-    //     foreach (FieldInfo field in staticFields)
-    //     {
-    //         object value = field.GetValue(null);
-    //         map.Add(field.Name, value.ToString());
-    //     }
-    //
-    //     foreach (string key in map.Keys)
-    //     {
-    //         Log.Information(key + "     " + map[key]);
-    //
-    //     }
-    // }
+    
 }

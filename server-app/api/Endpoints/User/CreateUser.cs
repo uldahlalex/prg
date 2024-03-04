@@ -1,7 +1,9 @@
-using api.Security;
+using api.ReusableHelpers.Security;
 using Carter;
 using Dapper;
 using Npgsql;
+
+namespace api.Endpoints.User;
 
 public class CreateUserRequestDto
 {

@@ -1,11 +1,11 @@
 using System.Security.Authentication;
-using api.StaticHelpers;
+using api.ReusableHelpers.GlobalValues;
 using JWT;
 using JWT.Algorithms;
 using JWT.Serializers;
 using Newtonsoft.Json;
 
-namespace api.Security;
+namespace api.ReusableHelpers.Security;
 
 public class TokenService
 {

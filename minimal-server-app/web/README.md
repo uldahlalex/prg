@@ -1,4 +1,0 @@
-- Vertically sliced
-- Minimal API
-- Few dependencies
-- Extremely slim API methods
