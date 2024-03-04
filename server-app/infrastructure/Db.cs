@@ -26,16 +26,6 @@
 //
 //
 //
-//     public bool DeleteTodo(int id)
-//     {
-//         var sql = "delete from todo_manager.todo where id = @id";
-//         using(var conn = dataSource.OpenConnection())
-//         {
-//             var success =  conn.Execute(sql, new { id }) == 1;
-//             if (!success) throw new InvalidOperationException("Could not delete");
-//             return success;
-//         }
-//     }
 //
 //    
 //
@@ -51,14 +41,7 @@
 //         }
 //     }
 //
-//     public User CreateUser(User user)
-//     {
-//         var sql = "insert into todo_manager.user (username, passwordhash, salt) values (@Username, @PasswordHash, @Salt) RETURNING *;";
-//         using (var conn = dataSource.OpenConnection())
-//         {
-//             return conn.QueryFirstOrDefault<User>(sql, user);
-//         }
-//     }
+//
 //
 //
 //

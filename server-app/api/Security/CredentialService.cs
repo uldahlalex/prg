@@ -1,6 +1,6 @@
 using System.Security.Cryptography;
 using System.Text;
-using Serilog;
+
 
 namespace api.Security;
 
@@ -25,7 +25,6 @@ public class CredentialService
         }
         catch (Exception e)
         {
-            Log.Error(e, "Hash");
             throw new InvalidOperationException("Failed to hash password");
         }
     }

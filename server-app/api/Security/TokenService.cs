@@ -1,17 +1,15 @@
 using System.Security.Authentication;
 using api.StaticHelpers;
-using infrastructure.DomainModels;
 using JWT;
 using JWT.Algorithms;
 using JWT.Serializers;
 using Newtonsoft.Json;
-using Serilog;
 
 namespace api.Security;
 
 public class TokenService
 {
-    public string IssueJwt(User user)
+    public string IssueJwt(object o)
     {
         try
         {
@@ -19,12 +17,12 @@ public class TokenService
             IJsonSerializer serializer = new JsonNetSerializer();
             IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
             IJwtEncoder encoder = new JwtEncoder(algorithm, serializer, urlEncoder);
-            Log.Information("JWT KEY: "+Env.JWT_KEY);
-            return encoder.Encode(user, Env.JWT_KEY);
+
+            return encoder.Encode(o, Env.JWT_KEY);
         }
         catch (Exception e)
         {
-            Log.Error(e, "IssueJWT");
+            Console.WriteLine(e.Message);
             throw new InvalidOperationException("User authentication succeeded, but could not create token");
         }
     }
@@ -38,13 +36,12 @@ public class TokenService
             IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
             IJwtValidator validator = new JwtValidator(serializer, provider);
             IJwtDecoder decoder = new JwtDecoder(serializer, validator, urlEncoder, new HMACSHA512Algorithm());
-            Log.Information("JWT KEY: "+Env.JWT_KEY);
             var json = decoder.Decode(jwt, Env.JWT_KEY);
             return JsonConvert.DeserializeObject<Dictionary<string, string>>(json)!;
         }
         catch (Exception e)
         {
-            Log.Error(e, "ValidateJwtAndReturnClaims");
+            Console.WriteLine(e.Message);
             throw new AuthenticationException("Authentication failed.");
         }
     }
