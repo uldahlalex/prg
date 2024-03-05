@@ -21,17 +21,18 @@ create table todo_manager.user (
 create table todo_manager.todo (
   id serial primary key,
   title text not null,
-    priority int not null default 0,
+  priority int not null default 0,
   description text,
   createdat timestamp not null default (now() at time zone 'utc'),
-    duedate timestamp not null default (now() at time zone 'utc') + interval '1 week',
+  duedate timestamp not null default (now() at time zone 'utc') + interval '1 week',
   iscompleted boolean not null default false,
-userid int references todo_manager.user(id)
+  userid int references todo_manager.user(id)
 );
 
 create table todo_manager.tag (
   id serial primary key,
-  name text not null
+  name text not null,
+  userid int references todo_manager.user(id)
 );
 
 create table todo_manager.todo_tag (
@@ -50,7 +51,7 @@ create table todo_manager.todo_tag (
     {
         var sql = @"
 insert into todo_manager.user (username, passwordhash, salt) values ('admin', 'passwordhash', 'salt');
-insert into todo_manager.tag (name) values ('home'), ('work');
+insert into todo_manager.tag (name, userid) values ('home', 1), ('work', 1);
 insert into todo_manager.todo (title, description, priority, duedate, userid) values ('clean', 'clean the house',2, now() + interval '1 week', 1);
 insert into todo_manager.todo (title, description, duedate, userid) values ('work', 'finish the project', now() + interval '1 week', 1);
 insert into todo_manager.todo (title, description, duedate, userid) values ('work', 'finish the project', now() + interval '1 week', 1);

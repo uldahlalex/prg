@@ -20,7 +20,7 @@ JOIN todo_manager.todo_tag tt on t.id = tt.todoid
 JOIN todo_manager.tag tag on tt.tagid = tag.id
 WHERE t.userid = @userId;
 ";
-            var todos = conn.Query<TodoWithTags>(sql).ToList();
+            var todos = conn.Query<TodoWithTags>(sql, new {userId = userId}).ToList();
             conn.Close();
             return todos;
 
