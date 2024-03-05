@@ -1,5 +1,7 @@
 using api.EndpointFilters;
+using api.ReusableHelpers.GlobalValues;
 using Carter;
+using Microsoft.VisualBasic;
 
 namespace api.Endpoints.User;
 
@@ -10,6 +12,6 @@ public class Test : ICarterModule
         app.MapGet("/test", (int id, HttpContext context) =>
         {
             return context.Items;
-        }).AddEndpointFilter<VerifyJwtAndSetUserId>();
+        }).AddEndpointFilter<VerifyJwtAndSetPayloadAsHttpItem>();
     }
 }

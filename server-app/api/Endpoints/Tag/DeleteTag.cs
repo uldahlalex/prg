@@ -1,19 +1,18 @@
-// using FastEndpoints;
-// using infrastructure;
-//
-// namespace api.Endpoints;
-//
-// sealed class DeleteTag(Db db) : EndpointWithoutRequest
-// {
-//     public override void Configure()
-//     {
-//         Delete("/api/tags/{id}");
-//         AllowAnonymous();
-//     }
-//
-//     public override async Task HandleAsync(CancellationToken c)
-//     {
-//         var id = Route<int>("id");
-//         db.DeleteTag(id);
-//     }
-// }
+
+using Carter;
+using Dapper;
+using Npgsql;
+
+public class DeleteTag : ICarterModule
+{
+    public void AddRoutes(IEndpointRouteBuilder app)
+    {
+        app.MapDelete("api/tag/{id}", (int id, NpgsqlDataSource ds) =>
+        {
+            using var conn = ds.OpenConnection();
+            var impactedRows = conn.Execute("delete from todo_manager.todo where id = @id", new { id = id });
+            if (impactedRows == 0) throw new InvalidOperationException("Could not delete");
+            conn.Close();
+        });
+    }
+}

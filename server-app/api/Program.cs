@@ -12,7 +12,7 @@ public class Program
     public static async Task Main()
     {
         var app = await Startup();
-        if (!Env.ASPNETCORE_ENVIRONMENT.Equals(Constants.Production))
+        if (!Env.ASPNETCORE_ENVIRONMENT.Equals(StringConstants.Environments.Production))
             app.Services.GetService<DbScripts>()!.RebuildDbSchema();
         app.Run();
     }
@@ -20,7 +20,7 @@ public class Program
     public static async Task<WebApplication> Startup()
     {
         Console.WriteLine("BUILDING API WITH ENVIRONMENT: +" + JsonSerializer.Serialize(Environment.GetEnvironmentVariables()));
-        if (!Env.ASPNETCORE_ENVIRONMENT.Equals(Constants.Production) && !Env.SKIP_DB_CONTAINER_BUILDING.Equals("true"))
+        if (!Env.ASPNETCORE_ENVIRONMENT.Equals(StringConstants.Environments.Production) && !Env.SKIP_DB_CONTAINER_BUILDING.Equals("true"))
             await BuildDbContainer.StartDbInContainer();
         var builder = WebApplication.CreateBuilder();
         builder.Services
@@ -36,7 +36,7 @@ public class Program
                 {
                     Description =
                         "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-                    Name = Constants.Authorization,
+                    Name = StringConstants.JwtConstants.Authorization,
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey,
                     Scheme = "Bearer"
@@ -61,7 +61,7 @@ public class Program
             });
 
 
-        if (Env.ASPNETCORE_ENVIRONMENT.Equals(Constants.Testing))
+        if (Env.ASPNETCORE_ENVIRONMENT.Equals(StringConstants.Environments.Testing))
             builder.WebHost.UseUrls("http://localhost:9999");
         var app = builder.Build();
         app.UseSwagger().UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"));

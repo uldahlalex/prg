@@ -8,7 +8,7 @@ public class Delete : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapDelete("api/delete/{id}", (int id, NpgsqlDataSource ds) =>
+        app.MapDelete("api/todo/{id}", (int id, NpgsqlDataSource ds) =>
         {
             using var conn = ds.OpenConnection();
             var impactedRows = conn.Execute("delete from todo_manager.todo where id = @id", new { id = id });
