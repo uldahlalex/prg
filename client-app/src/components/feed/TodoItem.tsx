@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {Todo} from "./models/todo.ts";
+import {Todo} from "../../models/todo.ts";
 
 export default function TodoItem(item: Todo) {
     const [data, setData] = useState<Todo>(item);
@@ -9,7 +9,6 @@ export default function TodoItem(item: Todo) {
 
     return (
         <>
-            <div>{JSON.stringify(data)}</div>
             <input type="checkbox"
                    defaultChecked={data.isCompleted}
                    onChange={() => {

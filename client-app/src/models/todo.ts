@@ -1,4 +1,4 @@
-import {Tag} from "./Tag.ts";
+import {Tag} from "./tag.ts";
 
 export interface Todo {
     id?: number;
