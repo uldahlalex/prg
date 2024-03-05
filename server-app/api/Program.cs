@@ -13,14 +13,20 @@ public class Program
     {
         var app = await Startup();
         if (!Env.ASPNETCORE_ENVIRONMENT.Equals(StringConstants.Environments.Production))
+        {
             app.Services.GetService<DbScripts>()!.RebuildDbSchema();
+            app.Services.GetService<DbScripts>()!.SeedDB();
+        }
+            
         app.Run();
     }
 
     public static async Task<WebApplication> Startup()
     {
-        Console.WriteLine("BUILDING API WITH ENVIRONMENT: +" + JsonSerializer.Serialize(Environment.GetEnvironmentVariables()));
-        if (!Env.ASPNETCORE_ENVIRONMENT.Equals(StringConstants.Environments.Production) && !Env.SKIP_DB_CONTAINER_BUILDING.Equals("true"))
+        Console.WriteLine("BUILDING API WITH ENVIRONMENT: +" +
+                          JsonSerializer.Serialize(Environment.GetEnvironmentVariables()));
+        if (!Env.ASPNETCORE_ENVIRONMENT.Equals(StringConstants.Environments.Production) &&
+            !Env.SKIP_DB_CONTAINER_BUILDING.Equals("true"))
             await BuildDbContainer.StartDbInContainer();
         var builder = WebApplication.CreateBuilder();
         builder.Services
@@ -29,6 +35,7 @@ public class Program
             .AddSingleton<CredentialService>()
             .AddSingleton<TokenService>()
             .AddCarter()
+            .AddCors()
             .AddEndpointsApiExplorer()
             .AddSwaggerGen(c =>
             {
@@ -66,6 +73,13 @@ public class Program
         var app = builder.Build();
         app.UseSwagger().UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"));
         app.MapCarter();
+        app.UseCors(options =>
+        {
+            options.SetIsOriginAllowed(_ => true)
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials();
+        });
         return app;
     }
 }

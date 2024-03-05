@@ -1,28 +1,34 @@
-// using FastEndpoints;
-// using infrastructure;
-// using infrastructure.DomainModels;
-//
-//
-// // public class UpdateTodoRequestDto
-// // {
-// //     [BindFrom(nameof(Id))]
-// //     public int Id { get; set; }
-// //     public string Title { get; set; }
-// //     public string Description { get; set; }
-// //     public DateTime DueDate { get; set; }
-// // }
-//
-// namespace api.Endpoints;
-//
-// public class UpdateTodo(Db db) : Endpoint<Todo, Todo>
-// {
-//     public override void Configure()
-//     {
-//         Put("/api/todo/{id}");
-//         AllowAnonymous();
-//     }
-//
-//     public override async Task HandleAsync(Todo todo, CancellationToken ct) 
-//         => await SendOkAsync(db.UpdateTodo(todo));
-//     
-// }
+using api.ReusableHelpers.GlobalModels;
+using Carter;
+using Dapper;
+using Npgsql;
+
+public class UpdateTodoRequestDto
+{
+    public int Id { get; set; }
+    public string Title { get; set; } = default!;
+    public string Description { get; set; } = default!;
+    public DateTime DueDate { get; set; }
+    public bool IsCompleted { get; set; }
+    public int Priority { get; set; }
+}
+
+public class UpdateTodo : ICarterModule
+{
+    public void AddRoutes(IEndpointRouteBuilder app)
+    {
+        app.MapPut("/api/todos/{id}", (UpdateTodoRequestDto req, NpgsqlDataSource ds) =>
+        {
+            var conn = ds.OpenConnection();
+            var userId = 1;
+            var todo = conn.QueryFirstOrDefault<TodoWithTags>(@"
+UPDATE todo_manager.todo
+SET title = @Title, iscompleted = @iscompleted, description = @Description, duedate = @DueDate, priority = @Priority
+WHERE id = @Id AND userid = @UserId
+RETURNING *;
+", req);
+            conn.Close();
+            return todo;
+        });
+    }
+}

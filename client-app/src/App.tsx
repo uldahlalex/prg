@@ -5,12 +5,16 @@ import TodoItem from "./TodoItem.tsx";
 
 
 function DataFetchingComponent() {
-    // Step 1: Initiate state
-    // Step 2: Type annotations for state
     const [data, setData] = useState<Todo[] | null>([
-        {id: 1, title: "First", description: "First description", done: false, priority: "High", due: new Date(), tags: ["tag1", "tag2"]},
-        {id: 2, title: "Second", description: "Second description", done: true, priority: "Low", due: new Date(), tags: ["tag3", "tag4"]},
-    ]);
+   ]);
+
+    // Step 3: Fetch data
+    useEffect(() => {
+        fetch('http://localhost:5000/api/todos')
+            .then((response) => response.json())
+            .then((data) => setData(data));
+    }, []);
+
 
     return (
         <div>

@@ -1,9 +1,11 @@
+import {Tag} from "./Tag.ts";
+
 export interface Todo {
     id?: number;
     title: string;
     description: string;
-    done?: boolean;
+    isCompleted?: boolean;
     priority?: string;
-    due?: Date;
-    tags?: string[];
+    dueDate?: Date;
+    tags?: Tag[];
 }

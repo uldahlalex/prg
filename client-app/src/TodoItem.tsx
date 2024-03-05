@@ -2,18 +2,37 @@ import {useState} from "react";
 import {Todo} from "./models/todo.ts";
 
 export default function TodoItem(item: Todo) {
-
-    // create react usestate hook but instead of square bracket syntax use curly bracket syntax
     const [data, setData] = useState<Todo>(item);
     const [checked, setChecked] = useState(true);
 
+
+
     return (
         <>
-
+            <div>{JSON.stringify(data)}</div>
             <input type="checkbox"
-                   defaultChecked={data.done}
-                   onChange={() => setChecked((state) => !state)}
+                   defaultChecked={data.isCompleted}
+                   onChange={() => {
+                       setData({...data, isCompleted: !data.isCompleted});
+                       fetch(`http://localhost:5000/api/todos/${data.id}`, {
+                            method: 'PUT',
+                            headers: {
+                                 'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                 ...data,
+                                 isCompleted: !data.isCompleted
+                            })
+                       }).then(async (res) => {
+                            let updated = await res.json() as Todo;
+                            updated.tags = [... data.tags!];
+                            setData(updated);
+                            setChecked(updated.isCompleted!);
+                            alert('Updated to : '+JSON.stringify(updated));
+                       });
+                   }}
             />
+
         </>
     )
 }
