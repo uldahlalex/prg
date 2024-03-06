@@ -1,14 +1,11 @@
-import {tags, todos} from "../store";
-import {Todo} from "../types/todo.ts";
+import {filterAllTodosByTagId, tags, todos} from "../../state/global.state.ts";
+import {Todo} from "../../types/todo.ts";
 import {useState} from "react";
-import {Tag} from "../types/tag.ts";
-import {toggleDone} from "../utilities/todohelpers.ts";
+import {Tag} from "../../types/tag.ts";
+export default function FeedItems() {
 
-export default function TodoList() {
-
-  const [filters, setFilters] = useState<Tag[]>([tags[0]]);
+  const [filters, setFilters] = useState<Tag[]>(tags.value);
   const [newTagIndex, setTag] = useState<number>(-1);
-
 
 
 
@@ -17,10 +14,13 @@ export default function TodoList() {
       (todo) => todo.id !== selectedTodo.id
     );
   };
+
+
   return (
       <>
+        <div style={{border: '1px solid yellow'}}>FeedItems
       <div>
-        {tags.map((tag, index) =>
+        {tags.value.map((tag, index) =>
                 <button onClick={() => {
                 setFilters([ tag]);
                   console.log(filters);
@@ -29,25 +29,17 @@ export default function TodoList() {
       </div>
 
     <ul>
-      {todos.value.map((todo) => {
-        const filtertagIds = filters.map(f => f.id);
-        const todoTagIds = todo.tags.map(t => t.id);
-        console.log("Filters: "+filtertagIds);
-        console.log("Tags: "+todoTagIds);
-        if (!filtertagIds.every((value) => todoTagIds.includes(value))) {
-          return null;
-        }
-
+        { filters && filters.length > 0 ? filterAllTodosByTagId(filters[0].id).map((todo) => {
         return (
                 <li key={todo.id}>
                   <p>assign new tag</p>
                   <select onChange={(event) => {
                     const id = event.target.value;
-                    setTag(tags.findIndex(tag => tag.id === parseInt(id)));
+                    setTag(filters.findIndex(tag => tag.id === parseInt(id)));
                     console.log(id);
                   }}>
                     {
-                      tags.map((tag, index) => <option value={tag.id}
+                      filters.map((tag, index) => <option value={tag.id}
                                                        key={index}>{tag.name}</option>)
                     }
                   </select>
@@ -55,7 +47,7 @@ export default function TodoList() {
                     if (newTagIndex !== -1) {
                       const d = todos.value.findIndex(t => t.id === todo.id);
                       const copy = [...todos.value];
-                      copy[d].tags.push(tags[newTagIndex]);
+                      copy[d].tags.push(filters[newTagIndex]);
                       todos.value = copy;
                     }
                   }}>Add tag
@@ -69,7 +61,7 @@ export default function TodoList() {
                   <p>{todo.tags.map(t => t.name).join(", ")}</p>
                   <button
                       onClick={() => {
-                        toggleDone(todo);
+                        //toggleDone(todo);
                       }}
                   >
                     {todo.isCompleted ? <span>✅</span> : <span>⚪</span>}
@@ -78,8 +70,8 @@ export default function TodoList() {
                 </li>
 
         );
-      })}
-    </ul>
+      }) : null}
+    </ul> </div>
       </>
   );
 }
