@@ -2,61 +2,68 @@ import {ChangeEvent, useState} from "react";
 import {tags, todos} from "../state/global.state.ts";
 import {Todo} from "../types/todo.ts";
 import {Tag} from "../types/tag.ts";
+import {CreateTodoDto} from "../types/dtos.ts";
 
 export default function NewTodo() {
 
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [due, setDue] = useState(new Date());
-    const [selectedTags, setTags] = useState<Tag[]>([]);
-    const [newTagIndex, setTag] = useState<number>(-1);
+const [formValues, setFormValues] = useState({
+    title: '',
+    description: '',
+    due: new Date(),
+    tags: [],
+    priority: 1
+});
 
 
+const handleChange = (e: any) => {
+    setFormValues({
+
+            ...formValues,
+            [e.target.name]: e.target.value
+
+
+    });
+}
     return (
         <>
             <div style={{border: '1px solid green'}}>NewTodo
-            <input placeholder="Title" type="text" value={title}
-                   onInput={(event: ChangeEvent<HTMLInputElement>) => setTitle(event.target.value)}/>
-            <input placeholder="Description" type="text" value={description}
-                   onInput={(event: ChangeEvent<HTMLInputElement>) => setDescription(event.target.value)}/>
-            <input placeholder="due" type="date" value={due.toString()}
-                   onInput={(event: ChangeEvent<HTMLInputElement>) => setDue(new Date(event.target.value))}/>
+                <input placeholder="Title" type="text" value={formValues.title}
+                       onChange={handleChange} name="title"/>
+                   <br></br>
+                <input placeholder="Description" type="text" value={formValues.description}
+                       onChange={handleChange} name="description"/>
+                <br></br>
+                <input type="number" value={formValues.priority} onChange={handleChange} name="priority"/>
+                <input type="date" value={formValues.due.toString()} onChange={handleChange} name="due"/>
+                <br></br>
+                <select onChange={(e) => {
+                    console.log(e.target.value)
+                    setFormValues({
+                        ...formValues,
+                        tags: [...formValues.tags, tags.value[e.target.value]]
+                    })
+                }}>
+                    <option value={-1}>Select a tag</option>
+                    {tags.value.map((tag, index) => <option value={index} key={index}>{tag.name}</option>)}
+                </select>
 
-           <select onChange={(event) => {
-               const id = event.target.value;
-               setTag(selectedTags.findIndex(tag => tag.id === parseInt(id)));
-                 }}>
-               {
-                   selectedTags.map((tag, index) => <option value={tag.id}
-                                                    key={index}>{tag.name}</option>)
-               }
-           </select>
-            <button onClick={() => {
-                if(newTagIndex !== -1)
-                    setTags([...selectedTags, selectedTags[newTagIndex]]);
-                else {
-                   alert('tag is undefined')
-                }
-            }}>Add tag</button>
-            <ul>
-                {selectedTags.map((tag, index) => <li key={index}>{tag.name}</li>)}
-            </ul>
-            <br></br>
-            <button onClick={() => {
-                const newTodo: Todo =
-                    {
-                        title: title,
-                        priority: 1,
-                        dueDate: due,
-                        description: description,
-                        isCompleted: false,
-                        id: todos.value.length + 1,
-                        tags: selectedTags,
-                        userId: 1
-                    }
-                todos.value = [newTodo, ...todos.value];
-            }}>Submit
-            </button>
+                <ul>
+                    {formValues.tags.map((tag, index) => <li key={index}>{tag.name}</li>)}
+                </ul>
+                <br></br>
+                <button onClick={async () => {
+                    const newTodo: CreateTodoDto = {...formValues}
+                    const resp = await fetch('http://localhost:5000/api/todos', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(newTodo)
+                    })
+                    const newTodoValues = await resp.json();
+                    todos.value = [newTodoValues, ...todos.value];
+                }}>Submit
+                </button>
             </div>
         </>
 

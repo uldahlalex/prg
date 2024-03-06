@@ -9,7 +9,7 @@ public class Create : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("/api/todo", (CreateTodoRequestDto req, NpgsqlDataSource ds) =>
+        app.MapPost("/api/todos", (CreateTodoRequestDto req, NpgsqlDataSource ds) =>
         {
             var transaction = ds.OpenConnection().BeginTransaction();
             var userId = 1;
