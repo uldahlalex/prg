@@ -1,10 +1,12 @@
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import {tagsAtom, todosAtom} from "../state.ts";
 import {useAtom} from "jotai";
 import '../styles/global.classes.css'
 import Sidebar from "./Sidebar.tsx";
 import AddTag from "./AddTag.tsx";
 import Feed from "./Feed.tsx";
+import {createBrowserRouter, Route, Router, RouterProvider, Routes} from "react-router-dom";
+import Login from "./Login.tsx";
 
 export default function App() {
     const [todos, setTodos] = useAtom(todosAtom);
@@ -23,6 +25,19 @@ export default function App() {
             });
     }, []);
 
+
+    const router = createBrowserRouter([
+        {
+            element: <Feed />,
+            path: "/",
+        },
+        {
+            element: <Login />,
+            path: "/login",
+        },
+    ])
+
+
     return (
         <>
             <div style={{display: 'flex'}}>
@@ -37,8 +52,10 @@ export default function App() {
                 </div>
 
                 <div>
-                    <div className="bordered">"Feed"
-                    <Feed/>
+
+                    <div className="bordered">"Main content"
+                        <RouterProvider router={router} />
+                
                     </div>
                 </div>
             </div>

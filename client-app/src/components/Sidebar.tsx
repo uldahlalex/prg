@@ -9,7 +9,7 @@ export default function Sidebar() {
         <div>
             {
                 tags.map((tag, index) => {
-                    return <li key={index}>{tag.name}</li>
+                    return <li key={index}>Request tag: {tag.name}</li>
                 })
             }
         </div>

@@ -2,15 +2,15 @@ import React, {useState} from 'react';
 import {useAtom, useAtomValue} from 'jotai';
 import FeedItem from "./FeedItem";
 import NewTodo from "./NewTodo";
-import {tagsAtom, todosAtom} from "../state.ts";
+import {selectedTagsForFeedAtom, tagsAtom, todosAtom} from "../state.ts";
 import {Tag} from "../types/tag.ts";
+import FeedFilters from "./FeedFilters.tsx";
 
 export default function Feed() {
     const [todos, setTodos] = useAtom(todosAtom);
-    const [tags, setTags] = useAtom(tagsAtom);
-    const [selectedTag, setSelectedTags] = useState<Tag[]>([])
+    const [selectedTag, setSelectedTags] = useAtom<Tag[]>(selectedTagsForFeedAtom)
 
-
+    //
     const filter = todos.filter((todo) => {
         if (selectedTag.length === 0) {
             return true;
@@ -23,26 +23,15 @@ export default function Feed() {
             <div><NewTodo /></div>
 
             <div>
-                <h2>Filters</h2>
-                <p>Selected tags: {selectedTag.map((tag) => JSON.stringify(tag) )}</p>
-                <ul>
-                    {tags.map((tag, index) => (
-                        <li key={index}>
-                            <button onClick={() => {
-                                if (selectedTag.includes(tag)) {
-                                    setSelectedTags(selectedTag.filter((t) => t !== tag));
-                                } else {
-                                    setSelectedTags([...selectedTag, tag]);
-                                }
-                            }}>{tag.name}</button>
-                        </li>
-                    ))}
-                </ul>
+               <FeedFilters />
             </div>
 
             <div>
                 {
+                 //   todos.map((todo, index) => <FeedItem key={index} todo={todo} />)
+                   // selectedTag.some(t => todos.map(todo => todo.tags.includes(t)).map((todo, index) => <FeedItem key={index} todo={todo} />))
                     filter.map((todo, index) => <FeedItem key={index} todo={todo} />)
+
                 }
             </div>
         </div>
