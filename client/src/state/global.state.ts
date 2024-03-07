@@ -1,7 +1,7 @@
 
 import {Todo} from "../types/todo.ts";
 import {Tag} from "../types/tag.ts";
-import {atom} from "jotai/vanilla/atom";
+import {atom} from "jotai";
 
 
 
