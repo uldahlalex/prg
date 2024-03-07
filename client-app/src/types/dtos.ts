@@ -3,7 +3,7 @@ import {Tag} from "./tag.ts";
 export type CreateTodoDto = {
     title: string;
     description: string;
-    due: Date;
+    dueDate: Date;
     priority: number;
     tags: Tag[];
 }

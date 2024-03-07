@@ -11,9 +11,10 @@ public class GetTodosWithTags : ICarterModule
     {
         app.MapGet("/api/todos", async (NpgsqlDataSource ds) =>
         {
-
-            var con = ds.OpenConnection();
-            var todos = con.Query(@"
+            IEnumerable<dynamic> todos;
+            await using (var con = ds.OpenConnection())
+            {
+                todos = con.Query(@"
 SELECT 
     t.id, 
     t.title, 
@@ -30,7 +31,9 @@ LEFT JOIN todo_manager.tag tag ON tt.tagid = tag.id
 WHERE t.userid = @UserId
 GROUP BY t.id
 ORDER BY t.createdat DESC;
-", new {UserId = 1});
+", new { UserId = 1 });
+            }
+
             return todos.Select(row =>
             {
                 var todo = new TodoWithTags

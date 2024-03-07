@@ -10,12 +10,16 @@ public class GetTags : ICarterModule
     {
         app.MapGet("/api/tags", (NpgsqlDataSource ds) =>
             {
-
-                var conn = ds.OpenConnection();
-                var tags = conn.Query<ReusableHelpers.GlobalModels.Tag>(@"
+                List<ReusableHelpers.GlobalModels.Tag> tags;
+                using (var conn = ds.OpenConnection())
+                {
+                    tags = conn.Query<ReusableHelpers.GlobalModels.Tag>(@"
 select * from todo_manager.tag where userid = 1;
-").ToList();
-                conn.Close();
+")
+                        .ToList();
+                    conn.Close();
+                }
+
                 return tags;
             }
         );
