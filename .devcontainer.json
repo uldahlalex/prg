@@ -1,0 +1,27 @@
+{
+  "name": "Monorepo Dev Container",
+  "workspaceFolder": "/workspace",
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
+  ],
+  "extensions": [
+    "ms-dotnettools.csharp",
+    "VisualStudioExptTeam.vscodeintellicode"
+  ],
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+  "remoteUser": "uldahlalex",
+  "services": {
+    "rider": {
+      "image": "jetbrains/rider:latest",
+      "command": ["sleep", "infinity"],
+      "shutdownAction": "stop"
+    },
+    "webstorm": {
+      "image": "jetbrains/webstorm:latest",
+      "command": ["sleep", "infinity"],
+      "shutdownAction": "stop"
+    }
+  }
+}
