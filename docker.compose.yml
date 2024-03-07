@@ -1,0 +1,13 @@
+#COMPOSE FILE FOR DEV-CONTAINER, NOT DOCKER COMPOSE UP
+version: '3.8'
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/workspace
+    ports:
+      - "3000:3000"
+      - "5000:5000"
+      - "5001:5001"

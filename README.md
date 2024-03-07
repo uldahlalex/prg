@@ -10,10 +10,16 @@
 ## Data model:
 ![Data model](datamodel.png)
 
-## Quickstart with Docker Compose:
+## Quickstart with Docker Compose: (coming soon)
 ```bash
-docker-compose up
+# coming soon
 ```
+
+## Quickstart IntelliJ Dev Container:
+```bash
+# coming soon
+```
+
 ## Quickstart "manually" with .NET CLI + vite
 
 *(if you want to start the server app with another DB than local container, simply set an env variable PG_CONN with postgres connection string and set env variable SKIP_DB_CONTAINER_BUILDING to true)*
