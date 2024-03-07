@@ -15,6 +15,8 @@ const [formValues, setFormValues] = useState({
 });
 
 
+
+
 const handleChange = (e: any) => {
     setFormValues({
 
@@ -44,11 +46,11 @@ const handleChange = (e: any) => {
                     })
                 }}>
                     <option value={-1}>Select a tag</option>
-                    {tags.value.map((tag, index) => <option value={index} key={index}>{tag.name}</option>)}
+                    {tags.map((tag, index) => <option value={index} key={index}>{tag.name}</option>)}
                 </select>
 
                 <ul>
-                    {formValues.tags.map((tag, index) => <li key={index}>{tag.name}</li>)}
+                    {formValues.tags.map((tag, index) => <li key={index}>{tag}</li>)}
                 </ul>
                 <br></br>
                 <button onClick={async () => {
