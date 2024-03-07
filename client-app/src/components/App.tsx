@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {tagsAtom, todosAtom} from "../state.ts";
+import {baseUrl, tagsAtom, todosAtom} from "../state.ts";
 import {useAtom} from "jotai";
 import '../styles/global.classes.css'
 import Sidebar from "./Sidebar.tsx";
@@ -13,12 +13,12 @@ export default function App() {
     const [tags, setTags] = useAtom(tagsAtom);
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/todos')
+        fetch(baseUrl+'/todos')
             .then((response) => response.json())
             .then((data) => {
                 setTodos(data);
             });
-        fetch('http://localhost:5000/api/tags')
+        fetch(baseUrl+'/tags')
             .then((response) => response.json())
             .then((data) => {
                 setTags(data);

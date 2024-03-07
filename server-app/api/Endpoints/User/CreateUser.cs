@@ -1,6 +1,7 @@
 using api.ReusableHelpers.Security;
 using Carter;
 using Dapper;
+using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
 namespace api.Endpoints.User;
@@ -24,7 +25,7 @@ public class Delete : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost<string>("api/users/{id}", (CreateUserRequestDto req, NpgsqlDataSource ds, CredentialService credService, TokenService tokenservice) =>
+        app.MapPost("/api/register", ([FromBody]CreateUserRequestDto req, [FromServices]NpgsqlDataSource ds, [FromServices]CredentialService credService, [FromServices]TokenService tokenservice) =>
         {
             var salt = credService.GenerateSalt();
             var hash = credService.Hash(req.Password, salt);
@@ -39,7 +40,7 @@ public class Delete : ICarterModule
                 }) ?? throw new InvalidOperationException("Could not create user");
             conn.Close();
 
-            return new { }; // tokenservice.IssueJwt(new { Username = user.Username, Id = user.Username });
+            return tokenservice.IssueJwt(new { Username = user.Username, Id = user.Username });
         });
     }
 }

@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {useAtom} from "jotai";
-import {userAtom} from "../state.ts";
+import {baseUrl, userAtom} from "../state.ts";
 
 export default function Login() {
 
@@ -12,7 +12,7 @@ export default function Login() {
     const [user, setUser] = useAtom(userAtom);
 
     const handleLogin = () => {
-        fetch('http://localhost:5000/api/login', {
+        fetch(baseUrl+'/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -27,20 +27,40 @@ export default function Login() {
             });
     };
 
+    const register = () => {
+        fetch(baseUrl+'/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(loginForm)
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                console.log(atob(data))
+                console.log(btoa(data));
+            });
+    }
+
+    const handleInput = (e) => {
+        setloginform({...loginForm, [e.target.name]: e.target.value});
+    }
+
     return (
         <div>
             <h1>Login</h1>
-            <form>
+
                 <div>
                     <label htmlFor="username">Username</label>
-                    <input type="text" name="username" />
+                    <input onChange={handleInput} type="text" name="username" />
                 </div>
                 <div>
                     <label htmlFor="password">Password</label>
-                    <input type="password" name="password" />
+                    <input onChange={handleInput} type="password" name="password" />
                 </div>
-                <button type="submit" onClick={handleLogin}>Login</button>
-            </form>
+                <button onClick={handleLogin}>Login</button>
+            <button onClick={register}>Register</button>
         </div>
     );
 }

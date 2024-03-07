@@ -8,10 +8,10 @@ export default function FeedFilters() {
     const [selectedTag, setSelectedTags] = useAtom(selectedTagsForFeedAtom);
 
     return(<>
-        <h2>Filters in memory selection</h2>
+        <h2>Filter and sort selection</h2>
         <p>Selected tags: {
             selectedTag && selectedTag.length> 0 ?
-            selectedTag.map((tag) => tag.name) : "All tags!"
+            selectedTag.map((tag) => tag.name + " ") : "All tags!"
         }</p>
         <ul>
             {tags.map((tag, index) => (

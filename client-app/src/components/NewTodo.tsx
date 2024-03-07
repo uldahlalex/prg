@@ -1,4 +1,4 @@
-import {tagsAtom, todosAtom} from "../state.ts";
+import {baseUrl, tagsAtom, todosAtom} from "../state.ts";
 import {useAtom} from "jotai";
 import {useState} from "react";
 import {CreateTodoDto} from "../types/dtos.ts";
@@ -35,7 +35,7 @@ export default function NewTodo() {
             </select>
 
             <button onClick={async () => {
-                const response = await fetch('http://localhost:5000/api/todos', {
+                const response = await fetch(baseUrl+'todos', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
