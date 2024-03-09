@@ -56,6 +56,7 @@ insert into todo_manager.todo (title, description, priority, duedate, userid) va
 insert into todo_manager.todo (title, description, duedate, userid) values ('work', 'finish the project', now() + interval '1 week', 1);
 insert into todo_manager.todo (title, description, duedate, userid) values ('work', 'finish the project', now() + interval '1 week', 1);
 insert into todo_manager.todo_tag (todoid, tagid) values (1, 1), (2, 2), (3, 2);
+insert into todo_manager.user (username, passwordhash, salt) values ('blabla', 'umfa3W4F1yXL2i/LZ9vt/wYyPKSZBv2gSSctkVFfyis=', 'gU2zU8nb+ezbu6yBX/s74A==');
 ";
         using (var conn = dataSource.OpenConnection())
         {

@@ -1,7 +1,12 @@
+using System.Data;
 using System.Net;
 using System.Net.NetworkInformation;
+using api.ReusableHelpers.GlobalValues;
+using Dapper;
 using Docker.DotNet;
 using Docker.DotNet.Models;
+using Npgsql;
+using Npgsql.Replication;
 
 namespace api.DbHelpers;
 
@@ -41,6 +46,9 @@ public static class BuildDbContainer
             {
                 await CreateContainerFromImage(client, imageName, containerName);
             }
+
+            var ds = new NpgsqlDataSourceBuilder(Env.PG_CONN).Build();
+            TestConnection(ds);
         }
         catch (Exception ex)
         {
@@ -50,6 +58,23 @@ public static class BuildDbContainer
         }
     }
 
+    private static void TestConnection(NpgsqlDataSource ds, int attempts = 0)
+    {
+        if (attempts > 100) throw new Exception("Could not start PostgreSQL container");
+        try
+        {
+            var conn = ds.OpenConnection();
+            conn.Execute("select 'hello world'");
+            conn.Close();
+        }
+        catch (Exception e)
+        {
+            attempts++;
+            Console.WriteLine("Waiting for connection to available");
+            Task.Delay(100).Wait();
+            TestConnection(ds);
+        }
+    }
     private static async Task StartExistingContainer(IList<ContainerListResponse> existingContainer,
         DockerClient client)
     {

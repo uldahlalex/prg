@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {useAtom, useAtomValue} from 'jotai';
-import FeedItem from "./FeedItem";
-import NewTodo from "./NewTodo";
-import {selectedTagsForFeedAtom, tagsAtom, todosAtom} from "../state.ts";
-import {Tag} from "../types/tag.ts";
+import FeedItem from "../FeedItem.tsx";
+import NewTodo from "../sidebar/NewTodo.tsx";
+import {selectedTagsForFeedAtom, tagsAtom, todosAtom} from "../../state.ts";
+import {Tag} from "../../types/tag.ts";
 import FeedFilters from "./FeedFilters.tsx";
 
 export default function Feed() {
@@ -19,8 +19,8 @@ export default function Feed() {
     });
 
     return (
-        <div>
-            <div><NewTodo /></div>
+        <div style={{border: '1px dotted yellow'}}>"Main content"
+
 
             <div>
                <FeedFilters />

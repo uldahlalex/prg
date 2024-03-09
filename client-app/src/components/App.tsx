@@ -2,11 +2,11 @@ import React, {useEffect} from "react";
 import {baseUrl, tagsAtom, todosAtom} from "../state.ts";
 import {useAtom} from "jotai";
 import '../styles/global.classes.css'
-import Sidebar from "./Sidebar.tsx";
-import AddTag from "./AddTag.tsx";
-import Feed from "./Feed.tsx";
+import AddTag from "./sidebar/AddTag.tsx";
+import Feed from "./mainview/Feed.tsx";
 import {createBrowserRouter, Route, Router, RouterProvider, Routes} from "react-router-dom";
 import Login from "./Login.tsx";
+import NewTodo from "./sidebar/NewTodo.tsx";
 
 export default function App() {
     const [todos, setTodos] = useAtom(todosAtom);
@@ -42,19 +42,19 @@ export default function App() {
         <>
             <div style={{display: 'flex'}}>
                 <div>
-                    <div className="bordered">"Sidebar"
-                        <Sidebar/>
+                    <div>
+                        <NewTodo/>
                     </div>
 
-                    <div className="bordered">"AddTag"
+                    <div>
                         <AddTag/>
                     </div>
                 </div>
 
                 <div>
 
-                    <div className="bordered">"Main content"
-                        <RouterProvider router={router} />
+                    <div>
+                    <RouterProvider router={router} />
                 
                     </div>
                 </div>

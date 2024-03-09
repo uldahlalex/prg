@@ -10,12 +10,12 @@
 ## Data model:
 ![Data model](datamodel.png)
 
-## Quickstart with Docker Compose: (coming soon)
+## Quickstart with Docker Compose: 
 ```bash
 # coming soon
 ```
 
-## Quickstart IntelliJ Dev Container:
+## Quickstart IntelliJ Dev Container: 
 ```bash
 # coming soon
 ```

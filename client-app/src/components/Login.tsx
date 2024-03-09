@@ -1,6 +1,8 @@
 import {useState} from "react";
 import {useAtom} from "jotai";
 import {baseUrl, userAtom} from "../state.ts";
+import {AuthenticationResponse} from "../types/authentication.response.ts";
+import {decodeJwt} from "../functions/jwtDecoder.ts";
 
 export default function Login() {
 
@@ -12,19 +14,18 @@ export default function Login() {
     const [user, setUser] = useAtom(userAtom);
 
     const handleLogin = () => {
-        fetch(baseUrl+'/login', {
+        fetch(baseUrl+'/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(loginForm)
         })
-            .then((response) => response.json())
+            .then((response) => response.json() as AuthenticationResponse)
             .then((data) => {
-                console.log(data);
-                console.log(atob(data))
-                console.log(btoa(data));
-            });
+                console.log(data)
+            })
+
     };
 
     const register = () => {
@@ -35,12 +36,12 @@ export default function Login() {
             },
             body: JSON.stringify(loginForm)
         })
-            .then((response) => response.json())
+            .then((response) => response.json() as AuthenticationResponse)
             .then((data) => {
-                console.log(data);
-                console.log(atob(data))
-                console.log(btoa(data));
+                const user = decodeJwt(data.token!);
             });
+
+
     }
 
     const handleInput = (e) => {

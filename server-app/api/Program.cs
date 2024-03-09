@@ -26,8 +26,9 @@ public class Program
         Console.WriteLine("BUILDING API WITH ENVIRONMENT: +" +
                           JsonSerializer.Serialize(Environment.GetEnvironmentVariables()));
         if (!Env.ASPNETCORE_ENVIRONMENT.Equals(StringConstants.Environments.Production) &&
-            !Env.SKIP_DB_CONTAINER_BUILDING.Equals("true"))
-            await BuildDbContainer.StartDbInContainer();
+            !Env.SKIP_DB_CONTAINER_BUILDING.Equals("true")) {
+                   await BuildDbContainer.StartDbInContainer();
+            }
         var builder = WebApplication.CreateBuilder();
         builder.Services
             .AddNpgsqlDataSource(Env.PG_CONN, cfg => cfg.EnableParameterLogging())

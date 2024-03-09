@@ -6,26 +6,17 @@ using Npgsql;
 
 namespace api.Endpoints.User;
 
-public class CreateUserRequestDto
+public class AuthenticationRequestDto
 {
     public string Username { get; set; }
     public string Password { get; set; }
 }
 
-public class User
-{
-    public int Id { get; set; }
-    public string Username { get; set; }
-    public string? PasswordHash { get; set; }
-    public string? Password { get; set; }
-    public string? Salt { get; set; }
-}
-
-public class Delete : ICarterModule
+public class Register : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("/api/register", ([FromBody]CreateUserRequestDto req, [FromServices]NpgsqlDataSource ds, [FromServices]CredentialService credService, [FromServices]TokenService tokenservice) =>
+        app.MapPost("/api/register", ([FromBody]AuthenticationRequestDto req, [FromServices]NpgsqlDataSource ds, [FromServices]CredentialService credService, [FromServices]TokenService tokenservice) =>
         {
             var salt = credService.GenerateSalt();
             var hash = credService.Hash(req.Password, salt);
@@ -40,7 +31,10 @@ public class Delete : ICarterModule
                 }) ?? throw new InvalidOperationException("Could not create user");
             conn.Close();
 
-            return tokenservice.IssueJwt(new { Username = user.Username, Id = user.Username });
+            return new
+            {
+    token = tokenservice.IssueJwt(new { Username = user.Username, Id = user.Id })
+            };
         });
     }
 }
