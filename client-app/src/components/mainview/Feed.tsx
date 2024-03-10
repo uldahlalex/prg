@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
 import {useAtom, useAtomValue} from 'jotai';
-import FeedItem from "../FeedItem.tsx";
+import FeedItem from "./FeedItem.tsx";
 import NewTodo from "../sidebar/NewTodo.tsx";
-import {selectedTagsForFeedAtom, tagsAtom, todosAtom} from "../../state.ts";
+import {orderByAtom, selectedTagsForFeedAtom, tagsAtom, todosAtom} from "../../state.ts";
 import {Tag} from "../../types/tag.ts";
 import FeedFilters from "./FeedFilters.tsx";
 
 export default function Feed() {
     const [todos, setTodos] = useAtom(todosAtom);
     const [selectedTag, setSelectedTags] = useAtom<Tag[]>(selectedTagsForFeedAtom)
-
+    const [orderBy, setOrderBy] = useAtom(orderByAtom);
     //
     const filter = todos.filter((todo) => {
         if (selectedTag.length === 0) {
@@ -28,9 +28,16 @@ export default function Feed() {
 
             <div>
                 {
-                 //   todos.map((todo, index) => <FeedItem key={index} todo={todo} />)
-                   // selectedTag.some(t => todos.map(todo => todo.tags.includes(t)).map((todo, index) => <FeedItem key={index} todo={todo} />))
-                    filter.map((todo, index) => <FeedItem key={index} todo={todo} />)
+                    filter
+                        .sort((a, b) => {
+                            if (orderBy.direction === "asc") {
+                                return a[orderBy.field] > b[orderBy.field] ? 1 : -1;}
+                             else {
+                                return a[orderBy.field] < b[orderBy.field] ? 1 : -1;
+
+                                }
+                            })
+                        .map((todo, index) => <FeedItem key={index} todo={todo} />)
 
                 }
             </div>

@@ -10,6 +10,11 @@ export const tagsAtom = atom<Tag[]>([]);
 export const userAtom = atom<User>({});
 
 
-
-//Forms
+//Forms: Filter selection
 export const selectedTagsForFeedAtom = atom<Tag[]>([]);
+export const orderByAtom = atom<SortBy>({field: 'dueDate', direction: 'asc'});
+
+export interface SortBy {
+    field: string;
+    direction: string;
+}

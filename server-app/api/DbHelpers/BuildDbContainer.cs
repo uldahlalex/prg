@@ -67,12 +67,12 @@ public static class BuildDbContainer
             conn.Execute("select 'hello world'");
             conn.Close();
         }
-        catch (Exception e)
+        catch (Exception)
         {
             attempts++;
             Console.WriteLine("Waiting for connection to available");
             Task.Delay(100).Wait();
-            TestConnection(ds);
+            TestConnection(ds, attempts);
         }
     }
     private static async Task StartExistingContainer(IList<ContainerListResponse> existingContainer,

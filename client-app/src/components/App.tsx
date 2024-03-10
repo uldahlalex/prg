@@ -5,7 +5,7 @@ import '../styles/global.classes.css'
 import AddTag from "./sidebar/AddTag.tsx";
 import Feed from "./mainview/Feed.tsx";
 import {createBrowserRouter, Route, Router, RouterProvider, Routes} from "react-router-dom";
-import Login from "./Login.tsx";
+import Login from "./mainview/Login.tsx";
 import NewTodo from "./sidebar/NewTodo.tsx";
 
 export default function App() {

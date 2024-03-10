@@ -1,15 +1,17 @@
-import React from "react";
+import React, {useState} from "react";
 import {useAtom} from "jotai/index";
-import {selectedTagsForFeedAtom, tagsAtom} from "../../state.ts";
+import {orderByAtom, selectedTagsForFeedAtom, tagsAtom} from "../../state.ts";
 
 export default function FeedFilters() {
 
     const [tags, setTags] = useAtom(tagsAtom);
     const [selectedTag, setSelectedTags] = useAtom(selectedTagsForFeedAtom);
+    const [orderBy, setOrderBy] = useAtom(orderByAtom);
+
 
     return(<>
         <div style={{border: '1px solid red'}}>"Feed filters"
-            <h2>Filter and sort selection</h2>
+            <h4>Filter and sort selection</h4>
             <p>Selected tags: {
                 selectedTag && selectedTag.length > 0 ?
                     selectedTag.map((tag) => tag.name + " ") : "All tags!"
@@ -29,8 +31,11 @@ export default function FeedFilters() {
                                 "Select: " + tag.name
                         }</button>
                     </li>
-                ))}
+                ))
+                    }
             </ul>
+            <h4>Order by</h4>
+            <button onClick={() => setOrderBy({field: "title", direction: "asc"})}>Due date</button>
         </div>
 
     </>)

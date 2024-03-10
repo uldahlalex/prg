@@ -1,8 +1,8 @@
 import {useState} from "react";
 import {useAtom} from "jotai";
-import {baseUrl, userAtom} from "../state.ts";
-import {AuthenticationResponse} from "../types/authentication.response.ts";
-import {decodeJwt} from "../functions/jwtDecoder.ts";
+import {baseUrl, userAtom} from "../../state.ts";
+import {AuthenticationResponse} from "../../types/authentication.response.ts";
+import {decodeJwt} from "../../functions/jwtDecoder.ts";
 
 export default function Login() {
 
