@@ -1,3 +1,5 @@
+using System.Text.Json;
+using api.EndpointFilters;
 using api.ReusableHelpers.GlobalModels;
 using Carter;
 using Dapper;
@@ -9,10 +11,10 @@ public class Create : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("/api/todos", (CreateTodoRequestDto req, NpgsqlDataSource ds) =>
+        app.MapPost("/api/todos", (CreateTodoRequestDto req, NpgsqlDataSource ds, HttpContext context) =>
         {
+            User.User user = User.User.FromHttpItemsPayload(context);
             var transaction = ds.OpenConnection().BeginTransaction();
-            var userId = 1;
             TodoWithTags todo = transaction.Connection!.QueryFirstOrDefault<TodoWithTags>(@"
 insert into todo_manager.todo (title, description, duedate, userid, priority)
 VALUES (@Title, @Description, @DueDate, @UserId, @Priority) returning *;
@@ -21,7 +23,7 @@ VALUES (@Title, @Description, @DueDate, @UserId, @Priority) returning *;
                     req.Title,
                     req.Description,
                     req.DueDate,
-                    UserId = userId,
+                    UserId = user.Id,
                     req.Priority
                 }
             ) ?? throw new InvalidOperationException("Could not insert todo");
@@ -39,7 +41,7 @@ VALUES (@Title, @Description, @DueDate, @UserId, @Priority) returning *;
             transaction.Commit();
             transaction.Connection!.Close();
             return todo;
-        });
+        }).AddEndpointFilter<VerifyJwtAndSetPayloadAsHttpItem>();
     }
 }
 

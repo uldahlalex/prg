@@ -27,7 +27,7 @@ public class TokenService
         }
     }
 
-    public Dictionary<string, string> ValidateJwtAndReturnClaims(string jwt)
+    public Dictionary<string, object> ValidateJwtAndReturnClaims(string jwt)
     {
         try
         {
@@ -37,7 +37,7 @@ public class TokenService
             IJwtValidator validator = new JwtValidator(serializer, provider);
             IJwtDecoder decoder = new JwtDecoder(serializer, validator, urlEncoder, new HMACSHA512Algorithm());
             var json = decoder.Decode(jwt, Env.JWT_KEY);
-            return JsonConvert.DeserializeObject<Dictionary<string, string>>(json)!;
+            return JsonConvert.DeserializeObject<Dictionary<string, object>>(json)!;
         }
         catch (Exception e)
         {
