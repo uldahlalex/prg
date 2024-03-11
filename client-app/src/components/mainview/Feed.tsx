@@ -13,29 +13,7 @@ export default function Feed() {
     const [queryPreferences, setQueryPreferences] = useAtom<QueryPreferences>(queryPreferencesAtom);
 
 
-    const get = () => {
-        fetch(buildQueryString(queryPreferences))
-            .then((response) => response.json())
-            .then((data) => {
-                setTodos(data);
-            });
-    }
 
-
-    function buildQueryString(preferences: QueryPreferences): string {
-        let queryParams: string[] = [];
-        if (preferences.filters.selectedTags.length > 0) {
-            const tagIds = preferences.filters.selectedTags.map(tag => tag.id).join(',');
-            queryParams.push(`tags=${encodeURIComponent(tagIds)}`);
-        }
-        if (preferences.filters.limit !== 50) {
-            queryParams.push(`limit=${preferences.filters.limit}`);
-        }
-        queryParams.push(`orderBy=${preferences.orderBy.field}`);
-        queryParams.push(`direction=${preferences.orderBy.direction}`);
-        const queryString = queryParams.join('&');
-        return `${baseUrl}/todos?${queryString}`;
-    }
 
     return (
         <div style={{border: '1px dotted yellow'}}>"Main content"
