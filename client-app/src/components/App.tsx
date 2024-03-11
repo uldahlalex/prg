@@ -13,11 +13,6 @@ export default function App() {
     const [tags, setTags] = useAtom(tagsAtom);
 
     useEffect(() => {
-        fetch(baseUrl+'/todos')
-            .then((response) => response.json())
-            .then((data) => {
-                setTodos(data);
-            });
         fetch(baseUrl+'/tags')
             .then((response) => response.json())
             .then((data) => {

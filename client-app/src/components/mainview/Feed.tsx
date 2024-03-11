@@ -2,42 +2,54 @@ import React, {useState} from 'react';
 import {useAtom, useAtomValue} from 'jotai';
 import FeedItem from "./FeedItem.tsx";
 import NewTodo from "../sidebar/NewTodo.tsx";
-import {orderByAtom, selectedTagsForFeedAtom, tagsAtom, todosAtom} from "../../state.ts";
+import {baseUrl, queryPreferencesAtom, tagsAtom, todosAtom} from "../../state.ts";
 import {Tag} from "../../types/tag.ts";
-import FeedFilters from "./FeedFilters.tsx";
+
+import Query, {QueryPreferences} from "./Filters/Query.tsx";
+import SetOrder from "./Filters/SetOrder.tsx";
 
 export default function Feed() {
     const [todos, setTodos] = useAtom(todosAtom);
-    const [selectedTag, setSelectedTags] = useAtom<Tag[]>(selectedTagsForFeedAtom)
-    const [orderBy, setOrderBy] = useAtom(orderByAtom);
-    //
-    const filter = todos.filter((todo) => {
-        if (selectedTag.length === 0) {
-            return true;
+    const [queryPreferences, setQueryPreferences] = useAtom<QueryPreferences>(queryPreferencesAtom);
+
+
+    const get = () => {
+        fetch(buildQueryString(queryPreferences))
+            .then((response) => response.json())
+            .then((data) => {
+                setTodos(data);
+            });
+    }
+
+
+    function buildQueryString(preferences: QueryPreferences): string {
+        let queryParams: string[] = [];
+        if (preferences.filters.selectedTags.length > 0) {
+            const tagIds = preferences.filters.selectedTags.map(tag => tag.id).join(',');
+            queryParams.push(`tags=${encodeURIComponent(tagIds)}`);
         }
-        return selectedTag.some((tag) => todo.tags.map(t => t.id).includes(tag.id));
-    });
+        if (preferences.filters.limit !== 50) {
+            queryParams.push(`limit=${preferences.filters.limit}`);
+        }
+        queryParams.push(`orderBy=${preferences.orderBy.field}`);
+        queryParams.push(`direction=${preferences.orderBy.direction}`);
+        const queryString = queryParams.join('&');
+        return `${baseUrl}/todos?${queryString}`;
+    }
 
     return (
         <div style={{border: '1px dotted yellow'}}>"Main content"
 
 
             <div>
-               <FeedFilters />
+                <SetOrder/>
+                <button onClick={get}>Get</button>
             </div>
 
             <div>
                 {
-                    filter
-                        .sort((a, b) => {
-                            if (orderBy.direction === "asc") {
-                                return a[orderBy.field] > b[orderBy.field] ? 1 : -1;}
-                             else {
-                                return a[orderBy.field] < b[orderBy.field] ? 1 : -1;
-
-                                }
-                            })
-                        .map((todo, index) => <FeedItem key={index} todo={todo} />)
+                   // filter.map((todo, index) => <FeedItem key={index} todo={todo} />)
+                    todos.map((todo, index) => <FeedItem key={index} todo={todo} />)
 
                 }
             </div>
