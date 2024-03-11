@@ -14,7 +14,7 @@ export default function Login() {
     const [user, setUser] = useAtom(userAtom);
 
     const handleLogin = () => {
-        fetch(baseUrl+'/signin', {
+        fetch(baseUrl + '/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -29,7 +29,7 @@ export default function Login() {
     };
 
     const register = () => {
-        fetch(baseUrl+'/register', {
+        fetch(baseUrl + '/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -52,15 +52,15 @@ export default function Login() {
         <div>
             <h1>Login</h1>
 
-                <div>
-                    <label htmlFor="username">Username</label>
-                    <input onChange={handleInput} type="text" name="username" />
-                </div>
-                <div>
-                    <label htmlFor="password">Password</label>
-                    <input onChange={handleInput} type="password" name="password" />
-                </div>
-                <button onClick={handleLogin}>Login</button>
+            <div>
+                <label htmlFor="username">Username</label>
+                <input onChange={handleInput} type="text" name="username"/>
+            </div>
+            <div>
+                <label htmlFor="password">Password</label>
+                <input onChange={handleInput} type="password" name="password"/>
+            </div>
+            <button onClick={handleLogin}>Login</button>
             <button onClick={register}>Register</button>
         </div>
     );

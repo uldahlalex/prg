@@ -15,7 +15,7 @@ export default function AddTag() {
         setNewTagForm({...newTagForm, name: e.target.value});
     }
 
-    return(
+    return (
         <>
             <div style={{border: '1px solid green'}}>"Add tag"
                 <button onClick={async () => {

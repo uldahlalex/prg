@@ -33,13 +33,14 @@ export default function NewTodo() {
                 <input type="text" placeholder="Title" name="title" value={newTodoForm.title} onChange={handleChanges}/>
                 <input type="text" placeholder="Description" name="description" value={newTodoForm.description}
                        onChange={handleChanges}/>
-                <input type="date" name="dueDate" value={newTodoForm.dueDate.toISOString().substring(0, 10)} onChange={handleChanges}/>
+                <input type="date" name="dueDate" value={newTodoForm.dueDate.toISOString().substring(0, 10)}
+                       onChange={handleChanges}/>
                 <input type="number" name="priority" value={newTodoForm.priority} onChange={handleChanges}/>
                 Tags:
                 <select
                     value={selectedTagIndex} // Controlled component
                     onChange={(e) => {
-                        if(e.target.value === "-1") return;
+                        if (e.target.value === "-1") return;
                         setTags(e);
                     }}>
 
@@ -54,11 +55,13 @@ export default function NewTodo() {
                     newTodoForm.tags.map((tag, index) => <p key={index}>
                         <button onClick={() => {
                             setNewTodoForm({...newTodoForm, tags: newTodoForm.tags.filter((t) => t !== tag)});
-                        }}><>{tag.name}</></button></p>)
+                        }}><>{tag.name}</>
+                        </button>
+                    </p>)
                 }
 
                 <button onClick={async () => {
-                    const response = await fetch(baseUrl+'/todos', {
+                    const response = await fetch(baseUrl + '/todos', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
