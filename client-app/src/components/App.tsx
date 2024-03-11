@@ -7,20 +7,10 @@ import Feed from "./mainview/Feed.tsx";
 import {createBrowserRouter, Route, Router, RouterProvider, Routes} from "react-router-dom";
 import Login from "./mainview/Login.tsx";
 import NewTodo from "./sidebar/NewTodo.tsx";
+import {getTodos} from "../functions/getTodosHook.ts";
 
 export default function App() {
-    const [todos, setTodos] = useAtom(todosAtom);
-    const [tags, setTags] = useAtom(tagsAtom);
-
-    useEffect(() => {
-        fetch(baseUrl+'/tags')
-            .then((response) => response.json())
-            .then((data) => {
-                setTags(data);
-            });
-    }, []);
-
-
+    getTodos();
     const router = createBrowserRouter([
         {
             element: <Feed />,

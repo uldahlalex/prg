@@ -21,7 +21,7 @@ export default function Feed() {
 
             <div>
                 <SetOrder/>
-                <button onClick={get}>Get</button>
+                {/*<button onClick={get}>Get</button>*/}
             </div>
 
             <div>
