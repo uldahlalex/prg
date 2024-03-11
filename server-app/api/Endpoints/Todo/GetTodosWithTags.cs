@@ -1,20 +1,36 @@
+using System.Runtime.CompilerServices;
+using System.Text.Json;
+using api.EndpointFilters;
 using api.ReusableHelpers.GlobalModels;
 using Carter;
 using Dapper;
+using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
 namespace api.Endpoints.Todo;
+
+public interface Compliancy<T>
+{
+    bool TryParse(string str, IFormatProvider provider, out T returnValue);
+}
+
 
 public class GetTodosWithTags : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/api/todos", async (NpgsqlDataSource ds) =>
+        app.MapGet("/api/todos", async (
+            [FromServices] NpgsqlDataSource ds,
+            [FromQuery]string OrderBy,
+        [FromQuery]string Direction,
+        [FromQuery]int Limit,
+            [FromQuery]int[] Tags,
+            HttpContext context) =>
         {
             IEnumerable<dynamic> todos;
             await using (var con = ds.OpenConnection())
             {
-                todos = con.Query(@"
+                todos = con.Query(@$"
 SELECT 
     t.id, 
     t.title, 
@@ -28,10 +44,15 @@ SELECT
 FROM todo_manager.todo t
 LEFT JOIN todo_manager.todo_tag tt ON t.id = tt.todoid
 LEFT JOIN todo_manager.tag tag ON tt.tagid = tag.id
-WHERE t.userid = @UserId
+WHERE t.userid = @UserId and tag.id = ANY(@Tags)
 GROUP BY t.id
-ORDER BY t.createdat DESC;
-", new { UserId = 1 });
+ORDER BY t.{OrderBy} {Direction}
+LIMIT {Limit};
+", new 
+                {
+                    UserId = User.User.FromHttpItemsPayload(context).Id,
+                    Tags = Tags
+                });
             }
 
             return todos.Select(row =>
@@ -51,6 +72,6 @@ ORDER BY t.createdat DESC;
 
                 return todo;
             }).ToList();
-        });
+        }).AddEndpointFilter<VerifyJwtAndSetPayloadAsHttpItem>();
     }
 }

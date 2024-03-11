@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import {baseUrl, queryPreferencesAtom, todosAtom} from "../state.ts";
 import {useAtom} from "jotai";
-import {QueryPreferences} from "../components/mainview/Filters/Query.tsx";
+import {QueryPreferences} from "../types/gettodos.params.dto.ts";
 
 export function getTodos() {
     const [queryPreferences] = useAtom(queryPreferencesAtom);

@@ -1,6 +1,6 @@
 import {queryPreferencesAtom} from "../../../state.ts";
-import {QueryPreferences} from "./Query.tsx";
 import {useAtom} from "jotai";
+import {QueryPreferences} from "../../../types/gettodos.params.dto.ts";
 
 export default function SetOrder() {
 
@@ -12,7 +12,17 @@ export default function SetOrder() {
 
     return <>
         <h4>Order by</h4>
-        <button onClick={() => setOrderBy({field: "title", direction: "asc"})}>Set ordering</button>
+        <select onChange={() => {
+            setOrderBy({field: "dueDate", direction: "asc"})
+        }}>
+            <option value="id">Select value to order by</option>
+            <option value="dueDate">Due date</option>
+            <option value="title">Title</option>
+            <option value="priority">Priority</option>
+        </select>
+        <button onClick={() => {
+            setOrderBy({field: "dueDate", direction: queryPreferences.orderBy.direction=="asc" ? "desc" : "asc"})
+        }}>Toggle to {queryPreferences.orderBy.direction=="asc" ? "Descending" : "Ascending"}</button>
     </>
 
 }
