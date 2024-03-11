@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace api.ReusableHelpers.Security;
+namespace api.Boilerplate.ReusableHelpers.Security;
 
 public class CredentialService
 {

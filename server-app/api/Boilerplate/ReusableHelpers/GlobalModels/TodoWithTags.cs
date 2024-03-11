@@ -1,4 +1,4 @@
-namespace api.ReusableHelpers.GlobalModels;
+namespace api.Boilerplate.ReusableHelpers.GlobalModels;
 
 public class TodoWithTags
 {

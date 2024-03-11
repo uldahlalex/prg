@@ -1,5 +1,4 @@
-using api.EndpointFilters;
-using api.ReusableHelpers.GlobalValues;
+using api.Boilerplate.EndpointFilters;
 using Carter;
 using Microsoft.VisualBasic;
 

@@ -1,7 +1,7 @@
 using System.Text.Json;
-using api.DbHelpers;
-using api.ReusableHelpers.GlobalValues;
-using api.ReusableHelpers.Security;
+using api.Boilerplate.DbHelpers;
+using api.Boilerplate.ReusableHelpers.GlobalValues;
+using api.Boilerplate.ReusableHelpers.Security;
 using Carter;
 using Microsoft.OpenApi.Models;
 
@@ -49,7 +49,7 @@ public class Program
                     Type = SecuritySchemeType.ApiKey,
                     Scheme = "Bearer"
                 });
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
                         new OpenApiSecurityScheme
@@ -61,7 +61,7 @@ public class Program
                             },
                             Scheme = "oauth2",
                             Name = "Bearer",
-                            In = ParameterLocation.Header,
+                            In = ParameterLocation.Header
                         },
                         new List<string>()
                     }

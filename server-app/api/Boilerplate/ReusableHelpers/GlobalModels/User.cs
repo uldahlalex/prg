@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace api.Endpoints.User;
+namespace api.Boilerplate.ReusableHelpers.GlobalModels;
 
 public class User
 {

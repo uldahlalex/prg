@@ -1,4 +1,4 @@
-using api.ReusableHelpers.Security;
+using api.Boilerplate.ReusableHelpers.Security;
 using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
@@ -16,25 +16,27 @@ public class Register : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("/api/register", ([FromBody]AuthenticationRequestDto req, [FromServices]NpgsqlDataSource ds, [FromServices]CredentialService credService, [FromServices]TokenService tokenservice) =>
-        {
-            var salt = credService.GenerateSalt();
-            var hash = credService.Hash(req.Password, salt);
-            using var conn = ds.OpenConnection();
-            var user = conn.QueryFirstOrDefault<User>(
-                "insert into todo_manager.user (username, passwordhash, salt) values (@Username, @PasswordHash, @Salt) RETURNING *;",
-                new
-                {
-                    Username = req.Username,
-                    PasswordHash = hash,
-                    Salt = salt
-                }) ?? throw new InvalidOperationException("Could not create user");
-            conn.Close();
-
-            return new
+        app.MapPost("/api/register",
+            ([FromBody] AuthenticationRequestDto req, [FromServices] NpgsqlDataSource ds,
+                [FromServices] CredentialService credService, [FromServices] TokenService tokenservice) =>
             {
-    token = tokenservice.IssueJwt(new { Username = user.Username, Id = user.Id })
-            };
-        });
+                var salt = credService.GenerateSalt();
+                var hash = credService.Hash(req.Password, salt);
+                using var conn = ds.OpenConnection();
+                var user = conn.QueryFirstOrDefault<Boilerplate.ReusableHelpers.GlobalModels.User>(
+                    "insert into todo_manager.user (username, passwordhash, salt) values (@Username, @PasswordHash, @Salt) RETURNING *;",
+                    new
+                    {
+                        req.Username,
+                        PasswordHash = hash,
+                        Salt = salt
+                    }) ?? throw new InvalidOperationException("Could not create user");
+                conn.Close();
+
+                return new
+                {
+                    token = tokenservice.IssueJwt(new { user.Username, user.Id })
+                };
+            });
     }
 }

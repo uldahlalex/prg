@@ -1,8 +1,8 @@
 using System.Security.Authentication;
-using api.ReusableHelpers.GlobalValues;
-using api.ReusableHelpers.Security;
+using api.Boilerplate.ReusableHelpers.GlobalValues;
+using api.Boilerplate.ReusableHelpers.Security;
 
-namespace api.EndpointFilters;
+namespace api.Boilerplate.EndpointFilters;
 
 public class VerifyJwtAndSetPayloadAsHttpItem(TokenService tokenService) : IEndpointFilter
 {

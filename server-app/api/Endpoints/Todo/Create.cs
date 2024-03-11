@@ -1,6 +1,6 @@
 using System.Text.Json;
-using api.EndpointFilters;
-using api.ReusableHelpers.GlobalModels;
+using api.Boilerplate.EndpointFilters;
+using api.Boilerplate.ReusableHelpers.GlobalModels;
 using Carter;
 using Dapper;
 using Npgsql;
@@ -13,7 +13,7 @@ public class Create : ICarterModule
     {
         app.MapPost("/api/todos", (CreateTodoRequestDto req, NpgsqlDataSource ds, HttpContext context) =>
         {
-            User.User user = User.User.FromHttpItemsPayload(context);
+            Boilerplate.ReusableHelpers.GlobalModels.User user = Boilerplate.ReusableHelpers.GlobalModels.User.FromHttpItemsPayload(context);
             var transaction = ds.OpenConnection().BeginTransaction();
             TodoWithTags todo = transaction.Connection!.QueryFirstOrDefault<TodoWithTags>(@"
 insert into todo_manager.todo (title, description, duedate, userid, priority)
@@ -34,7 +34,7 @@ VALUES (@Title, @Description, @DueDate, @UserId, @Priority) returning *;
                         new { TodoId = todo.Id, TagId = e.Id }) == 0)
                     throw new InvalidOperationException("Could not associate tag with todo");
             });
-            todo.Tags = transaction.Connection!.Query<ReusableHelpers.GlobalModels.Tag>(
+            todo.Tags = transaction.Connection!.Query<Boilerplate.ReusableHelpers.GlobalModels.Tag>(
                 "select * from todo_manager.tag join todo_manager.todo_tag tt on tag.id = tt.tagid where tt.todoid = @id;",
                 new { id = todo.Id }).ToList() ?? throw new InvalidOperationException("Could not retrieve tags");
 
@@ -51,5 +51,5 @@ public class CreateTodoRequestDto
     public string Description { get; set; } = default!;
     public DateTime DueDate { get; set; }
     public int Priority { get; set; }
-    public List<ReusableHelpers.GlobalModels.Tag> Tags { get; set; } = default!;
+    public List<Boilerplate.ReusableHelpers.GlobalModels.Tag> Tags { get; set; } = default!;
 }

@@ -1,4 +1,4 @@
-using api.ReusableHelpers.Security;
+using api.Boilerplate.ReusableHelpers.Security;
 using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +17,7 @@ public class SignIn : ICarterModule
             [FromServices]TokenService tokenService) =>
         { 
             using var conn = ds.OpenConnection();
-            var userToCheck = conn.QueryFirstOrDefault<User>(
+            var userToCheck = conn.QueryFirstOrDefault<Boilerplate.ReusableHelpers.GlobalModels.User>(
                 "SELECT * FROM todo_manager.user where username = @username;",
                 new
                 {

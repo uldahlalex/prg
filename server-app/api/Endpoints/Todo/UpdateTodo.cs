@@ -1,7 +1,9 @@
-using api.ReusableHelpers.GlobalModels;
+using api.Boilerplate.ReusableHelpers.GlobalModels;
 using Carter;
 using Dapper;
 using Npgsql;
+
+namespace api.Endpoints.Todo;
 
 public class UpdateTodoRequestDto
 {

@@ -1,14 +1,11 @@
-using System.Data;
-using System.Net;
 using System.Net.NetworkInformation;
-using api.ReusableHelpers.GlobalValues;
+using api.Boilerplate.ReusableHelpers.GlobalValues;
 using Dapper;
 using Docker.DotNet;
 using Docker.DotNet.Models;
 using Npgsql;
-using Npgsql.Replication;
 
-namespace api.DbHelpers;
+namespace api.Boilerplate.DbHelpers;
 
 public static class BuildDbContainer
 {
@@ -16,36 +13,30 @@ public static class BuildDbContainer
     {
         try
         {
-            string dockerSocketPath = GetDockerSocketPath();
-            DockerClient client = new DockerClientConfiguration(new Uri(dockerSocketPath)).CreateClient();
-            string imageName = "postgres:latest";
-            string containerName = "postgres";
+            var dockerSocketPath = GetDockerSocketPath();
+            var client = new DockerClientConfiguration(new Uri(dockerSocketPath)).CreateClient();
+            var imageName = "postgres:latest";
+            var containerName = "postgres";
 
             IList<ImagesListResponse> images =
                 await client.Images.ListImagesAsync(new ImagesListParameters { All = true });
             if (!images.Any(i => i.RepoTags.Contains(imageName)))
-            {
                 await client.Images.CreateImageAsync(
                     new ImagesCreateParameters { FromImage = imageName }, null, new Progress<JSONMessage>());
-            }
 
             var existingContainer = await client.Containers.ListContainersAsync(
-                new ContainersListParameters()
+                new ContainersListParameters
                 {
-                    All = true, Filters = new Dictionary<string, IDictionary<string, bool>>()
+                    All = true, Filters = new Dictionary<string, IDictionary<string, bool>>
                     {
-                        { "name", new Dictionary<string, bool>() { { containerName, true } } }
+                        { "name", new Dictionary<string, bool> { { containerName, true } } }
                     }
                 });
 
             if (existingContainer.Any())
-            {
                 await StartExistingContainer(existingContainer, client);
-            }
             else
-            {
                 await CreateContainerFromImage(client, imageName, containerName);
-            }
 
             var ds = new NpgsqlDataSourceBuilder(Env.PG_CONN).Build();
             TestConnection(ds);
@@ -75,13 +66,14 @@ public static class BuildDbContainer
             TestConnection(ds, attempts);
         }
     }
+
     private static async Task StartExistingContainer(IList<ContainerListResponse> existingContainer,
         DockerClient client)
     {
         var containerId = existingContainer[0].ID;
         Console.WriteLine("Existing PostgreSQL container found.");
 
-        bool isPortInUse = IsPortInUse(5432);
+        var isPortInUse = IsPortInUse(5432);
 
         if (isPortInUse)
         {
@@ -113,7 +105,7 @@ public static class BuildDbContainer
             {
                 PortBindings = new Dictionary<string, IList<PortBinding>>
                 {
-                    { "5432/tcp", new List<PortBinding> { new PortBinding { HostPort = "5432" } } }
+                    { "5432/tcp", new List<PortBinding> { new() { HostPort = "5432" } } }
                 }
             },
             Env = new List<string>
@@ -138,8 +130,8 @@ public static class BuildDbContainer
 
     private static bool IsPortInUse(int port)
     {
-        IPGlobalProperties properties = IPGlobalProperties.GetIPGlobalProperties();
-        IPEndPoint[] endpoints = properties.GetActiveTcpListeners();
+        var properties = IPGlobalProperties.GetIPGlobalProperties();
+        var endpoints = properties.GetActiveTcpListeners();
         return endpoints.Any(endpoint => endpoint.Port == port);
     }
 }

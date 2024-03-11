@@ -18,7 +18,7 @@ public class Createtag : ICarterModule
         {
             using (var conn = ds.OpenConnection())
             {
-                var insertedTag = conn.QueryFirst<ReusableHelpers.GlobalModels.Tag>(
+                var insertedTag = conn.QueryFirst<Boilerplate.ReusableHelpers.GlobalModels.Tag>(
                     "insert into todo_manager.tag (name, userid) values (@name, @userid) returning *;",
                     dto) ?? throw new InvalidOperationException("Could not create tag");
                 conn.Close();

@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using api.EndpointFilters;
-using api.ReusableHelpers.GlobalModels;
+using api.Boilerplate.EndpointFilters;
+using api.Boilerplate.ReusableHelpers.GlobalModels;
 using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +9,6 @@ using Npgsql;
 
 namespace api.Endpoints.Todo;
 
-public interface Compliancy<T>
-{
-    bool TryParse(string str, IFormatProvider provider, out T returnValue);
-}
 
 
 public class GetTodosWithTags : ICarterModule
@@ -50,7 +46,7 @@ ORDER BY t.{OrderBy} {Direction}
 LIMIT {Limit};
 ", new 
                 {
-                    UserId = User.User.FromHttpItemsPayload(context).Id,
+                    UserId = Boilerplate.ReusableHelpers.GlobalModels.User.FromHttpItemsPayload(context).Id,
                     Tags = Tags
                 });
             }
@@ -67,7 +63,7 @@ LIMIT {Limit};
                     CreatedAt = row.createdat,
                     Priority = row.priority,
                     UserId = row.userid,
-                    Tags = System.Text.Json.JsonSerializer.Deserialize<List<ReusableHelpers.GlobalModels.Tag>>(row.tags)
+                    Tags = System.Text.Json.JsonSerializer.Deserialize<List<Boilerplate.ReusableHelpers.GlobalModels.Tag>>(row.tags)
                 };
 
                 return todo;

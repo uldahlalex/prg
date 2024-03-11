@@ -1,10 +1,8 @@
-import React, {useEffect} from "react";
-import {baseUrl, tagsAtom, todosAtom} from "../state.ts";
-import {useAtom} from "jotai";
+import React from "react";
 import '../styles/global.classes.css'
 import AddTag from "./sidebar/AddTag.tsx";
 import Feed from "./mainview/Feed.tsx";
-import {createBrowserRouter, Route, Router, RouterProvider, Routes} from "react-router-dom";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Login from "./mainview/Login.tsx";
 import NewTodo from "./sidebar/NewTodo.tsx";
 import {getTodos} from "../functions/getTodosHook.ts";
@@ -13,11 +11,11 @@ export default function App() {
     getTodos();
     const router = createBrowserRouter([
         {
-            element: <Feed />,
+            element: <Feed/>,
             path: "/",
         },
         {
-            element: <Login />,
+            element: <Login/>,
             path: "/login",
         },
     ])
@@ -39,8 +37,8 @@ export default function App() {
                 <div>
 
                     <div>
-                    <RouterProvider router={router} />
-                
+                        <RouterProvider router={router}/>
+
                     </div>
                 </div>
             </div>

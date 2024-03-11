@@ -21,8 +21,8 @@ export default function SetOrder() {
             <option value="priority">Priority</option>
         </select>
         <button onClick={() => {
-            setOrderBy({field: "dueDate", direction: queryPreferences.orderBy.direction=="asc" ? "desc" : "asc"})
-        }}>Toggle to {queryPreferences.orderBy.direction=="asc" ? "Descending" : "Ascending"}</button>
+            setOrderBy({field: "dueDate", direction: queryPreferences.orderBy.direction == "asc" ? "desc" : "asc"})
+        }}>Toggle to {queryPreferences.orderBy.direction == "asc" ? "Descending" : "Ascending"}</button>
     </>
 
 }
