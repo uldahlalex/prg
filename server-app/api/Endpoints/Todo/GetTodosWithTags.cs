@@ -12,15 +12,16 @@ public class GetTodosWithTags : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/api/todos", async (
-            [FromServices] NpgsqlDataSource ds,
-            [FromQuery] string OrderBy,
-            [FromQuery] string Direction,
-            [FromQuery] int Limit,
-            [FromQuery] int[] Tags,
-            HttpContext context) =>
+        app.MapGet("/api/todos", async (HttpContext context,
+            [FromServices] NpgsqlDataSource ds,       
+            [FromQuery] int[] tags = null, 
+            [FromQuery] string orderBy = "id",
+            [FromQuery] string direction = "asc",
+            [FromQuery] int limit = 50
+            ) =>
         {
             IEnumerable<dynamic> todos;
+            var filterByTags = (tags == null || tags.Length == 0)  ? "" : " WHERE tag.id = ANY(@Tags) ";
             await using (var con = ds.OpenConnection())
             {
                 todos = con.Query(@$"
@@ -37,13 +38,13 @@ SELECT
 FROM todo_manager.todo t
 LEFT JOIN todo_manager.todo_tag tt ON t.id = tt.todoid
 LEFT JOIN todo_manager.tag tag ON tt.tagid = tag.id
-WHERE t.userid = @UserId and tag.id = ANY(@Tags)
+{filterByTags}
 GROUP BY t.id
-ORDER BY t.{OrderBy} {Direction}
-LIMIT {Limit};
+ORDER BY t.{orderBy} {direction}
+LIMIT {limit};
 ", new
                 {
-                    UserId = Boilerplate.ReusableHelpers.GlobalModels.User.FromHttpItemsPayload(context).Id, Tags
+                    UserId = Boilerplate.ReusableHelpers.GlobalModels.User.FromHttpItemsPayload(context).Id, Tags = tags
                 });
             }
 

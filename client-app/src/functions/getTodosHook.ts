@@ -1,6 +1,7 @@
 import {useEffect} from "react";
 import {baseUrl, queryPreferencesAtom, todosAtom} from "../state.ts";
 import {useAtom} from "jotai";
+import {getTodosWithTags} from "../requests.ts";
 import {QueryPreferences} from "../types/gettodos.params.dto.ts";
 
 export function getTodos() {
@@ -8,11 +9,10 @@ export function getTodos() {
     const [, setTodos] = useAtom(todosAtom);
 
     useEffect(() => {
-        fetch(buildQueryString(queryPreferences))
-            .then((response) => response.json())
-            .then((data) => {
-                setTodos(data);
-            });
+        const url = buildQueryString(queryPreferences);
+        getTodosWithTags(url).then(todos => {
+            setTodos(todos);
+        })
     }, [queryPreferences, setTodos]);
 }
 

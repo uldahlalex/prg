@@ -1,7 +1,9 @@
+using System.ComponentModel;
 using api.Boilerplate.EndpointFilters;
 using api.Boilerplate.ReusableHelpers.GlobalModels;
 using Carter;
 using Dapper;
+using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
 namespace api.Endpoints.Todo;
@@ -10,7 +12,10 @@ public class Create : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("/api/todos", (CreateTodoRequestDto req, NpgsqlDataSource ds, HttpContext context) =>
+        app.MapPost("/api/todos", (
+            [FromBody]CreateTodoRequestDto req, 
+            [FromServices]NpgsqlDataSource ds, 
+            HttpContext context) =>
         {
             var user = Boilerplate.ReusableHelpers.GlobalModels.User.FromHttpItemsPayload(context);
             var transaction = ds.OpenConnection().BeginTransaction();
