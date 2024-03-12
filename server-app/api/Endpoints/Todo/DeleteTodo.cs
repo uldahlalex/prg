@@ -11,7 +11,7 @@ public class Delete : ICarterModule
         app.MapDelete("api/todo/{id}", (int id, NpgsqlDataSource ds) =>
         {
             using var conn = ds.OpenConnection();
-            var impactedRows = conn.Execute("delete from todo_manager.todo where id = @id", new { id = id });
+            var impactedRows = conn.Execute("delete from todo_manager.todo where id = @id", new { id });
             if (impactedRows == 0) throw new InvalidOperationException("Could not delete");
             conn.Close();
         });

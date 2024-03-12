@@ -13,6 +13,7 @@ public class User
 
     public static User FromHttpItemsPayload(HttpContext context)
     {
-        return JsonSerializer.Deserialize<User>(JsonSerializer.Serialize(context.Items["Payload"])) ?? throw new InvalidOperationException("Could not create user from HTTP items");
+        return JsonSerializer.Deserialize<User>(JsonSerializer.Serialize(context.Items["Payload"])) ??
+               throw new InvalidOperationException("Could not create user from HTTP items");
     }
 }

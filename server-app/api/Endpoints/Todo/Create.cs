@@ -1,4 +1,3 @@
-using System.Text.Json;
 using api.Boilerplate.EndpointFilters;
 using api.Boilerplate.ReusableHelpers.GlobalModels;
 using Carter;
@@ -13,9 +12,9 @@ public class Create : ICarterModule
     {
         app.MapPost("/api/todos", (CreateTodoRequestDto req, NpgsqlDataSource ds, HttpContext context) =>
         {
-            Boilerplate.ReusableHelpers.GlobalModels.User user = Boilerplate.ReusableHelpers.GlobalModels.User.FromHttpItemsPayload(context);
+            var user = Boilerplate.ReusableHelpers.GlobalModels.User.FromHttpItemsPayload(context);
             var transaction = ds.OpenConnection().BeginTransaction();
-            TodoWithTags todo = transaction.Connection!.QueryFirstOrDefault<TodoWithTags>(@"
+            var todo = transaction.Connection!.QueryFirstOrDefault<TodoWithTags>(@"
 insert into todo_manager.todo (title, description, duedate, userid, priority)
 VALUES (@Title, @Description, @DueDate, @UserId, @Priority) returning *;
         ", new

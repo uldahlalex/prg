@@ -23,6 +23,5 @@ public class VerifyJwtAndSetPayloadAsHttpItem(TokenService tokenService) : IEndp
             Console.WriteLine(e.StackTrace);
             throw new AuthenticationException("Authentication error regarding token");
         }
- 
     }
 }

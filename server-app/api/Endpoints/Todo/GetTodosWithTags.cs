@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using System.Text.Json;
 using api.Boilerplate.EndpointFilters;
 using api.Boilerplate.ReusableHelpers.GlobalModels;
@@ -9,18 +8,16 @@ using Npgsql;
 
 namespace api.Endpoints.Todo;
 
-
-
 public class GetTodosWithTags : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapGet("/api/todos", async (
             [FromServices] NpgsqlDataSource ds,
-            [FromQuery]string OrderBy,
-        [FromQuery]string Direction,
-        [FromQuery]int Limit,
-            [FromQuery]int[] Tags,
+            [FromQuery] string OrderBy,
+            [FromQuery] string Direction,
+            [FromQuery] int Limit,
+            [FromQuery] int[] Tags,
             HttpContext context) =>
         {
             IEnumerable<dynamic> todos;
@@ -44,10 +41,9 @@ WHERE t.userid = @UserId and tag.id = ANY(@Tags)
 GROUP BY t.id
 ORDER BY t.{OrderBy} {Direction}
 LIMIT {Limit};
-", new 
+", new
                 {
-                    UserId = Boilerplate.ReusableHelpers.GlobalModels.User.FromHttpItemsPayload(context).Id,
-                    Tags = Tags
+                    UserId = Boilerplate.ReusableHelpers.GlobalModels.User.FromHttpItemsPayload(context).Id, Tags
                 });
             }
 
@@ -63,7 +59,7 @@ LIMIT {Limit};
                     CreatedAt = row.createdat,
                     Priority = row.priority,
                     UserId = row.userid,
-                    Tags = System.Text.Json.JsonSerializer.Deserialize<List<Boilerplate.ReusableHelpers.GlobalModels.Tag>>(row.tags)
+                    Tags = JsonSerializer.Deserialize<List<Boilerplate.ReusableHelpers.GlobalModels.Tag>>(row.tags)
                 };
 
                 return todo;
