@@ -5,6 +5,7 @@ import {AuthenticationResponse} from "../../types/authentication.response.ts";
 import {decodeJwt} from "../../functions/independent/jwtDecoder.ts";
 import {login, register} from "../../requests.ts";
 import {useNavigate} from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function Login() {
 
@@ -32,9 +33,11 @@ export default function Login() {
             </div>
             <button  onClick={ () => login(loginForm).then(() => {
                 navigate('/feed');
+                toast("welcome back")
             })}>Login</button>
             <button onClick={() => register(loginForm).then(() => {
                 navigate('/feed');
+                toast("welcome aboard")
             })}>Register</button>
         </div>
     );

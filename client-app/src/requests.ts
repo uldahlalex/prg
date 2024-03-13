@@ -1,6 +1,8 @@
 import {baseUrl} from "./state.ts";
 import {redirect, useNavigate} from "react-router-dom";
 import {jwt} from "./functions/independent/getJwt.ts";
+import {useState} from "react";
+import {CreateTodoDto} from "./types/dtos.ts";
 
 
 
@@ -33,3 +35,11 @@ export const getTodosWithTags = (url) => fetch(
         }
     }
 );
+export const createTodo = (newTodoForm) => fetch(baseUrl + '/todos', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(newTodoForm)
+});
+

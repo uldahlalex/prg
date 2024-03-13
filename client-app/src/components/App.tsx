@@ -8,8 +8,6 @@ import NewTodo from "./sidebar/NewTodo.tsx";
 import toast, {Toaster} from "react-hot-toast";
 
 export default function App() {
-
-
     const RequireAuth = ({children}) => {
         const token = localStorage.getItem('token');
         if (token && token.length > 0)
