@@ -6,16 +6,18 @@ import {createTodo} from "../../requests.ts";
 import SetTitleForCreateTodoForm from "./newTodo/title.tsx";
 import AddTag from "./AddTag.tsx";
 import AddTagToNewTodo from "./newTodo/addTags.tsx";
+import {jwt} from "../../functions/independent/getJwt.ts";
 
 export default function NewTodo() {
     const [todos, setTodos] = useAtom(todosAtom);
-    const [tags] = useAtom(tagsAtom);
+    const [tags, setTags] = useAtom(tagsAtom);
     const [newTodoForm, setNewTodoForm] = useAtom(createTodoForm);
     const [selectedTagIndex, setSelectedTagIndex] = useState('-1');
 
     const handleChanges = (e) => {
         setNewTodoForm({...newTodoForm, [e.target.name]: e.target.value});
     }
+
 
 
 

@@ -12,7 +12,7 @@ export function getTodos() {
         const url = buildQueryString(queryPreferences);
         getTodosWithTags(url).then(resp => resp.json())
             .then(todos => setTodos(todos))
-    }, [queryPreferences, setTodos]);
+    }, [queryPreferences, setTodos]); //todo refresh
 }
 
 function buildQueryString(preferences: QueryPreferences): string {

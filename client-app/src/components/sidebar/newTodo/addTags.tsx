@@ -4,9 +4,11 @@ import {useState} from "react";
 import {Tag} from "../../../types/tag.ts";
 
 export default function AddTagToNewTodo() {
-    const [availableTags] = useAtom(tagsAtom);
+    const [availableTags, setAvailableTags] = useAtom(tagsAtom);
     const [selectedTagIndex, setSelectedTagIndex] = useState(-1);
      const [newTodoForm, setNewTodoForm] = useAtom(createTodoForm);
+
+
 
     const setTags = (e) => {
         setSelectedTagIndex(e.target.value); // Update the selected tag index
