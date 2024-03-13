@@ -4,6 +4,7 @@ using api.Boilerplate.ReusableHelpers.GlobalValues;
 using api.Boilerplate.ReusableHelpers.Security;
 using Carter;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace api;
 
@@ -16,6 +17,18 @@ public class Program
         {
             app.Services.GetService<DbScripts>()!.RebuildDbSchema();
             app.Services.GetService<DbScripts>()!.SeedDB();
+        }
+        if (Env.ASPNETCORE_ENVIRONMENT != StringConstants.Environments.Production)
+        {
+            //todo change to system.text.json
+                var swaggerProvider = app.Services.GetRequiredService<ISwaggerProvider>();
+    var swagger = swaggerProvider.GetSwagger("v1", null, "/");
+    var swaggerJson = Newtonsoft.Json.JsonConvert.SerializeObject(swagger, new Newtonsoft.Json.JsonSerializerSettings { Formatting = Newtonsoft.Json.Formatting.Indented });
+
+    var outputPath = Path.Combine(app.Environment.ContentRootPath+"/../../", "swagger.json");
+    File.WriteAllText(outputPath, swaggerJson);
+
+
         }
 
         app.Run();
@@ -81,6 +94,7 @@ public class Program
                 .AllowAnyHeader()
                 .AllowCredentials();
         });
+
         return app;
     }
 }

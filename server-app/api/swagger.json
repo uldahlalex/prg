@@ -1,0 +1,56 @@
+{
+  "Workspace": null,
+  "Info": {
+    "Title": "api",
+    "Description": null,
+    "Version": "1.0",
+    "TermsOfService": null,
+    "Contact": null,
+    "License": null,
+    "Extensions": {}
+  },
+  "Servers": [
+    {
+      "Description": null,
+      "Url": "./.././",
+      "Variables": {},
+      "Extensions": {}
+    }
+  ],
+  "Paths": {},
+  "Components": {
+    "Schemas": {},
+    "Responses": {},
+    "Parameters": {},
+    "Examples": {},
+    "RequestBodies": {},
+    "Headers": {},
+    "SecuritySchemes": {
+      "Bearer": {
+        "Type": 0,
+        "Description": "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+        "Name": "Authorization",
+        "In": 1,
+        "Scheme": "Bearer",
+        "BearerFormat": null,
+        "Flows": null,
+        "OpenIdConnectUrl": null,
+        "Extensions": {},
+        "UnresolvedReference": false,
+        "Reference": null
+      }
+    },
+    "Links": {},
+    "Callbacks": {},
+    "Extensions": {}
+  },
+  "SecurityRequirements": [
+    {
+      "Microsoft.OpenApi.Models.OpenApiSecurityScheme": []
+    }
+  ],
+  "Tags": [],
+  "ExternalDocs": null,
+  "Extensions": {},
+  "HashCode": "9F6F116CA84BC7AD4D343621C864D69A6E2114B998197FF6B900EF932E189066C1AAC7E9C52C4B627A3C9A02D9B4F2AE54C533B040E89FE38CCEE8940D440729"
+}
