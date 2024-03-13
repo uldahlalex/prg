@@ -5,11 +5,13 @@ import {queryPreferencesAtom, todosAtom} from "../../state.ts";
 
 import SetOrder from "./Filters/SetOrder.tsx";
 import {QueryPreferences} from "../../types/gettodos.params.dto.ts";
+import {getTodos} from "../../functions/getTodosHook.ts";
 
 export default function Feed() {
     const [todos, setTodos] = useAtom(todosAtom);
     const [queryPreferences, setQueryPreferences] = useAtom<QueryPreferences>(queryPreferencesAtom);
 
+    getTodos();
 
     return (
         <div style={{border: '1px dotted yellow'}}>"Main content"

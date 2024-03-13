@@ -10,9 +10,8 @@ export function getTodos() {
 
     useEffect(() => {
         const url = buildQueryString(queryPreferences);
-        getTodosWithTags(url).then(todos => {
-            setTodos(todos);
-        })
+        getTodosWithTags(url).then(resp => resp.json())
+            .then(todos => setTodos(todos))
     }, [queryPreferences, setTodos]);
 }
 

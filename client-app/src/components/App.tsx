@@ -1,18 +1,36 @@
 import React from "react";
-import '../styles/global.classes.css'
 import AddTag from "./sidebar/AddTag.tsx";
+import '../error.handler.ts';
 import Feed from "./mainview/Feed.tsx";
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
 import Login from "./mainview/Login.tsx";
 import NewTodo from "./sidebar/NewTodo.tsx";
-import {getTodos} from "../functions/getTodosHook.ts";
+import toast, {Toaster} from "react-hot-toast";
 
 export default function App() {
-    getTodos();
+
+
+    const RequireAuth = ({children}) => {
+        const token = localStorage.getItem('token');
+        if (token && token.length > 0)
+            return children;
+        return (<Navigate to="/login" replace/>);
+    };
+
+
     const router = createBrowserRouter([
         {
-            element: <Feed/>,
-            path: "/",
+          element: <>
+          <Navigate to="/feed" replace /></>,
+          path: '/'
+        },
+        {
+            element:
+                <RequireAuth>
+                    <Feed/>
+                </RequireAuth>
+            ,
+            path: "/feed",
         },
         {
             element: <Login/>,
@@ -23,6 +41,7 @@ export default function App() {
 
     return (
         <>
+            <Toaster/>
             <div style={{display: 'flex'}}>
                 <div>
                     <div>
@@ -42,8 +61,6 @@ export default function App() {
                     </div>
                 </div>
             </div>
-
-
         </>
     )
 }

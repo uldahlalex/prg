@@ -2,11 +2,13 @@ import {useState} from "react";
 import {useAtom} from "jotai";
 import {baseUrl, userAtom} from "../../state.ts";
 import {AuthenticationResponse} from "../../types/authentication.response.ts";
-import {decodeJwt} from "../../functions/jwtDecoder.ts";
+import {decodeJwt} from "../../functions/independent/jwtDecoder.ts";
 import {login, register} from "../../requests.ts";
+import {useNavigate} from "react-router-dom";
 
 export default function Login() {
 
+    const navigate = useNavigate();
     const [loginForm, setloginform] = useState({
         username: "",
         password: ""
@@ -28,8 +30,12 @@ export default function Login() {
                 <label htmlFor="password">Password</label>
                 <input onChange={handleInput} type="password" name="password"/>
             </div>
-            <button  onClick={ () => login(loginForm)}>Login</button>
-            <button onClick={() => register(loginForm)}>Register</button>
+            <button  onClick={ () => login(loginForm).then(() => {
+                navigate('/feed');
+            })}>Login</button>
+            <button onClick={() => register(loginForm).then(() => {
+                navigate('/feed');
+            })}>Register</button>
         </div>
     );
 }
