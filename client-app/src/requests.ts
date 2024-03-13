@@ -35,6 +35,13 @@ export const getTodosWithTags = (url) => fetch(
         }
     }
 );
+export const getTags = () => fetch(baseUrl + '/tags', {
+    headers: {
+        'Content-Type': 'application/json',
+        "Authorization": jwt()
+    }
+});
+
 export const createTodo = (newTodoForm) => fetch(baseUrl + '/todos', {
     method: 'POST',
     headers: {

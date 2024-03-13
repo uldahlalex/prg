@@ -5,6 +5,7 @@ import {useState} from "react";
 import {createTodo} from "../../requests.ts";
 import SetTitleForCreateTodoForm from "./newTodo/title.tsx";
 import AddTag from "./AddTag.tsx";
+import AddTagToNewTodo from "./newTodo/addTags.tsx";
 
 export default function NewTodo() {
     const [todos, setTodos] = useAtom(todosAtom);
@@ -29,7 +30,8 @@ export default function NewTodo() {
                 <input type="number" name="priority" value={newTodoForm.priority} onChange={handleChanges}/>
                 Tags:
 
-            <AddTag />
+                <AddTagToNewTodo />
+
                 <button onClick={async () => {
                     createTodo(newTodoForm)
                         .then(res => res.json())

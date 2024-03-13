@@ -6,8 +6,14 @@ import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
 import Login from "./mainview/Login.tsx";
 import NewTodo from "./sidebar/NewTodo.tsx";
 import toast, {Toaster} from "react-hot-toast";
+import {getTags} from "../requests.ts";
+import {tagsAtom} from "../state.ts";
+import {useAtom} from "jotai";
 
 export default function App() {
+
+    const [tags, setTags] = useAtom(tagsAtom);
+
     const RequireAuth = ({children}) => {
         const token = localStorage.getItem('token');
         if (token && token.length > 0)
@@ -16,6 +22,9 @@ export default function App() {
     };
 
 
+    getTags().then(res => res.json()).then(data => {
+        setTags(data);
+    });
     const router = createBrowserRouter([
         {
           element: <>
