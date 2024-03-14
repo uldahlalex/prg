@@ -1,7 +1,7 @@
 import { tagsAtom} from "../../state/application.state.atoms.ts";
 import {useAtom} from "jotai";
 import {useState} from "react";
-import {api} from "../../api.ts";
+import {api} from "../../communication/api.ts";
 import {Tag} from "../../../httpclient/Api.ts";
 
 export default function AddTag() {

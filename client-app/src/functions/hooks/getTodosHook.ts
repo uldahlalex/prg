@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import { todosAtom} from "../../state/application.state.atoms.ts";
 import {useAtom} from "jotai";
-import {api} from "../../api.ts";
+import {api} from "../../communication/api.ts";
 import {queryPreferencesAtom} from "../../state/forms/queryPreferencesAtom.ts";
 
 /**

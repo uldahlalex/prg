@@ -1,7 +1,7 @@
 import {useAtom} from "jotai";
 import {tagsAtom} from "../../state/application.state.atoms.ts";
 import {useEffect} from "react";
-import {api} from '../../api.ts';
+import {api} from '../../communication/api.ts';
 import {createTodoForm} from "../../state/forms/createTodoForm.ts";
 
 export function getTagsHook() {

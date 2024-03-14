@@ -11,7 +11,6 @@ export default function Feed() {
     const [todos, setTodos] = useAtom(todosAtom);
     const [queryPreferences, setQueryPreferences] = useAtom<QueryPreferences>(queryPreferencesAtom);
 
-    getTodos();
 
     return (
         <div style={{border: '1px dotted yellow'}}>"Main content"

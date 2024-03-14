@@ -1,4 +1,4 @@
-import {Api} from "../httpclient/Api.ts";
+import {Api} from "../../httpclient/Api.ts";
 
 
 export const api = new Api({

@@ -6,31 +6,24 @@ import Login from "./mainview/Login.tsx";
 import NewTodo from "./sidebar/NewTodo.tsx";
 import toast, {Toaster} from "react-hot-toast";
 import {getTagsHook} from "../functions/hooks/getTags.ts";
+import ReactDOM from "react-dom/client";
+import '../eventlisteners/errorhandlers.ts';
+import '../communication/addJwtToAllRequests.ts';
+import RequireAuth from "./etc/requireAuth.tsx";
+import {getTodos} from "../functions/hooks/getTodosHook.ts";
 
 export default function App() {
-
-
-    const RequireAuth = ({children}) => {
-        const token = localStorage.getItem('token');
-        if (token && token.length > 0)
-            return children;
-        return (<Navigate to="/login" replace/>);
-    };
     getTagsHook();
-
-
+    getTodos();
     const router = createBrowserRouter([
         {
-          element: <>
-          <Navigate to="/feed" replace /></>,
-          path: '/'
+            element: <Navigate to="/feed" replace/>,
+            path: '/'
         },
         {
-            element:
-                <RequireAuth>
-                    <Feed/>
-                </RequireAuth>
-            ,
+            element: <RequireAuth redirect="/login">
+                        <Feed/>
+                </RequireAuth>,
             path: "/feed",
         },
         {
@@ -39,14 +32,13 @@ export default function App() {
         },
     ])
 
-
-    return (
+   // ReactDOM.createRoot(document.getElementById('root')!).render(
+        return (
         <>
             <Toaster/>
             <div style={{display: 'flex'}}>
                 <div>
                     <div>
-
 
 
                         <NewTodo/>
@@ -64,6 +56,8 @@ export default function App() {
                 </div>
             </div>
         </>
-    )
+        )
+
+
 }
 
