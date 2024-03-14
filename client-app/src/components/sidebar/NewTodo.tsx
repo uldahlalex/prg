@@ -8,7 +8,7 @@ import {createTodoForm} from "../../state/forms/createTodoForm.ts";
 
 export default function NewTodo() {
     const [todos, setTodos] = useAtom(todosAtom);
-    const [tags, setTags] = useAtom(tagsAtom);
+    const [, setTags] = useAtom(tagsAtom);
     const [newTodoForm, setNewTodoForm] = useAtom(createTodoForm);
     const [selectedTagIndex, setSelectedTagIndex] = useState('-1');
 

@@ -4,12 +4,9 @@ import FeedItem from "./FeedItem.tsx";
 import {todosAtom} from "../../state/application.state.atoms.ts";
 
 import SetOrder from "./Filters/SetOrder.tsx";
-import {QueryPreferences} from "../../functions/hooks/getTodosHook.ts";
-import {queryPreferencesAtom} from "../../state/forms/queryPreferencesAtom.ts";
 
 export default function Feed() {
-    const [todos, setTodos] = useAtom(todosAtom);
-    const [queryPreferences, setQueryPreferences] = useAtom<QueryPreferences>(queryPreferencesAtom);
+    const [todos] = useAtom(todosAtom);
 
 
     return (
