@@ -7,15 +7,7 @@ namespace api.Endpoints.Tag;
 
 public class CreateTagRequestDto
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <example>Bob</example>
     public string Name { get; set; }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// </example>1</example>
     public int userId { get; set; }
 }
 
@@ -25,8 +17,7 @@ public class Createtag : ICarterModule
     {
         app.MapPost("api/tags", (
             [FromBody] CreateTagRequestDto dto,
-            [FromServices] NpgsqlDataSource ds,
-            [FromHeader]string Authorization ) =>
+            [FromServices] NpgsqlDataSource ds ) =>
         {
             using (var conn = ds.OpenConnection())
             {

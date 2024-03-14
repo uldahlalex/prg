@@ -1,11 +1,7 @@
 import {useState} from "react";
-import {useAtom} from "jotai";
-import {baseUrl, userAtom} from "../../state.ts";
-import {AuthenticationResponse} from "../../types/authentication.response.ts";
-import {decodeJwt} from "../../functions/independent/jwtDecoder.ts";
-import {login, register} from "../../requests.ts";
 import {useNavigate} from "react-router-dom";
 import toast from "react-hot-toast";
+import {api} from "../../api.ts";
 
 export default function Login() {
 
@@ -31,11 +27,11 @@ export default function Login() {
                 <label htmlFor="password">Password</label>
                 <input onChange={handleInput} type="password" name="password"/>
             </div>
-            <button  onClick={ () => login(loginForm).then(() => {
+            <button  onClick={ () => api.api.signinCreate(loginForm).then(() => {
                 navigate('/feed');
                 toast("welcome back")
             })}>Login</button>
-            <button onClick={() => register(loginForm).then(() => {
+            <button onClick={() => api.api.registerCreate(loginForm).then(() => {
                 navigate('/feed');
                 toast("welcome aboard")
             })}>Register</button>

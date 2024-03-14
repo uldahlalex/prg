@@ -26,7 +26,7 @@ export default function AddTag() {
                         });
                 }}>add
                 </button>
-                <input type="text" value={newTagForm.name} onChange={handleFormChange}/>
+                <input type="text" value={newTagForm.name!} onChange={handleFormChange}/>
 
             </div>
 
