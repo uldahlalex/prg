@@ -25,7 +25,8 @@ public class Createtag : ICarterModule
     {
         app.MapPost("api/tags", (
             [FromBody] CreateTagRequestDto dto,
-            [FromServices] NpgsqlDataSource ds) =>
+            [FromServices] NpgsqlDataSource ds,
+            [FromHeader]string Authorization ) =>
         {
             using (var conn = ds.OpenConnection())
             {

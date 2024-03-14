@@ -32,7 +32,17 @@ export const createTodoForm = atom<CreateTodoDto>({
     dueDate: new Date(),
     priority: 0
 });
+//todo better with axois?
 const api = new Api({
     baseUrl: 'http://localhost:5000/api',
 
 });
+
+api.api.tagsCreate({name: 'test'}).then((res) => {
+    console.log(res);
+});
+api.api.todosList({
+    lol: ''
+})
+
+

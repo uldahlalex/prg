@@ -13,12 +13,13 @@ public class GetTodosWithTags : ICarterModule
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapGet("/api/todos", async (HttpContext context,
-            [FromServices] NpgsqlDataSource ds,       
+            [FromHeader] string Authorization,
+            [FromServices] NpgsqlDataSource ds,                   
+            [FromQuery] string lol,
             [FromQuery] int[] tags = null, 
             [FromQuery] string orderBy = "id",
             [FromQuery] string direction = "asc",
-            [FromQuery] int limit = 50
-            ) =>
+            [FromQuery] int limit = 50) =>
         {
             IEnumerable<dynamic> todos;
             var filterByTags = (tags == null || tags.Length == 0)  ? "" : " WHERE tag.id = ANY(@Tags) ";
