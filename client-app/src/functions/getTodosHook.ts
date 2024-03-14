@@ -1,8 +1,20 @@
 import {useEffect} from "react";
 import {baseUrl, queryPreferencesAtom, todosAtom} from "../state.ts";
 import {useAtom} from "jotai";
-import {getTodosWithTags} from "../requests.ts";
-import {QueryPreferences} from "../types/gettodos.params.dto.ts";
+import {api} from "../api.ts";
+import {Tag} from "../../httpclient/Api.ts";
+
+export interface QueryPreferences {
+    filters: {
+        limit: number | 50;
+        selectedTags: Tag[];
+    }
+    orderBy: {
+        field: string | "dueDate" | "title" | "priority" | "id";
+        direction: string | "asc" | "desc";
+    };
+
+}
 
 export function getTodos() {
     const [queryPreferences] = useAtom(queryPreferencesAtom);
@@ -10,7 +22,7 @@ export function getTodos() {
 
     useEffect(() => {
         const url = buildQueryString(queryPreferences);
-        getTodosWithTags(url).then(resp => resp.json())
+        api.api.todosList(queryPreferences).then(resp => resp.json())
             .then(todos => setTodos(todos))
     }, [queryPreferences]); //todo refresh
 }

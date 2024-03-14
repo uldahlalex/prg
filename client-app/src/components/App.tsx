@@ -1,6 +1,5 @@
 import React from "react";
 import AddTag from "./sidebar/AddTag.tsx";
-import '../error.handler.ts';
 import Feed from "./mainview/Feed.tsx";
 import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
 import Login from "./mainview/Login.tsx";

@@ -138,17 +138,9 @@
             }
           },
           {
-            "name": "lol",
-            "in": "query",
-            "required": true,
-            "style": "form",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "tags",
             "in": "query",
+            "required": true,
             "style": "form",
             "schema": {
               "type": "array",
@@ -161,19 +153,19 @@
           {
             "name": "orderBy",
             "in": "query",
+            "required": true,
             "style": "form",
             "schema": {
-              "type": "string",
-              "default": "id"
+              "type": "string"
             }
           },
           {
             "name": "direction",
             "in": "query",
+            "required": true,
             "style": "form",
             "schema": {
-              "type": "string",
-              "default": "asc"
+              "type": "string"
             }
           },
           {

@@ -2,9 +2,9 @@ import {atom} from "jotai";
 import {Todo} from "./types/todo.ts";
 import {Tag} from "./types/tag.ts";
 import {User} from "./types/user.ts";
-import {QueryPreferences} from "./types/gettodos.params.dto.ts";
+import {} from "./types/gettodos.params.dto.ts";
 import {Api} from "../httpclient/Api.ts";
-import {CreateTodoDto} from "./types/dtos.ts";
+
 
 
 export const baseUrl = "http://localhost:5000/api";
@@ -24,8 +24,12 @@ export const queryPreferencesAtom = atom<QueryPreferences>({
     }
 });
 
+const api = new Api({
+    baseUrl: 'http://localhost:5000/api',
 
-export const createTodoForm = atom<CreateTodoDto>({
+});
+
+export const createTodoForm = atom<>({
     title: '',
     description: '',
     tags: [],
@@ -33,10 +37,7 @@ export const createTodoForm = atom<CreateTodoDto>({
     priority: 0
 });
 //todo better with axois?
-const api = new Api({
-    baseUrl: 'http://localhost:5000/api',
 
-});
 
 api.api.tagsCreate({name: 'test'}).then((res) => {
     console.log(res);

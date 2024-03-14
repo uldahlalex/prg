@@ -15,10 +15,9 @@ public class GetTodosWithTags : ICarterModule
         app.MapGet("/api/todos", async (HttpContext context,
             [FromHeader] string Authorization,
             [FromServices] NpgsqlDataSource ds,                   
-            [FromQuery] string lol,
-            [FromQuery] int[] tags = null, 
-            [FromQuery] string orderBy = "id",
-            [FromQuery] string direction = "asc",
+            [FromQuery] int[] tags, 
+            [FromQuery] string orderBy,
+            [FromQuery] string direction,
             [FromQuery] int limit = 50) =>
         {
             IEnumerable<dynamic> todos;
