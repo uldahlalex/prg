@@ -3,6 +3,7 @@ using api.Boilerplate.DbHelpers;
 using api.Boilerplate.ReusableHelpers.GlobalValues;
 using api.Boilerplate.ReusableHelpers.Security;
 using Carter;
+using Microsoft.OpenApi;
 using Microsoft.OpenApi.Extensions;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
@@ -21,18 +22,7 @@ public class Program
         }
         if (Env.ASPNETCORE_ENVIRONMENT != StringConstants.Environments.Production)
         {
-            //todo change to system.text.json
-    //             var swaggerProvider = app.Services.GetRequiredService<ISwaggerProvider>();
-    // var swagger = swaggerProvider.GetSwagger("v1", null, "/");
-    // var swaggerJson = Newtonsoft.Json.JsonConvert.SerializeObject(swagger, new Newtonsoft.Json.JsonSerializerSettings { Formatting = Newtonsoft.Json.Formatting.Indented });
-    //
-    // var outputPath = Path.Combine(app.Environment.ContentRootPath+"/../../", "swagger.json");
-    // File.WriteAllText(outputPath, swaggerJson);
-    //
-    ISwaggerProvider sw = app.Services.GetRequiredService<ISwaggerProvider>();
-    // OpenApiDocument doc = sw.GetSwagger("v1", null, "/swagger/v1/swagger.json");
-    // string swaggerFile = doc.SerializeAsJson(Microsoft.OpenApi.OpenApiSpecVersion.OpenApi3_0);
-    // File.WriteAllText("swagger.json", swaggerFile);
+            
         }
 
         app.Run();
@@ -86,6 +76,7 @@ public class Program
                 c.SwaggerDoc( "v1", new OpenApiInfo { Title = "My API", Version = "v1" });
 
             }); 
+        builder.Services.AddHostedService<SwaggerJsonGeneratorService>();
 
 
         if (Env.ASPNETCORE_ENVIRONMENT.Equals(StringConstants.Environments.Testing))
