@@ -21,7 +21,7 @@ export default function SetOrder() {
             <option value="priority">Priority</option>
         </select>
         <button onClick={() => {
-            setQueryPreferences( {...queryPreferences, direction: queryPreferences.direction == "asc" ? "desc" : "asc"})
+            setQueryPreferences({...queryPreferences, direction: queryPreferences.direction == "asc" ? "desc" : "asc"})
         }}>Toggle to {queryPreferences.direction == "asc" ? "Descending" : "Ascending"}</button>
     </>
 

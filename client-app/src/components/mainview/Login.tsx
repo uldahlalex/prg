@@ -27,14 +27,16 @@ export default function Login() {
                 <label htmlFor="password">Password</label>
                 <input onChange={handleInput} type="password" name="password"/>
             </div>
-            <button  onClick={ () => api.api.signinCreate(loginForm).then(() => {
+            <button onClick={() => api.api.signinCreate(loginForm).then(() => {
                 navigate('/feed');
                 toast("welcome back")
-            })}>Login</button>
+            })}>Login
+            </button>
             <button onClick={() => api.api.registerCreate(loginForm).then(() => {
                 navigate('/feed');
                 toast("welcome aboard")
-            })}>Register</button>
+            })}>Register
+            </button>
         </div>
     );
 }

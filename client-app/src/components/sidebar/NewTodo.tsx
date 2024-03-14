@@ -17,12 +17,10 @@ export default function NewTodo() {
     }
 
 
-
-
     return (
         <>
             <div style={{border: '1px solid blue'}}>"New Todo"
-            <SetTitleForCreateTodoForm />
+                <SetTitleForCreateTodoForm/>
                 <input type="text" placeholder="Description" name="description" value={newTodoForm.description!}
                        onChange={handleChanges}/>
                 <input type="date" name="dueDate" value={newTodoForm.dueDate!}
@@ -30,12 +28,13 @@ export default function NewTodo() {
                 <input type="number" name="priority" value={newTodoForm.priority} onChange={handleChanges}/>
                 Tags:
 
-                <AddTagToNewTodo />
+                <AddTagToNewTodo/>
 
                 <button onClick={async () => {
                     api.api.todosCreate(newTodoForm).then(resp => resp.json()
                     ).then(data => {
-                        setTodos([...todos, data]) });
+                        setTodos([...todos, data])
+                    });
                     setSelectedTagIndex('-1');
 
                 }}>Create todo

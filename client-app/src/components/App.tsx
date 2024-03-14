@@ -4,9 +4,8 @@ import Feed from "./mainview/Feed.tsx";
 import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
 import Login from "./mainview/Login.tsx";
 import NewTodo from "./sidebar/NewTodo.tsx";
-import toast, {Toaster} from "react-hot-toast";
+import {Toaster} from "react-hot-toast";
 import {getTagsHook} from "../functions/hooks/getTags.ts";
-import ReactDOM from "react-dom/client";
 import '../eventlisteners/errorhandlers.ts';
 import '../communication/addJwtToAllRequests.ts';
 import RequireAuth from "./etc/requireAuth.tsx";
@@ -22,8 +21,8 @@ export default function App() {
         },
         {
             element: <RequireAuth redirect="/login">
-                        <Feed/>
-                </RequireAuth>,
+                <Feed/>
+            </RequireAuth>,
             path: "/feed",
         },
         {
@@ -32,8 +31,8 @@ export default function App() {
         },
     ])
 
-   // ReactDOM.createRoot(document.getElementById('root')!).render(
-        return (
+    return (
+
         <>
             <Toaster/>
             <div style={{display: 'flex'}}>
@@ -56,7 +55,7 @@ export default function App() {
                 </div>
             </div>
         </>
-        )
+    )
 
 
 }

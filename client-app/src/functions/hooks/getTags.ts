@@ -17,6 +17,7 @@ export function getTagsHook() {
             .then(data => {
                 const tags = data;
                 setTags(tags);
-            });}, [createTodoForm])
+            });
+    }, [createTodoForm])
 
 }

@@ -6,8 +6,7 @@ import {createTodoForm} from "../../../state/forms/createTodoForm.ts";
 export default function AddTagToNewTodo() {
     const [availableTags, setAvailableTags] = useAtom(tagsAtom);
     const [selectedTagIndex, setSelectedTagIndex] = useState(-1);
-     const [newTodoForm, setNewTodoForm] = useAtom(createTodoForm);
-
+    const [newTodoForm, setNewTodoForm] = useAtom(createTodoForm);
 
 
     const setTags = (e) => {
@@ -15,7 +14,7 @@ export default function AddTagToNewTodo() {
         setNewTodoForm({...newTodoForm, tags: [...newTodoForm.tags!, availableTags[e.target.value]]});
     }
 
-    return(<>
+    return (<>
         <select
             value={selectedTagIndex}
             onChange={(e) => {

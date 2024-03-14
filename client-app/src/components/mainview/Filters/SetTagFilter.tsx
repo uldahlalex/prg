@@ -22,7 +22,7 @@ export default function SetTagFilter() {
                 }
                 const tagIds = selectedTags.map(t => t.id!);
                 setQueryPreferences({...queryPreferences, tags: tagIds});
-            }} />
+            }}/>
         })}
 
     </>;

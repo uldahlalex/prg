@@ -6,7 +6,7 @@ export default function SetTitleForCreateTodoForm() {
     const [todoForm, setCreateTodoForm] = useAtom(createTodoForm);
 
 
-    return(<>
+    return (<>
         <label htmlFor="title">Title</label>
         <input onChange={(e) => setCreateTodoForm({...todoForm, title: e.target.value})} type="text" name="title"/>
     </>);
