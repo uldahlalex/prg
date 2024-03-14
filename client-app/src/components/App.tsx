@@ -5,9 +5,6 @@ import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
 import Login from "./mainview/Login.tsx";
 import NewTodo from "./sidebar/NewTodo.tsx";
 import toast, {Toaster} from "react-hot-toast";
-import {tagsAtom} from "../state.ts";
-import {useAtom} from "jotai";
-import {getTags} from "../requests.ts";
 import {getTagsHook} from "../functions/getTags.ts";
 
 export default function App() {

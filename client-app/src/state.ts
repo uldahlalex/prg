@@ -1,49 +1,29 @@
 import {atom} from "jotai";
-import {Todo} from "./types/todo.ts";
-import {Tag} from "./types/tag.ts";
+import {Api, CreateTodoRequestDto, Tag, TodoWithTags} from "../httpclient/Api.ts";
+import {QueryPreferences} from "./functions/getTodosHook.ts";
 import {User} from "./types/user.ts";
-import {} from "./types/gettodos.params.dto.ts";
-import {Api} from "../httpclient/Api.ts";
 
 
-
-export const baseUrl = "http://localhost:5000/api";
-
-export const todosAtom = atom<Todo[]>([]);
+export const todosAtom = atom<TodoWithTags[]>([]);
 export const tagsAtom = atom<Tag[]>([]);
 export const userAtom = atom<User>({});
 
 export const queryPreferencesAtom = atom<QueryPreferences>({
-    orderBy: {
-        field: "dueDate",
-        direction: "asc"
-    },
-    filters: {
+    orderBy: "dueDate",
+        direction: "asc",
+
         limit: 50,
-        selectedTags: []
-    }
-});
-
-const api = new Api({
-    baseUrl: 'http://localhost:5000/api',
+        tags: []
 
 });
 
-export const createTodoForm = atom<>({
+export const createTodoForm = atom<CreateTodoRequestDto>({
     title: '',
     description: '',
     tags: [],
-    dueDate: new Date(),
+    dueDate: '',
     priority: 0
 });
-//todo better with axois?
 
-
-api.api.tagsCreate({name: 'test'}).then((res) => {
-    console.log(res);
-});
-api.api.todosList({
-    lol: ''
-})
 
 

@@ -1,19 +1,16 @@
 import {useEffect} from "react";
-import {baseUrl, queryPreferencesAtom, todosAtom} from "../state.ts";
+import { queryPreferencesAtom, todosAtom} from "../state.ts";
 import {useAtom} from "jotai";
 import {api} from "../api.ts";
-import {Tag} from "../../httpclient/Api.ts";
 
+/**
+ * Dto is not auto generated, only the individual "properties" so i made a class for it
+ */
 export interface QueryPreferences {
-    filters: {
         limit: number | 50;
-        selectedTags: Tag[];
-    }
-    orderBy: {
-        field: string | "dueDate" | "title" | "priority" | "id";
+        tags: number[];
+    orderBy:  string | "dueDate" | "title" | "priority" | "id";
         direction: string | "asc" | "desc";
-    };
-
 }
 
 export function getTodos() {
@@ -21,23 +18,8 @@ export function getTodos() {
     const [, setTodos] = useAtom(todosAtom);
 
     useEffect(() => {
-        const url = buildQueryString(queryPreferences);
         api.api.todosList(queryPreferences).then(resp => resp.json())
             .then(todos => setTodos(todos))
     }, [queryPreferences]); //todo refresh
 }
 
-function buildQueryString(preferences: QueryPreferences): string {
-    let queryParams: string[] = [];
-    if (preferences.filters.selectedTags.length > 0) {
-        const tagIds = preferences.filters.selectedTags.map(tag => tag.id).join(',');
-        queryParams.push(`tags=${encodeURIComponent(tagIds)}`);
-    }
-    if (preferences.filters.limit !== 50) {
-        queryParams.push(`limit=${preferences.filters.limit}`);
-    }
-    queryParams.push(`orderBy=${preferences.orderBy.field}`);
-    queryParams.push(`direction=${preferences.orderBy.direction}`);
-    const queryString = queryParams.join('&');
-    return `${baseUrl}/todos?${queryString}`;
-}

@@ -1,7 +1,6 @@
 import {useAtom} from "jotai";
 import {createTodoForm, tagsAtom} from "../../../state.ts";
 import {useState} from "react";
-import {Tag} from "../../../types/tag.ts";
 
 export default function AddTagToNewTodo() {
     const [availableTags, setAvailableTags] = useAtom(tagsAtom);
@@ -12,7 +11,7 @@ export default function AddTagToNewTodo() {
 
     const setTags = (e) => {
         setSelectedTagIndex(e.target.value); // Update the selected tag index
-        setNewTodoForm({...newTodoForm, tags: [...newTodoForm.tags, availableTags[e.target.value]]});
+        setNewTodoForm({...newTodoForm, tags: [...newTodoForm.tags!, availableTags[e.target.value]]});
     }
 
     return(<>
@@ -31,9 +30,9 @@ export default function AddTagToNewTodo() {
 
         <p>Added tags</p>
         {
-            newTodoForm.tags.map((tag, index) => <p key={index}>
+            newTodoForm.tags!.map((tag, index) => <p key={index}>
                 <button onClick={() => {
-                    setNewTodoForm({...newTodoForm, tags: newTodoForm.tags.filter((t) => t !== tag)});
+                    setNewTodoForm({...newTodoForm, tags: newTodoForm.tags!.filter((t) => t !== tag)});
                 }}><>{tag.name}</>
                 </button>
             </p>)

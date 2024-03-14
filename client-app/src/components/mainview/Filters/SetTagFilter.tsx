@@ -1,8 +1,8 @@
 import {queryPreferencesAtom, tagsAtom} from "../../../state.ts";
-import {QueryPreferences} from "../../../types/gettodos.params.dto.ts";
 import {useAtom} from "jotai";
 import {useState} from "react";
-import {Tag} from "../../../types/tag.ts";
+import {QueryPreferences} from "../../../functions/getTodosHook.ts";
+import {Tag} from "../../../../httpclient/Api.ts";
 
 export default function SetTagFilter() {
     const [queryPreferences, setQueryPreferences] = useAtom<QueryPreferences>(queryPreferencesAtom);
@@ -19,7 +19,8 @@ export default function SetTagFilter() {
                 } else {
                     setSelectedTags([...selectedTags, tag]);
                 }
-                setQueryPreferences({...queryPreferences, filters: {...queryPreferences.filters, selectedTags: selectedTags}});
+                const tagIds = selectedTags.map(t => t.id!);
+                setQueryPreferences({...queryPreferences, tags: tagIds});
             }} />
         })}
 

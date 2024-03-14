@@ -1,7 +1,8 @@
-import {baseUrl, tagsAtom} from "../../state.ts";
+import { tagsAtom} from "../../state.ts";
 import {useAtom} from "jotai";
 import {useState} from "react";
-import {Tag} from "../../types/tag.ts";
+import {api} from "../../api.ts";
+import {Tag} from "../../../httpclient/Api.ts";
 
 export default function AddTag() {
     const [tags, setTags] = useAtom(tagsAtom);
@@ -19,15 +20,10 @@ export default function AddTag() {
         <>
             <div style={{border: '1px solid green'}}>"Add tag"
                 <button onClick={async () => {
-                    const response = await fetch(`${baseUrl}/tags`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(newTagForm)
-                    });
-                    const data = await response.json();
-                    setTags([...tags, data]);
+                    api.api.tagsCreate(newTagForm).then(resp => resp.json())
+                        .then(resp => {
+                            setTags([...tags, resp]);
+                        });
                 }}>add
                 </button>
                 <input type="text" value={newTagForm.name} onChange={handleFormChange}/>

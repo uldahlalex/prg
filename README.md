@@ -5,9 +5,9 @@
 - No persistence abstraction
 - Feature-per-endpoint (iteration of vertical slicing)
 
-## Data model:
+## Data schema:
+Can be found in directory `server-app/api/Boilerplate/DbHelpers/DbScripts.cs`
 
-![Data model](datamodel.png)
 
 ## Quickstart with Docker Compose:
 

@@ -1,20 +1,2 @@
-﻿<wpf:ResourceDictionary xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib"
-                        xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                        xml:space="preserve">
-	<s:String x:Key="/Default/Environment/Hierarchy/Build/BuildTool/CustomBuildToolPath/@EntryValue">/home/alex/dotnet/sdk/8.0.201/MSBuild.dll</s:String>
-    <s:String x:Key="/Default/Environment/Hierarchy/Build/BuildTool/DotNetCliExePath/@EntryValue">/home/alex/dotnet/dotnet</s:String>
-    <s:Boolean
-            x:Key="/Default/Environment/Hierarchy/Build/BuildTool/RecentDotNetCliExePaths/=_002Fhome_002Falex_002Fdotnet_002Fdotnet/@EntryIndexedValue">True</s:Boolean>
-
-    <s:String
-            x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=3646f0a9_002Ddcc2_002D4373_002D99b7_002D0c750769b8ba/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="TestMethod1" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;Solution /&gt;
-&lt;/SessionState&gt;</s:String>
-    <s:String
-            x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=8e0c4c68_002Da0b1_002D45ac_002D9122_002D81b4efd44366/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Session" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;NUnit3x::5E43013B-E99E-4A02-BA5E-B1E46BC7E2DA::net8.0::tests.Todo.GetAllWithTags&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
-&lt;/SessionState&gt;</s:String>
-    <s:String
-            x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=C23A3ED0F5ED334C9F36AFA5E8A47083/Shortcut/@EntryValue">endp</s:String></wpf:ResourceDictionary>
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">/home/alex/.cache/JetBrains/Rider2023.3/resharper-host/temp/Rider/vAny/CoverageData/_prg.1110705926/Snapshot/snapshot.utdcvr</s:String></wpf:ResourceDictionary>
