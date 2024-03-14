@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "/v1"
+      "url": "/swagger/v1/swagger.json"
     }
   ],
   "paths": { },

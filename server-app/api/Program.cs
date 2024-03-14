@@ -30,9 +30,9 @@ public class Program
     // File.WriteAllText(outputPath, swaggerJson);
     //
     ISwaggerProvider sw = app.Services.GetRequiredService<ISwaggerProvider>();
-    OpenApiDocument doc = sw.GetSwagger("v1", null, "/");
-    string swaggerFile = doc.SerializeAsJson(Microsoft.OpenApi.OpenApiSpecVersion.OpenApi3_0);
-    File.WriteAllText("swaggerfile.json", swaggerFile);
+    // OpenApiDocument doc = sw.GetSwagger("v1", null, "/swagger/v1/swagger.json");
+    // string swaggerFile = doc.SerializeAsJson(Microsoft.OpenApi.OpenApiSpecVersion.OpenApi3_0);
+    // File.WriteAllText("swagger.json", swaggerFile);
         }
 
         app.Run();
@@ -82,14 +82,19 @@ public class Program
                         },
                         new List<string>()
                     }
-                });
-            });
+                }); 
+                c.SwaggerDoc( "v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+
+            }); 
 
 
         if (Env.ASPNETCORE_ENVIRONMENT.Equals(StringConstants.Environments.Testing))
             builder.WebHost.UseUrls("http://localhost:9999");
         var app = builder.Build();
-        app.UseSwagger().UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"));
+        app.UseSwagger().UseSwaggerUI(c =>
+        {
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+        });
         app.MapCarter();
         app.UseCors(options =>
         {
