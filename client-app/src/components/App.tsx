@@ -9,6 +9,7 @@ import toast, {Toaster} from "react-hot-toast";
 import {tagsAtom} from "../state.ts";
 import {useAtom} from "jotai";
 import {getTags} from "../requests.ts";
+import {getTagsHook} from "../functions/getTags.ts";
 
 export default function App() {
 
@@ -19,7 +20,7 @@ export default function App() {
             return children;
         return (<Navigate to="/login" replace/>);
     };
-    getTags();
+    getTagsHook();
 
 
     const router = createBrowserRouter([

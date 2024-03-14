@@ -12,7 +12,7 @@ export function getTagsHook() {
     useEffect(() => {
         getTags().then(resp => resp.json())
             .then(tags => setTags(tags));
-    }, [setTags, App, createTodoForm])
+    }, [createTodoForm])
 
 
 }

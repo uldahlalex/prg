@@ -3,7 +3,9 @@ import {Todo} from "./types/todo.ts";
 import {Tag} from "./types/tag.ts";
 import {User} from "./types/user.ts";
 import {QueryPreferences} from "./types/gettodos.params.dto.ts";
+import {Api} from "../httpclient/Api.ts";
 import {CreateTodoDto} from "./types/dtos.ts";
+
 
 export const baseUrl = "http://localhost:5000/api";
 
@@ -22,10 +24,15 @@ export const queryPreferencesAtom = atom<QueryPreferences>({
     }
 });
 
+
 export const createTodoForm = atom<CreateTodoDto>({
     title: '',
     description: '',
     tags: [],
     dueDate: new Date(),
     priority: 0
+});
+const api = new Api({
+    baseUrl: 'http://localhost:5000/api',
+
 });

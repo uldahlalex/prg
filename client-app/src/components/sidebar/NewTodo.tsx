@@ -27,7 +27,7 @@ export default function NewTodo() {
             <SetTitleForCreateTodoForm />
                 <input type="text" placeholder="Description" name="description" value={newTodoForm.description}
                        onChange={handleChanges}/>
-                <input type="date" name="dueDate" value={newTodoForm.dueDate.toISOString().substring(0, 10)}
+                <input type="date" name="dueDate" value={newTodoForm.dueDate.toISOString().split('T')[0]}
                        onChange={handleChanges}/>
                 <input type="number" name="priority" value={newTodoForm.priority} onChange={handleChanges}/>
                 Tags:
