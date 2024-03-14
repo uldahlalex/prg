@@ -1,5 +1,6 @@
 import {useAtom} from "jotai";
-import {createTodoForm} from "../../../state.ts";
+
+import {createTodoForm} from "../../../state/forms/createTodoForm.ts";
 
 export default function SetTitleForCreateTodoForm() {
     const [todoForm, setCreateTodoForm] = useAtom(createTodoForm);

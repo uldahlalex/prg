@@ -1,6 +1,7 @@
 import {useAtom} from "jotai";
-import {createTodoForm, tagsAtom} from "../../../state.ts";
+import {tagsAtom} from "../../../state/application.state.atoms.ts";
 import {useState} from "react";
+import {createTodoForm} from "../../../state/forms/createTodoForm.ts";
 
 export default function AddTagToNewTodo() {
     const [availableTags, setAvailableTags] = useAtom(tagsAtom);

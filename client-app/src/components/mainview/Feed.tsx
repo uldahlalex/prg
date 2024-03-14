@@ -1,10 +1,11 @@
 import React from 'react';
 import {useAtom} from 'jotai';
 import FeedItem from "./FeedItem.tsx";
-import {queryPreferencesAtom, todosAtom} from "../../state.ts";
+import {todosAtom} from "../../state/application.state.atoms.ts";
 
 import SetOrder from "./Filters/SetOrder.tsx";
-import {getTodos, QueryPreferences} from "../../functions/getTodosHook.ts";
+import {getTodos, QueryPreferences} from "../../functions/hooks/getTodosHook.ts";
+import {queryPreferencesAtom} from "../../state/forms/queryPreferencesAtom.ts";
 
 export default function Feed() {
     const [todos, setTodos] = useAtom(todosAtom);

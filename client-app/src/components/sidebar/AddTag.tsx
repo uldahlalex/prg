@@ -1,4 +1,4 @@
-import { tagsAtom} from "../../state.ts";
+import { tagsAtom} from "../../state/application.state.atoms.ts";
 import {useAtom} from "jotai";
 import {useState} from "react";
 import {api} from "../../api.ts";

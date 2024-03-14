@@ -1,7 +1,7 @@
-import {queryPreferencesAtom} from "../../../state.ts";
 import {useAtom} from "jotai";
 import {useState} from "react";
-import {QueryPreferences} from "../../../functions/getTodosHook.ts";
+import {QueryPreferences} from "../../../functions/hooks/getTodosHook.ts";
+import {queryPreferencesAtom} from "../../../state/forms/queryPreferencesAtom.ts";
 
 export default function SetOrder() {
 

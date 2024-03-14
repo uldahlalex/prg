@@ -1,9 +1,10 @@
 import {useAtom} from "jotai";
-import {createTodoForm, tagsAtom, todosAtom} from "../../state.ts";
+import {tagsAtom, todosAtom} from "../../state/application.state.atoms.ts";
 import {useState} from "react";
 import SetTitleForCreateTodoForm from "./newTodo/title.tsx";
 import AddTagToNewTodo from "./newTodo/addTags.tsx";
 import {api} from "../../api.ts";
+import {createTodoForm} from "../../state/forms/createTodoForm.ts";
 
 export default function NewTodo() {
     const [todos, setTodos] = useAtom(todosAtom);

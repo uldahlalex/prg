@@ -1,7 +1,8 @@
 import {useEffect} from "react";
-import { queryPreferencesAtom, todosAtom} from "../state.ts";
+import { todosAtom} from "../../state/application.state.atoms.ts";
 import {useAtom} from "jotai";
-import {api} from "../api.ts";
+import {api} from "../../api.ts";
+import {queryPreferencesAtom} from "../../state/forms/queryPreferencesAtom.ts";
 
 /**
  * Dto is not auto generated, only the individual "properties" so i made a class for it
@@ -18,8 +19,12 @@ export function getTodos() {
     const [, setTodos] = useAtom(todosAtom);
 
     useEffect(() => {
-        api.api.todosList(queryPreferences).then(resp => resp.json())
+        api.api.todosList(queryPreferences, {headers: {Authorization: ` ${localStorage.getItem('token')}`}})
+            .then(resp => {
+                if(resp.ok) return resp.json();
+            })
             .then(todos => setTodos(todos))
+            .catch(error => console.log("Error reading response:", error));
     }, [queryPreferences]); //todo refresh
 }
 
