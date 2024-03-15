@@ -1,11 +1,9 @@
 import {Api} from "../../httpclient/Api.ts";
 
 export const http = new Api({
-
     baseURL: 'http://localhost:5000',
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': localStorage.getItem('token') || ''
-    },
-
+});
+http.instance.interceptors.request.use((config) => {
+    config.headers.Authorization = localStorage.getItem('token') || '';
+    return config;
 });
