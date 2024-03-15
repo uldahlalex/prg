@@ -1,7 +1,6 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import toast from "react-hot-toast";
-import {api} from "../../communication/api.ts";
 
 export default function Login() {
 
@@ -27,16 +26,16 @@ export default function Login() {
                 <label htmlFor="password">Password</label>
                 <input onChange={handleInput} type="password" name="password"/>
             </div>
-            <button onClick={() => api.api.signinCreate(loginForm).then(() => {
-                navigate('/feed');
-                toast("welcome back")
-            })}>Login
-            </button>
-            <button onClick={() => api.api.registerCreate(loginForm).then(() => {
-                navigate('/feed');
-                toast("welcome aboard")
-            })}>Register
-            </button>
+            {/*<button onClick={() => api.api.signinCreate(loginForm).then(() => {*/}
+            {/*    navigate('/feed');*/}
+            {/*    toast("welcome back")*/}
+            {/*})}>Login*/}
+            {/*</button>*/}
+            {/*<button onClick={() => api.api.registerCreate(loginForm).then(() => {*/}
+            {/*    navigate('/feed');*/}
+            {/*    toast("welcome aboard")*/}
+            {/*})}>Register*/}
+            {/*</button>*/}
         </div>
     );
 }

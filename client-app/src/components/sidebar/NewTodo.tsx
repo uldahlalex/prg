@@ -1,16 +1,16 @@
 import {useAtom} from "jotai";
-import {tagsAtom, todosAtom} from "../../state/application.state.atoms.ts";
-import {useState} from "react";
-import SetTitleForCreateTodoForm from "./newTodo/title.tsx";
-import AddTagToNewTodo from "./newTodo/addTags.tsx";
-import {api} from "../../communication/api.ts";
+import {todosAtom} from "../../state/application.state.atoms.ts";
+import React, {useState} from "react";
+import SetTitleForCreateTodoForm from "./newTodoFormFields/SetTitleForCreateTodoForm.tsx";
+import AddTagsToNewTodo from "./newTodoFormFields/AddTagsToNewTodo.tsx";
 import {createTodoForm} from "../../state/forms/createTodoForm.ts";
+import SetDescriptionForNewTodo from "./newTodoFormFields/SetDescriptionForNewTodo.tsx";
+import SetPriorityForNewTodo from "./newTodoFormFields/setPriorityForNewTodo.tsx";
 
 export default function NewTodo() {
     const [todos, setTodos] = useAtom(todosAtom);
-    const [, setTags] = useAtom(tagsAtom);
     const [newTodoForm, setNewTodoForm] = useAtom(createTodoForm);
-    const [selectedTagIndex, setSelectedTagIndex] = useState('-1');
+    const [, setSelectedTagIndex] = useState('-1');
 
     const handleChanges = (e) => {
         setNewTodoForm({...newTodoForm, [e.target.name]: e.target.value});
@@ -19,22 +19,19 @@ export default function NewTodo() {
 
     return (
         <>
-            <div style={{border: '1px solid blue'}}>"New Todo"
+            <div style={{border: '1px solid blue'}}>
                 <SetTitleForCreateTodoForm/>
-                <input type="text" placeholder="Description" name="description" value={newTodoForm.description!}
-                       onChange={handleChanges}/>
+               <SetDescriptionForNewTodo/>
+                <SetPriorityForNewTodo/>
                 <input type="date" name="dueDate" value={newTodoForm.dueDate!}
                        onChange={handleChanges}/>
-                <input type="number" name="priority" value={newTodoForm.priority} onChange={handleChanges}/>
-                Tags:
-
-                <AddTagToNewTodo/>
+                <AddTagsToNewTodo/>
 
                 <button onClick={async () => {
-                    api.api.todosCreate(newTodoForm).then(resp => resp.json()
-                    ).then(data => {
-                        setTodos([...todos, data])
-                    });
+                    // api.api.todosCreate(newTodoForm).then(resp => resp.json()
+                    // ).then(data => {
+                    //     setTodos([...todos, data])
+                    // });
                     setSelectedTagIndex('-1');
 
                 }}>Create todo

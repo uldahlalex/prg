@@ -15,16 +15,16 @@ export interface QueryPreferences {
 }
 
 export function getTodos() {
-    const [queryPreferences] = useAtom(queryPreferencesAtom);
-    const [, setTodos] = useAtom(todosAtom);
-
-    useEffect(() => {
-        api.api.todosList(queryPreferences, {headers: {Authorization: ` ${localStorage.getItem('token')}`}})
-            .then(resp => {
-                if (resp.ok) return resp.json();
-            })
-            .then(todos => setTodos(todos))
-            .catch(error => console.log("Error reading response:", error));
-    }, [queryPreferences]); //todo refresh
+    // const [queryPreferences] = useAtom(queryPreferencesAtom);
+    // const [, setTodos] = useAtom(todosAtom);
+    //
+    // useEffect(() => {
+    //     api.api.todosList(queryPreferences, {headers: {Authorization: ` ${localStorage.getItem('token')}`}})
+    //         .then(resp => {
+    //             if (resp.ok) return resp.json();
+    //         })
+    //         .then(todos => setTodos(todos))
+    //         .catch(error => console.log("Error reading response:", error));
+    // }, [queryPreferences]); //todo refresh
 }
 

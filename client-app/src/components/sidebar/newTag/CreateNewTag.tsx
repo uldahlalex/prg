@@ -1,10 +1,9 @@
-import {tagsAtom} from "../../state/application.state.atoms.ts";
+import {tagsAtom} from "../../../state/application.state.atoms.ts";
 import {useAtom} from "jotai";
 import {useState} from "react";
-import {api} from "../../communication/api.ts";
-import {Tag} from "../../../httpclient/Api.ts";
+import {Tag} from "../../../../httpclient/Api.ts";
 
-export default function AddTag() {
+export default function CreateNewTag() {
     const [tags, setTags] = useAtom(tagsAtom);
     const [newTagForm, setNewTagForm] = useState<Tag>({
         id: -1,
