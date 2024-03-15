@@ -5,7 +5,7 @@ import {http} from "../../communication/api.ts";
 import {User} from "../../types/user.ts";
 import {AuthenticationRequestDto} from "../../../httpclient/Api.ts";
 import {useAtom} from "jotai/index";
-import {userAtom} from "../../state/application.state.atoms.ts";
+import {userAtom} from "../../state/atoms/application.state.atoms.ts";
 import {decodeJwt} from "../../functions/independent/jwtDecoder.ts";
 
 export default function Login() {

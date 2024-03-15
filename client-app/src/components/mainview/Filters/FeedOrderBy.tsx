@@ -1,9 +1,9 @@
 import {useAtom} from "jotai";
 import {useState} from "react";
-import {queryPreferencesAtom} from "../../../state/forms/queryPreferencesAtom.ts";
+import {queryPreferencesAtom} from "../../../state/atoms/queryPreferencesAtom.ts";
 import {QueryPreferences} from "../../App.tsx";
 
-export default function SetOrder() {
+export default function FeedOrderBy() {
 
     const [queryPreferences, setQueryPreferences] = useAtom<QueryPreferences>(queryPreferencesAtom);
     const [selectValue] = useState("title");

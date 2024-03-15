@@ -1,4 +1,4 @@
-import {createTodoForm} from "../../../state/forms/createTodoForm.ts";
+import {createTodoForm} from "../../../state/atoms/createTodoForm.ts";
 import {useAtom} from "jotai";
 
 export default function SetDescriptionForNewTodo() {

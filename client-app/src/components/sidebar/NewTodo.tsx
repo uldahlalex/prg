@@ -1,9 +1,9 @@
 import {useAtom} from "jotai";
-import {todosAtom} from "../../state/application.state.atoms.ts";
+import {todosAtom} from "../../state/atoms/application.state.atoms.ts";
 import React, {useState} from "react";
 import SetTitleForCreateTodoForm from "./newTodoFormFields/SetTitleForCreateTodoForm.tsx";
 import AddTagsToNewTodo from "./newTodoFormFields/AddTagsToNewTodo.tsx";
-import {createTodoForm} from "../../state/forms/createTodoForm.ts";
+import {createTodoForm} from "../../state/atoms/createTodoForm.ts";
 import SetDescriptionForNewTodo from "./newTodoFormFields/SetDescriptionForNewTodo.tsx";
 import SetPriorityForNewTodo from "./newTodoFormFields/setPriorityForNewTodo.tsx";
 import {http} from "../../communication/api.ts";

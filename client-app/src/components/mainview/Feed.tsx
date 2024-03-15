@@ -1,9 +1,10 @@
 import React from 'react';
 import {useAtom} from 'jotai';
 import FeedItem from "./FeedItem.tsx";
-import {todosAtom} from "../../state/application.state.atoms.ts";
+import {todosAtom} from "../../state/atoms/application.state.atoms.ts";
 
-import SetOrder from "./Filters/SetOrder.tsx";
+import FeedOrderBy from "./Filters/FeedOrderBy.tsx";
+import FilterFeedByTag from "./Filters/FilterFeedByTag.tsx";
 
 export default function Feed() {
     const [todos] = useAtom(todosAtom);
@@ -14,7 +15,8 @@ export default function Feed() {
 
 
             <div>
-                <SetOrder/>
+                <FilterFeedByTag />
+                <FeedOrderBy/>
 
             </div>
 

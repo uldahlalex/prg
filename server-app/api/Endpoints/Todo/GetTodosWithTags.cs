@@ -13,7 +13,6 @@ public class GetTodosWithTags : ICarterModule
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapGet("/api/todos", async (HttpContext context,
-            [FromHeader] string Authorization,
             [FromServices] NpgsqlDataSource ds,                   
             [FromQuery] int[] tags, 
             [FromQuery] string orderBy,
