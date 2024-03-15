@@ -1,3 +1,4 @@
+using api.Boilerplate.EndpointFilters;
 using Carter;
 using Dapper;
 using Npgsql;
@@ -14,6 +15,6 @@ public class DeleteTag : ICarterModule
             var impactedRows = conn.Execute("delete from todo_manager.todo where id = @id", new { id });
             if (impactedRows == 0) throw new InvalidOperationException("Could not delete");
             conn.Close();
-        });
+        }).AddEndpointFilter<VerifyJwtAndSetPayloadAsHttpItem>();
     }
 }

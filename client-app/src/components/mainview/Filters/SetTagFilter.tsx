@@ -1,9 +1,9 @@
 import {tagsAtom} from "../../../state/application.state.atoms.ts";
 import {useAtom} from "jotai";
 import {useState} from "react";
-import {QueryPreferences} from "../../../functions/hooks/getTodosHook.ts";
 import {Tag} from "../../../../httpclient/Api.ts";
 import {queryPreferencesAtom} from "../../../state/forms/queryPreferencesAtom.ts";
+import {QueryPreferences} from "../../App.tsx";
 
 export default function SetTagFilter() {
     const [queryPreferences, setQueryPreferences] = useAtom<QueryPreferences>(queryPreferencesAtom);

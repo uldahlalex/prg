@@ -1,3 +1,4 @@
+using api.Boilerplate.EndpointFilters;
 using api.Boilerplate.ReusableHelpers.GlobalModels;
 using Carter;
 using Dapper;
@@ -31,6 +32,6 @@ RETURNING *;
 ", req);
             conn.Close();
             return todo;
-        });
+        }).AddEndpointFilter<VerifyJwtAndSetPayloadAsHttpItem>();
     }
 }

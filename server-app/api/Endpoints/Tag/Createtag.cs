@@ -1,3 +1,4 @@
+using api.Boilerplate.EndpointFilters;
 using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,7 @@ public class Createtag : ICarterModule
     {
         app.MapPost("api/tags", (
             [FromBody] CreateTagRequestDto dto,
-            [FromServices] NpgsqlDataSource ds ) =>
+            [FromServices] NpgsqlDataSource ds) =>
         {
             using (var conn = ds.OpenConnection())
             {
@@ -27,6 +28,6 @@ public class Createtag : ICarterModule
                 conn.Close();
                 return insertedTag;
             }
-        });
+        }).AddEndpointFilter<VerifyJwtAndSetPayloadAsHttpItem>();
     }
 }

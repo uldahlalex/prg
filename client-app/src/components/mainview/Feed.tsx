@@ -15,12 +15,11 @@ export default function Feed() {
 
             <div>
                 <SetOrder/>
-                {/*<button onClick={get}>Get</button>*/}
+
             </div>
 
             <div>
                 {
-                    // filter.map((todo, index) => <FeedItem key={index} todo={todo} />)
                     todos.map((todo, index) => <FeedItem key={index} todo={todo}/>)
 
                 }

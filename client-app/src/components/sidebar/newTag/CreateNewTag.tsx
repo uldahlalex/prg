@@ -2,6 +2,7 @@ import {tagsAtom} from "../../../state/application.state.atoms.ts";
 import {useAtom} from "jotai";
 import {useState} from "react";
 import {Tag} from "../../../../httpclient/Api.ts";
+import {http} from "../../../communication/api.ts";
 
 export default function CreateNewTag() {
     const [tags, setTags] = useAtom(tagsAtom);
@@ -19,10 +20,7 @@ export default function CreateNewTag() {
         <>
             <div style={{border: '1px solid green'}}>"Add tag"
                 <button onClick={async () => {
-                    api.api.tagsCreate(newTagForm).then(resp => resp.json())
-                        .then(resp => {
-                            setTags([...tags, resp]);
-                        });
+                    http.api.tagsCreate(newTagForm).then(resp =>  setTags([...tags, resp.data]))
                 }}>add
                 </button>
                 <input type="text" value={newTagForm.name!} onChange={handleFormChange}/>

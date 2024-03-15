@@ -1,3 +1,4 @@
+using api.Boilerplate.EndpointFilters;
 using Carter;
 using Dapper;
 using Npgsql;
@@ -22,6 +23,6 @@ select * from todo_manager.tag where userid = 1;
 
                 return tags;
             }
-        );
+        ).AddEndpointFilter<VerifyJwtAndSetPayloadAsHttpItem>();
     }
 }

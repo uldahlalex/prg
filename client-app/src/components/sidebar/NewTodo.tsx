@@ -6,6 +6,7 @@ import AddTagsToNewTodo from "./newTodoFormFields/AddTagsToNewTodo.tsx";
 import {createTodoForm} from "../../state/forms/createTodoForm.ts";
 import SetDescriptionForNewTodo from "./newTodoFormFields/SetDescriptionForNewTodo.tsx";
 import SetPriorityForNewTodo from "./newTodoFormFields/setPriorityForNewTodo.tsx";
+import {http} from "../../communication/api.ts";
 
 export default function NewTodo() {
     const [todos, setTodos] = useAtom(todosAtom);
@@ -28,10 +29,7 @@ export default function NewTodo() {
                 <AddTagsToNewTodo/>
 
                 <button onClick={async () => {
-                    // api.api.todosCreate(newTodoForm).then(resp => resp.json()
-                    // ).then(data => {
-                    //     setTodos([...todos, data])
-                    // });
+                    http.api.todosCreate(newTodoForm).then(resp => setTodos([...todos, resp.data]));
                     setSelectedTagIndex('-1');
 
                 }}>Create todo
