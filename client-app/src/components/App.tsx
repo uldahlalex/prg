@@ -10,7 +10,7 @@ import '../communication/addJwtToAllRequests.ts';
 import RequireAuth from "./etc/requireAuth.tsx";
 import {useAtom} from "jotai/index";
 import {queryPreferencesAtom} from "../state/forms/queryPreferencesAtom.ts";
-import {tagsAtom, todosAtom} from "../state/application.state.atoms.ts";
+import {tagsAtom, todosAtom, userAtom} from "../state/application.state.atoms.ts";
 import {http} from "../communication/api.ts";
 
 export interface QueryPreferences {
@@ -23,18 +23,19 @@ export interface QueryPreferences {
 export default function App() {
 
     const [todosQueryPreferences] = useAtom(queryPreferencesAtom);
+    const [user] = useAtom(userAtom);
 
     const [, setTodos] = useAtom(todosAtom);
     const [, setTags] = useAtom(tagsAtom);
 
     useEffect(() => {
-        http.api.todosList(todosQueryPreferences)
+        http.api
+            .todosList(todosQueryPreferences)
             .then(resp => setTodos(resp.data))
-            .catch(error => console.log("Error fetching todos:", error));
-        http.api.tagsList()
+        http.api
+            .tagsList()
             .then(resp => setTags(resp.data))
-            .catch(error => console.log("Error fetching tags:", error));
-    }, []);
+    }, [user]);
 
     const router = createBrowserRouter([
         {
