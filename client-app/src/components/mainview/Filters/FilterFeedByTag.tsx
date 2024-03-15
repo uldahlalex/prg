@@ -8,8 +8,6 @@ import {QueryPreferences} from "../../App.tsx";
 export default function FilterFeedByTag() {
     const [queryPreferences, setQueryPreferences] = useAtom<QueryPreferences>(queryPreferencesAtom);
     const [tags] = useAtom(tagsAtom);
-    const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
-
 
     console.log(tags)
     return <>
@@ -17,13 +15,11 @@ export default function FilterFeedByTag() {
 
         {tags.map(tag =>
             <input key={tag.id} type="checkbox" value={tag.id} onChange={() => {
-                if (selectedTags.includes(tag)) {
-                    setSelectedTags(selectedTags.filter(t => t.id !== tag.id));
+                if (queryPreferences.tags.includes(tag.id!)) {
+                    setQueryPreferences({...queryPreferences, tags: queryPreferences.tags.filter(t => t !== tag.id)});
                 } else {
-                    setSelectedTags([...selectedTags, tag]);
+                    setQueryPreferences({...queryPreferences, tags: [...queryPreferences.tags, tag.id!]});
                 }
-                const tagIds = selectedTags.map(t => t.id!);
-                setQueryPreferences({...queryPreferences, tags: tagIds});
             }}/>
         )}
 

@@ -1,10 +1,6 @@
 import toast from "react-hot-toast";
+import {decodeJwt} from "../functions/independent/jwtDecoder.ts";
 
+export function AddEventListeners() {
 
-window.addEventListener('error', function (event) {
-    toast("Caught in global error handler: " + event.message, {icon: '🔥'})
-});
-
-window.addEventListener('unhandledrejection', function () {
-    toast("Caught in global error handler: ", {icon: '🔥'})
-});
+}

@@ -22,6 +22,8 @@ export interface QueryPreferences {
 
 export default function App() {
 
+    const [user, setUser] = useAtom(userAtom);
+
     StateHooks();
 
     const router = createBrowserRouter([
@@ -65,6 +67,19 @@ export default function App() {
                     </div>
                 </div>
             </div>
+            <footer>
+                {
+                    user ? <>
+                        <p>Logged in as {user.username}</p>
+                        <button onClick={() => {
+                            localStorage.removeItem('token');
+                            setUser(null);
+                        }}>Sign out
+                        </button>
+                    </> : null
+                }
+
+            </footer>
         </>
     )
 
