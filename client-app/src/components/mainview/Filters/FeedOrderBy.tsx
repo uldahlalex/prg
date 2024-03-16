@@ -1,7 +1,8 @@
 import {useAtom} from "jotai";
 import {useState} from "react";
 import {queryPreferencesAtom} from "../../../state/atoms/queryPreferencesAtom.ts";
-import {QueryPreferences} from "../../App.tsx";
+
+import {QueryPreferences} from "../../../types/QueryPreferences.tsx";
 
 export default function FeedOrderBy() {
 

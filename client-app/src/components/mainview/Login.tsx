@@ -1,12 +1,12 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import toast from "react-hot-toast";
-import {http} from "../../communication/api.ts";
+import {http} from "../../constants/api.ts";
 import {User} from "../../types/user.ts";
 import {AuthenticationRequestDto} from "../../../httpclient/Api.ts";
 import {useAtom} from "jotai/index";
 import {userAtom} from "../../state/atoms/application.state.atoms.ts";
-import {decodeJwt} from "../../functions/independent/jwtDecoder.ts";
+import {decodeJwt} from "../../functions/jwtDecoder.ts";
 
 export default function Login() {
 

@@ -1,4 +1,4 @@
-import {User} from "../../types/user.ts";
+import {User} from "../types/user.ts";
 
 export function decodeJwt(jwt): User {
     function base64UrlToBase64(input) {

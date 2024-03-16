@@ -6,17 +6,11 @@ import {Toaster} from "react-hot-toast";
 import '../eventlisteners/errorhandlers.ts';
 import {useAtom} from "jotai/index";
 import {userAtom} from "../state/atoms/application.state.atoms.ts";
-import StateHooks from "../state/hooks/statehooks.ts";
+import StateHooks from "../functions/hooks/statehooks.ts";
 import Sidebar from "./sidebar/Sidebar.tsx";
 import {User} from "../types/user.ts";
-import {SetupHttpClient} from "../communication/api.ts";
 
-export interface QueryPreferences {
-    limit: number | 50;
-    tags: number[];
-    orderBy: string | "dueDate" | "title" | "priority" | "id";
-    direction: string | "asc" | "desc";
-}
+import {SetupHttpClient} from "../functions/setupHttpClient.ts";
 
 export default function App() {
 

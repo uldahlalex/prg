@@ -1,10 +1,10 @@
 import {useAtom} from "jotai/index";
 import {useEffect} from "react";
-import {http} from "../../communication/api.ts";
-import {queryPreferencesAtom} from "../atoms/queryPreferencesAtom.ts";
-import {tagsAtom, todosAtom, userAtom} from "../atoms/application.state.atoms.ts";
+import {http} from "../../constants/api.ts";
+import {queryPreferencesAtom} from "../../state/atoms/queryPreferencesAtom.ts";
+import {tagsAtom, todosAtom, userAtom} from "../../state/atoms/application.state.atoms.ts";
 import toast from "react-hot-toast";
-import {decodeJwt} from "../../functions/independent/jwtDecoder.ts";
+import {decodeJwt} from "../jwtDecoder.ts";
 import {User} from "../../types/user.ts";
 
 export default function StateHooks() {
@@ -42,14 +42,5 @@ export default function StateHooks() {
             .tagsList()
             .then(resp => setTags(resp.data))
     }, [user]);
-
-    window.addEventListener('error', function (event) {
-        toast("Caught in global error handler: " + event.message, {icon: '🔥'})
-    });
-
-    window.addEventListener('unhandledrejection', function () {
-        toast("Caught in global error handler: ", {icon: '🔥'})
-    });
-
 
 }

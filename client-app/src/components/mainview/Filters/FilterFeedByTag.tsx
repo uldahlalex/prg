@@ -3,7 +3,8 @@ import {useAtom} from "jotai";
 import {useState} from "react";
 import {Tag} from "../../../../httpclient/Api.ts";
 import {queryPreferencesAtom} from "../../../state/atoms/queryPreferencesAtom.ts";
-import {QueryPreferences} from "../../App.tsx";
+
+import {QueryPreferences} from "../../../types/QueryPreferences.tsx";
 
 export default function FilterFeedByTag() {
     const [queryPreferences, setQueryPreferences] = useAtom<QueryPreferences>(queryPreferencesAtom);
