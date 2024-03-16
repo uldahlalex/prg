@@ -26,7 +26,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/String<>f__AnonymousType5"
+                  "$ref": "#/components/schemas/String<>f__AnonymousType6"
                 }
               }
             }
@@ -55,7 +55,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/String<>f__AnonymousType5"
+                  "$ref": "#/components/schemas/String<>f__AnonymousType6"
                 }
               }
             }
@@ -373,7 +373,7 @@
         },
         "additionalProperties": false
       },
-      "String<>f__AnonymousType5": {
+      "String<>f__AnonymousType6": {
         "type": "object",
         "properties": {
           "token": {

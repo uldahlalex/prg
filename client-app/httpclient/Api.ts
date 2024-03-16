@@ -30,7 +30,7 @@ export interface CreateTodoRequestDto {
   tags?: Tag[] | null;
 }
 
-export interface StringFAnonymousType5 {
+export interface StringFAnonymousType6 {
   token?: string | null;
 }
 
@@ -217,7 +217,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     registerCreate: (data: AuthenticationRequestDto, params: RequestParams = {}) =>
-      this.request<StringFAnonymousType5, any>({
+      this.request<StringFAnonymousType6, any>({
         path: `/api/register`,
         method: "POST",
         body: data,
@@ -236,7 +236,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     signinCreate: (data: AuthenticationRequestDto, params: RequestParams = {}) =>
-      this.request<StringFAnonymousType5, any>({
+      this.request<StringFAnonymousType6, any>({
         path: `/api/signin`,
         method: "POST",
         body: data,
