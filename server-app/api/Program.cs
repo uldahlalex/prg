@@ -3,6 +3,7 @@ using api.Boilerplate.DbHelpers;
 using api.Boilerplate.ReusableHelpers.GlobalValues;
 using api.Boilerplate.ReusableHelpers.Security;
 using Carter;
+using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Extensions;
@@ -80,6 +81,7 @@ public class Program
         builder.Services.AddHostedService<SwaggerJsonGeneratorService>();
 
 
+
         if (Env.ASPNETCORE_ENVIRONMENT.Equals(StringConstants.Environments.Testing))
             builder.WebHost.UseUrls("http://localhost:9999");
         var app = builder.Build();
@@ -95,25 +97,31 @@ public class Program
                 .AllowAnyHeader()
                 .AllowCredentials();
         });
-        app.UseExceptionHandler(appError =>
-        {
-            appError.Run(async context =>
-            {
-                context.Response.StatusCode = 500; // Default to internal server error
-                context.Response.ContentType = "application/json";
+        // app.UseExceptionHandler(appError =>
+        // {
+        //     appError.Run(async context =>
+        //     {
+        //         context.Response.StatusCode = 500; // Default to internal server error
+        //         context.Response.ContentType = "application/json";
+        //
+        //         var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+        //         if (contextFeature != null)
+        //         {
+        //             // Check if the exception is an AuthenticationException
+        //             if (contextFeature.Error is System.Security.Authentication.AuthenticationException)
+        //             {
+        //                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        //             }
+        //             // You can log the error or set a response body here
+        //         }
+        //     });
+        // });
+        app.UseExceptionHandler(exceptionHandlerApp 
+            => exceptionHandlerApp.Run(async context 
+                => await Results.Problem()
+                    .ExecuteAsync(context)));
 
-                var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
-                if (contextFeature != null)
-                {
-                    // Check if the exception is an AuthenticationException
-                    if (contextFeature.Error is System.Security.Authentication.AuthenticationException)
-                    {
-                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                    }
-                    // You can log the error or set a response body here
-                }
-            });
-        });
+        app.UseStatusCodePages();
 
 
         return app;
