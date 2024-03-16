@@ -5,10 +5,11 @@ import {queryPreferencesAtom} from "../atoms/queryPreferencesAtom.ts";
 import {tagsAtom, todosAtom, userAtom} from "../atoms/application.state.atoms.ts";
 import toast from "react-hot-toast";
 import {decodeJwt} from "../../functions/independent/jwtDecoder.ts";
+import {User} from "../../types/user.ts";
 
 export default function StateHooks() {
     const [todosQueryPreferences] = useAtom(queryPreferencesAtom);
-    const [user, setUser] = useAtom(userAtom);
+    const [user, setUser] = useAtom<User | null>(userAtom);
 
     const [, setTodos] = useAtom(todosAtom);
     const [, setTags] = useAtom(tagsAtom);
@@ -27,6 +28,15 @@ export default function StateHooks() {
     }, [user, todosQueryPreferences]);
 
     useEffect(() => {
+        const jwt = localStorage.getItem('token');
+        if(!jwt || jwt.length==0)
+            setUser(null);
+        else {
+            setUser(decodeJwt(jwt));
+        }
+    }, []); //Are there other hooks that impact this??
+
+    useEffect(() => {
         if(!user) return;
         http.api
             .tagsList()
@@ -41,15 +51,5 @@ export default function StateHooks() {
         toast("Caught in global error handler: ", {icon: '🔥'})
     });
 
-    // window.addEventListener("storage", () => {
-    //     const jwt = window.localStorage.getItem("token");
-    //     if(jwt && jwt.length>0) {
-    //         const user = decodeJwt(jwt);
-    //         setUser(user);
-    //     } else {
-    //         setUser(null);
-    //         toast("You have been logged out. Please log in again.")
-    //     }
-    // });
 
 }

@@ -42,6 +42,8 @@ public class TokenService
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
+            Console.WriteLine(e.InnerException);
+            Console.WriteLine(e.StackTrace);
             throw new AuthenticationException("Authentication failed.");
         }
     }

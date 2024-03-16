@@ -10,7 +10,8 @@ public class VerifyJwtAndSetPayloadAsHttpItem(TokenService tokenService) : IEndp
     {
         try
         {
-            var jwt = context.HttpContext.Request.Headers[StringConstants.JwtConstants.Authorization][0]!;
+            string jwt = context.HttpContext.Request.Headers[StringConstants.JwtConstants.Authorization][0] ??
+                         throw new InvalidOperationException("Could not find token in headers!");
             var payload = tokenService.ValidateJwtAndReturnClaims(jwt);
             context.HttpContext.Items.Add(StringConstants.JwtConstants.Payload, payload);
             return await next(context);
@@ -19,7 +20,7 @@ public class VerifyJwtAndSetPayloadAsHttpItem(TokenService tokenService) : IEndp
         {
             Console.WriteLine("Failed to verify jwt and set payload as http item");
             Console.WriteLine(e.Message);
-            Console.WriteLine(e.InnerException.Message);
+            Console.WriteLine(e.InnerException);
             Console.WriteLine(e.StackTrace);
             throw new AuthenticationException("Authentication error regarding token");
         }

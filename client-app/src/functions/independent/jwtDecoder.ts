@@ -21,8 +21,8 @@ export function decodeJwt(jwt): User {
     }
     const payload = decodeBase64Json(base64UrlToBase64(parts[1]));
     const u: User = {
-        id: payload.id,
-        username: payload.username,
+        id: payload.Id,
+        username: payload.Username,
         jwt: jwt
     };
     return u;

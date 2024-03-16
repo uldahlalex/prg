@@ -94,6 +94,7 @@ public class Program
                 .AllowAnyHeader()
                 .AllowCredentials();
         });
+        app.UseExceptionHandler();
 
         return app;
     }

@@ -1,17 +1,15 @@
-import React, {useEffect} from "react";
-import CreateNewTag from "./sidebar/newTag/CreateNewTag.tsx";
+import React from "react";
 import Feed from "./mainview/Feed.tsx";
 import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
 import Login from "./mainview/Login.tsx";
-import NewTodo from "./sidebar/NewTodo.tsx";
 import {Toaster} from "react-hot-toast";
 import '../eventlisteners/errorhandlers.ts';
-import RequireAuth from "./etc/requireAuth.tsx";
 import {useAtom} from "jotai/index";
-import {queryPreferencesAtom} from "../state/atoms/queryPreferencesAtom.ts";
-import {tagsAtom, todosAtom, userAtom} from "../state/atoms/application.state.atoms.ts";
-import {http} from "../communication/api.ts";
+import {userAtom} from "../state/atoms/application.state.atoms.ts";
 import StateHooks from "../state/hooks/statehooks.ts";
+import Sidebar from "./sidebar/Sidebar.tsx";
+import {User} from "../types/user.ts";
+import {SetupHttpClient} from "../communication/api.ts";
 
 export interface QueryPreferences {
     limit: number | 50;
@@ -22,8 +20,9 @@ export interface QueryPreferences {
 
 export default function App() {
 
-    const [user, setUser] = useAtom(userAtom);
+    const [user, setUser] = useAtom<User | null>(userAtom);
 
+    SetupHttpClient();
     StateHooks();
 
     const router = createBrowserRouter([
@@ -32,9 +31,7 @@ export default function App() {
             path: '/'
         },
         {
-            element: <RequireAuth redirect="/login">
-                <Feed/>
-            </RequireAuth>,
+            element: <Feed/>,
             path: "/feed",
         },
         {
@@ -49,28 +46,20 @@ export default function App() {
 
             <Toaster/>
             <div style={{display: 'flex'}}>
+
                 <div>
-                    <div>
-
-
-                        <NewTodo/>
-
-                        <CreateNewTag/>
-                    </div>
+                    <Sidebar/>
                 </div>
 
                 <div>
+                    <RouterProvider router={router}/>
 
-                    <div>
-                        <RouterProvider router={router}/>
-
-                    </div>
                 </div>
             </div>
             <footer>
                 {
                     user ? <>
-                        <p>Logged in as {user.username}</p>
+                        <p>Logged in as {JSON.stringify(user)}</p>
                         <button onClick={() => {
                             localStorage.removeItem('token');
                             setUser(null);
