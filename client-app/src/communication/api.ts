@@ -35,14 +35,23 @@ export function SetupHttpClient() {
         }
         return config;
     });
-
-//interceptor that checks if response code is 401 and if it is remove jwt
-    http.instance.interceptors.response.use( (response) => {
+    http.instance.interceptors.response.use((response) => {
         if(response.status === 401) {
-            setUser(null);
-            localStorage.removeItem('token');
+            handleUnauthorizedAccess();
         }
-
         return response;
-    })
+    }, (error) => {
+        if (error.response && error.response.status === 401) {
+            handleUnauthorizedAccess();
+        }
+        return Promise.reject(error);
+    });
+     const handleUnauthorizedAccess = () => {
+        localStorage.removeItem('token');
+        setUser(null)
+        // Assuming you have a way to reset the user state globally, invoke that method here.
+        // This might involve emitting an event, calling a Redux action, invoking a callback, etc.
+    }
 }
+
+

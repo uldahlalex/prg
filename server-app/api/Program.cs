@@ -3,6 +3,7 @@ using api.Boilerplate.DbHelpers;
 using api.Boilerplate.ReusableHelpers.GlobalValues;
 using api.Boilerplate.ReusableHelpers.Security;
 using Carter;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Extensions;
 using Microsoft.OpenApi.Models;
@@ -94,7 +95,26 @@ public class Program
                 .AllowAnyHeader()
                 .AllowCredentials();
         });
-        app.UseExceptionHandler();
+        app.UseExceptionHandler(appError =>
+        {
+            appError.Run(async context =>
+            {
+                context.Response.StatusCode = 500; // Default to internal server error
+                context.Response.ContentType = "application/json";
+
+                var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+                if (contextFeature != null)
+                {
+                    // Check if the exception is an AuthenticationException
+                    if (contextFeature.Error is System.Security.Authentication.AuthenticationException)
+                    {
+                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                    }
+                    // You can log the error or set a response body here
+                }
+            });
+        });
+
 
         return app;
     }
