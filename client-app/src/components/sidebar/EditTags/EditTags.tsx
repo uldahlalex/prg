@@ -5,7 +5,8 @@ import {tagsAtom} from "../../../state/atoms/application.state.atoms.ts";
 export default function EditTags() {
     const [tags, setTags] = useAtom(tagsAtom);
     const [openDialog, setOpenDialog] = useState<number | null>(null);
-    const [newTagName, setNewTagName] = useState<string>("");
+    const [newTagName, setNewTagName] = useState<string>(""); //todo make atom for tag form
+    const [dialogCoordinates, setDialogCoordinates] = useState<{x: number, y: number} | null>({x: 0, y: 0});
 
     const handleDelete = (index: number) => {
         setTags(tags.filter((_, i) => i !== index));
@@ -31,16 +32,36 @@ export default function EditTags() {
                     {
                         tags.map((tag, index) =>
                             <div key={index}>
-                                <button onClick={() => setOpenDialog(index)}>{tag.name}</button>
+                                <button onClick={(e) => {
+                                    setOpenDialog(index);
+                                    setDialogCoordinates({x: e.clientX, y: e.clientY})
+                                }}>{tag.name}</button>
                                 {
                                     openDialog === index && (
-                                        <div style={{position: "fixed", top: "50%", left: "50%", backgroundColor: '#ffffff', border: '1px solid black', transform: "translate(-50%, -50%)"}}>
-                                            <button onClick={() => handleDelete(index)}>Delete</button>
-                                            <div>
-                                                <input type="text" value={newTagName} onChange={(e) => setNewTagName(e.target.value)} placeholder="New tag name" />
-                                                <button onClick={() => handleRename(index)}>Rename</button>
+                                        <div style={{
+                                            position: "fixed",
+                                            top: dialogCoordinates?.y + "px",
+                                            left: dialogCoordinates?.x + "px",
+                                            backgroundColor: '#ffffff',
+                                            border: '1px solid black',
+                                            padding: '10px',
+                                            borderRadius: '5px',
+                                        }}>
+
+                                            <div style={{marginBottom: '10px', display: 'flex', justifyContent: "center"}}>
+                                                <input style={{ height: '50%', width: '40%'}} type="text" value={newTagName}
+                                                       onChange={(e) => setNewTagName(e.target.value)}
+                                                       placeholder="New tag name"/>
+                                                <button style={{width: "25%"}}  onClick={() => handleRename(index)}>Rename</button>
                                             </div>
-                                            <button onClick={() => setOpenDialog(null)}>Close</button>
+                                            <div style={{display: "flex", justifyContent: "center"}}>
+                                                <button className="button-outline button-black" style={{width: "25%"}} onClick={() => setOpenDialog(null)}>Close Dialog</button>
+
+                                                <button style={{marginBottom: '10px', width: "25%"}}
+                                                        onClick={() => handleDelete(index)}>Delete
+                                                </button>
+                                            </div>
+
                                         </div>
                                     )}
                             </div>
