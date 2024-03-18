@@ -1,21 +1,31 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import toast from "react-hot-toast";
-import {http} from "../../constants/api.ts";
 import {User} from "../../types/user.ts";
 import {AuthenticationRequestDto} from "../../../httpclient/Api.ts";
 import {useAtom} from "jotai/index";
 import {userAtom} from "../../state/atoms/application.state.atoms.ts";
 import {decodeJwt} from "../../functions/jwtDecoder.ts";
+import {http} from "../../functions/setupHttpClient.ts";
 
 export default function Login() {
 
     const navigate = useNavigate();
-    const [, setUser] = useAtom<User | null>(userAtom);
+    const [user, setUser] = useAtom<User | null>(userAtom);
     const [loginForm, setloginform] = useState({
         username: "",
         password: ""
     });
+
+    useEffect(() => {
+        const jwt = localStorage.getItem('token');
+        if(!jwt || jwt.length==0)
+            setUser(null);
+        else {
+            navigate('/feed')
+            setUser(decodeJwt(jwt));
+        }
+    }, [user]);
 
     const handleInput = (e) => {
         setloginform({...loginForm, [e.target.name]: e.target.value});

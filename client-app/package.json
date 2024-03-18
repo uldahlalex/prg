@@ -12,12 +12,14 @@
   },
   "dependencies": {
     "jotai": "^2.7.0",
+    "qs": "^6.12.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
     "react-router-dom": "^6.22.2"
   },
   "devDependencies": {
+    "@types/qs": "^6.9.12",
     "@types/react": "^18.2.56",
     "@types/react-dom": "^18.2.19",
     "@typescript-eslint/eslint-plugin": "^7.2.0",

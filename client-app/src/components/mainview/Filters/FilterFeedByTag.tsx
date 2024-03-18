@@ -13,13 +13,18 @@ export default function FilterFeedByTag() {
         <h1>Filter by tags</h1>
 
         {tags.map(tag =>
-            <input key={tag.id} type="checkbox" value={tag.id} onChange={() => {
+            <>
+                <p>{tag.name}</p>
+                <input key={tag.id} type="checkbox"
+                          checked={queryPreferences.tags.includes(tag.id!)}
+                       value={tag.id} onChange={() => {
                 if (queryPreferences.tags.includes(tag.id!)) {
                     setQueryPreferences({...queryPreferences, tags: queryPreferences.tags.filter(t => t !== tag.id)});
                 } else {
                     setQueryPreferences({...queryPreferences, tags: [...queryPreferences.tags, tag.id!]});
                 }
             }}/>
+            </>
         )}
 
     </>;

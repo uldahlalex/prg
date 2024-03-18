@@ -275,7 +275,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      */
     todosList: (
       query: {
-        tags: number[];
+        serializedTagArray: string;
         orderBy: string;
         direction: string;
         /**

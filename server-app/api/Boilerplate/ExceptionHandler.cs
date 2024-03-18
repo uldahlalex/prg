@@ -35,10 +35,10 @@ public static class ExceptionHandler
                     }
 
                     context.Response.StatusCode = statusCode;
-                    await context.Response.WriteAsync(new
+                    await context.Response.WriteAsJsonAsync(new
                     {
                         message
-                    }.ToString()); 
+                    });
                 }
             });
         });

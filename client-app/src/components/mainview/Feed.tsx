@@ -23,7 +23,7 @@ export default function Feed() {
     }
 
     return (
-        <div style={{border: '1px dotted yellow'}}>"Main content"
+        <div style={{border: '1px dotted yellow'}}>
 
 
             <div>

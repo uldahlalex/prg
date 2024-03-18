@@ -14,11 +14,12 @@ public class GetTodosWithTags : ICarterModule
     {
         app.MapGet("/api/todos", async (HttpContext context,
             [FromServices] NpgsqlDataSource ds,                   
-            [FromQuery] int[] tags, 
+            [FromQuery] string serializedTagArray, 
             [FromQuery] string orderBy,
             [FromQuery] string direction,
             [FromQuery] int limit = 50) =>
         {
+            var tags = JsonSerializer.Deserialize<int[]>(serializedTagArray);
             IEnumerable<dynamic> todos;
             var filterByTags = (tags == null || tags.Length == 0)  ? "" : " WHERE tag.id = ANY(@Tags) ";
             await using (var con = ds.OpenConnection())

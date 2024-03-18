@@ -129,16 +129,12 @@
         ],
         "parameters": [
           {
-            "name": "tags",
+            "name": "serializedTagArray",
             "in": "query",
             "required": true,
             "style": "form",
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "integer",
-                "format": "int32"
-              }
+              "type": "string"
             }
           },
           {

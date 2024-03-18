@@ -16,7 +16,6 @@ export default function FeedOrderBy() {
             () => {
                 setQueryPreferences({...queryPreferences, orderBy: selectValue});
             }}>
-            <option value="id">Select value to order by</option>
             <option value="dueDate">Due date</option>
             <option value="title">Title</option>
             <option value="priority">Priority</option>

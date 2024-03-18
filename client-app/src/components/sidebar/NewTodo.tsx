@@ -6,7 +6,8 @@ import AddTagsToNewTodo from "./newTodoFormFields/AddTagsToNewTodo.tsx";
 import {createTodoForm} from "../../state/atoms/createTodoForm.ts";
 import SetDescriptionForNewTodo from "./newTodoFormFields/SetDescriptionForNewTodo.tsx";
 import SetPriorityForNewTodo from "./newTodoFormFields/setPriorityForNewTodo.tsx";
-import {http} from "../../constants/api.ts";
+
+import {http} from "../../functions/setupHttpClient.ts";
 
 export default function NewTodo() {
     const [todos, setTodos] = useAtom(todosAtom);
