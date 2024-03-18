@@ -19,7 +19,7 @@ export default function CreateNewTag() {
 
     return (
         <>
-            <div style={{border: '1px solid green'}}>"Add tag"
+            <div>
                 <button onClick={async () => {
                     http.api.tagsCreate(newTagForm).then(resp =>  setTags([...tags, resp.data]))
                 }}>add

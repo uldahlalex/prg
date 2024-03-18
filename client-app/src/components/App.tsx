@@ -40,7 +40,7 @@ export default function App() {
             <Toaster/>
             <div style={{display: 'flex'}}>
 
-                <div>
+                <div style={{maxWidth: '30%'}}>
                     <Sidebar/>
                 </div>
 

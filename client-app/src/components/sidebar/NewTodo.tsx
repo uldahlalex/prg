@@ -21,7 +21,7 @@ export default function NewTodo() {
 
     return (
         <>
-            <div style={{border: '1px solid blue'}}>
+            <div >
                 <SetTitleForCreateTodoForm/>
                <SetDescriptionForNewTodo/>
                 <SetPriorityForNewTodo/>
