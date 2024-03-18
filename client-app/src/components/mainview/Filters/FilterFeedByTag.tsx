@@ -9,8 +9,6 @@ import {QueryPreferences} from "../../../types/QueryPreferences.tsx";
 export default function FilterFeedByTag() {
     const [queryPreferences, setQueryPreferences] = useAtom<QueryPreferences>(queryPreferencesAtom);
     const [tags] = useAtom(tagsAtom);
-
-    console.log(tags)
     return <>
         <h1>Filter by tags</h1>
 

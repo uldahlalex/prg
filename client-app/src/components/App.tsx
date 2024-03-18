@@ -3,7 +3,6 @@ import Feed from "./mainview/Feed.tsx";
 import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
 import Login from "./mainview/Login.tsx";
 import {Toaster} from "react-hot-toast";
-import '../eventlisteners/errorhandlers.ts';
 import {useAtom} from "jotai/index";
 import {userAtom} from "../state/atoms/application.state.atoms.ts";
 import StateHooks from "../functions/hooks/statehooks.ts";
