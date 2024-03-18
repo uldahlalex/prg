@@ -23,7 +23,7 @@ export default function CreateNewTag() {
                 <h3>Create a new tag!</h3>
                 <div style={{display: "flex"}}>       <input placeholder="New tag title" type="text" value={newTagForm.name!}
                                     onChange={handleFormChange}/>
-                <button onClick={async () => {
+                <button  onClick={async () => {
                     http.api.tagsCreate(newTagForm).then(resp => setTags([...tags, resp.data]))
                 }}>add
                 </button></div>

@@ -42,10 +42,12 @@ export default function App() {
                 marginTop: '50px',
                 flexDirection: 'column',
                 justifyContent: 'space-around',
-                height: '90vh'
+                height: '90vh',
+                paddingLeft: "10%",
+                paddingRight: "10%"
             }}>
-                <div id="topContainer" style={{justifyContent: 'space-between'}}>
-                    <div style={{display: 'flex', height: '90%', justifyContent: 'space-evenly'}}>
+                <div id="topContainer">
+                    <div style={{display: 'flex', height: '90%', justifyContent: "space-between"}}>
                         <div style={{maxWidth: '30%'}}>
                             <Sidebar/>
                         </div>
@@ -56,7 +58,6 @@ export default function App() {
                     </div>
 
                 </div>
-                {/*todo fix space horizontal sides*/}
                 <div id="bottomContainer" style={{justifyContent: 'space-around', wordWrap: 'break-word'}}>
                     <div>                       {
                         user ? <>

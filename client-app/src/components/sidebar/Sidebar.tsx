@@ -1,4 +1,4 @@
-import NewTodo from "./NewTodo.tsx";
+import NewTodo from "./NewTodo/NewTodo.tsx";
 import CreateNewTag from "./newTag/CreateNewTag.tsx";
 import React from "react";
 import {useAtom} from "jotai/index";
@@ -12,7 +12,7 @@ export default function Sidebar() {
     if(!user) return null;
 
     return(<>
-        <div>
+        <div style={{maxWidth: '100%'}}>
 
 
             <NewTodo/>

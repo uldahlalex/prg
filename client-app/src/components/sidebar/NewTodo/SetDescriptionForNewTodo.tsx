@@ -4,7 +4,8 @@ import {useAtom} from "jotai";
 export default function SetDescriptionForNewTodo() {
     const [todoForm, setCreateTodoForm] = useAtom(createTodoForm);
     return <>
-        <input placeholder="Description" onChange={(e) => {
+        <label htmlFor="description">Description</label>
+        <input placeholder="Descriptio" value={todoForm.description!} onChange={(e) => {
             setCreateTodoForm({...todoForm, description: e.target.value})
         }} />
     </>;

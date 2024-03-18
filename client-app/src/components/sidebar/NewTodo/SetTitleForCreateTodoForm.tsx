@@ -9,6 +9,7 @@ export default function SetTitleForCreateTodoForm() {
 
     return (<>
         <label htmlFor="title">Title</label>
-        <input onChange={(e) => setCreateTodoForm({...todoForm, title: e.target.value})} type="text" name="title"/>
+        <input placeholder="Title" value={todoForm.title!} onChange={(e) =>
+            setCreateTodoForm({...todoForm, title: e.target.value})} type="text" name="title"/>
     </>);
 }
