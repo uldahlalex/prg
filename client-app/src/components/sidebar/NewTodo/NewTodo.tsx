@@ -1,6 +1,6 @@
 import {useAtom} from "jotai";
 import {todosAtom} from "../../../state/atoms/application.state.atoms.ts";
-import React, {useState} from "react";
+import React from "react";
 import SetTitleForCreateTodoForm from "./SetTitleForCreateTodoForm.tsx";
 import SetTagsToNewTodo from "./SetTagsToNewTodo.tsx";
 import {createTodoForm} from "../../../state/atoms/createTodoForm.ts";
@@ -16,11 +16,11 @@ export default function NewTodo() {
 
     return (
         <>
-            <div >
+            <div>
                 <SetTitleForCreateTodoForm/>
-               <SetDescriptionForNewTodo/>
+                <SetDescriptionForNewTodo/>
                 <SetPriorityForNewTodo/>
-          <SetDueDateForNewTodo />
+                <SetDueDateForNewTodo/>
                 <SetTagsToNewTodo/>
                 <button style={{width: '100%'}} onClick={async () => {
                     http.api.todosCreate(newTodoForm).then(resp => {

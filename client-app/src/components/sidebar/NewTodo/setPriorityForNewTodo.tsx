@@ -12,8 +12,8 @@ export default function SetPriorityForNewTodo() {
             {[0, 1, 2, 3, 4].map(priority =>
                 <option key={priority} value={priority}>
                     {priority === 0 ? '0: Lowest priority' :
-                            priority === 4 ? '4: Highest priority' :
-                                priority}
+                        priority === 4 ? '4: Highest priority' :
+                            priority}
                 </option>
             )}
         </select>

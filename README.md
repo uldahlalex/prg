@@ -6,8 +6,8 @@
 - Feature-per-endpoint (iteration of vertical slicing)
 
 ## Data schema:
-Can be found in directory `server-app/api/Boilerplate/DbHelpers/DbScripts.cs`
 
+Can be found in directory `server-app/api/Boilerplate/DbHelpers/DbScripts.cs`
 
 ## Quickstart with Docker Compose:
 

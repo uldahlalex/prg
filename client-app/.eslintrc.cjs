@@ -25,7 +25,8 @@ module.exports = {
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module",
-        "project": "./tsconfig.json"     },
+        "project": "./tsconfig.json"
+    },
     "plugins": [
         "@typescript-eslint",
         "react"
@@ -36,7 +37,7 @@ module.exports = {
         "@typescript-eslint/no-explicit-any": "off",
         "react/prop-types": "off",
         "no-console": "warn",
-        "react/jsx-key": ["error", { "checkFragmentShorthand": true }]
+        "react/jsx-key": ["error", {"checkFragmentShorthand": true}]
 
     }
 };

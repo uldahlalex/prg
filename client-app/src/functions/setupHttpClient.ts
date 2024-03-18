@@ -4,7 +4,6 @@ import {userAtom} from "../state/atoms/application.state.atoms.ts";
 import {AxiosError, AxiosResponse} from "axios";
 import toast from "react-hot-toast";
 import {Api} from "../../httpclient/Api.ts";
-import qs from 'qs';
 
 export const http = new Api({
     baseURL: 'http://localhost:5000',
@@ -26,7 +25,7 @@ export function SetupHttpClient() {
         }
         return response;
     }, (error: AxiosError<any, any>) => {
-        toast( error.response!.data?.message || 'An error occurred', {icon: '🔥'})
+        toast(error.response!.data?.message || 'An error occurred', {icon: '🔥'})
         if (error.response && error.response.status === 401) {
             handleUnauthorizedAccess();
         }

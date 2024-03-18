@@ -2,7 +2,6 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import toast from "react-hot-toast";
 import {User} from "../../types/user.ts";
-import {AuthenticationRequestDto} from "../../../httpclient/Api.ts";
 import {useAtom} from "jotai/index";
 import {userAtom} from "../../state/atoms/application.state.atoms.ts";
 import {decodeJwt} from "../../functions/jwtDecoder.ts";
@@ -19,7 +18,7 @@ export default function Login() {
 
     useEffect(() => {
         const jwt = localStorage.getItem('token');
-        if(!jwt || jwt.length==0)
+        if (!jwt || jwt.length == 0)
             setUser(null);
         else {
             navigate('/feed')
@@ -32,7 +31,7 @@ export default function Login() {
     }
 
     const signIn = (e) => {
-         http.api.signinCreate(loginForm).then((r) => {
+        http.api.signinCreate(loginForm).then((r) => {
             localStorage.setItem('token', r.data.token!)
             navigate('/feed');
             toast("welcome back")
@@ -46,7 +45,7 @@ export default function Login() {
             toast("welcome aboard")
             setUser(decodeJwt(r.data.token!));
         });
-        }
+    }
 
     return (
         <div>
@@ -59,7 +58,7 @@ export default function Login() {
             <div>
                 <label htmlFor="password">Password</label>
                 <input onChange={handleInput} onKeyDown={(e) => {
-                    if(e.key === 'Enter') signIn(e);
+                    if (e.key === 'Enter') signIn(e);
                 }} type="password" name="password"/>
             </div>
             <button onClick={signIn}>Login

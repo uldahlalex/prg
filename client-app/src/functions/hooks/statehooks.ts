@@ -2,7 +2,6 @@ import {useAtom} from "jotai/index";
 import {useEffect} from "react";
 import {queryPreferencesAtom} from "../../state/atoms/queryPreferencesAtom.ts";
 import {tagsAtom, todosAtom, userAtom} from "../../state/atoms/application.state.atoms.ts";
-import toast from "react-hot-toast";
 import {decodeJwt} from "../jwtDecoder.ts";
 import {User} from "../../types/user.ts";
 import {http} from "../setupHttpClient.ts";
@@ -15,7 +14,7 @@ export default function StateHooks() {
     const [, setTags] = useAtom(tagsAtom);
 
     useEffect(() => {
-        if(!user) return;
+        if (!user) return;
         http.api
             .todosList({
                 orderBy: todosQueryPreferences.orderBy,
@@ -29,7 +28,7 @@ export default function StateHooks() {
 
     useEffect(() => {
         const jwt = localStorage.getItem('token');
-        if(!jwt || jwt.length==0)
+        if (!jwt || jwt.length == 0)
             setUser(null);
         else {
             setUser(decodeJwt(jwt));
@@ -37,7 +36,7 @@ export default function StateHooks() {
     }, []); //Are there other hooks that impact this??
 
     useEffect(() => {
-        if(!user) return;
+        if (!user) return;
         http.api
             .tagsList()
             .then(resp => setTags(resp.data))

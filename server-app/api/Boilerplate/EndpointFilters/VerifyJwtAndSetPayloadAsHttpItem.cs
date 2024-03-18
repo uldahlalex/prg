@@ -10,8 +10,8 @@ public class VerifyJwtAndSetPayloadAsHttpItem(TokenService tokenService) : IEndp
     {
         try
         {
-            string jwt = context.HttpContext.Request.Headers[StringConstants.JwtConstants.Authorization][0] ??
-                         throw new InvalidOperationException("Could not find token in headers!");
+            var jwt = context.HttpContext.Request.Headers[StringConstants.JwtConstants.Authorization][0] ??
+                      throw new InvalidOperationException("Could not find token in headers!");
             var payload = tokenService.ValidateJwtAndReturnClaims(jwt);
             context.HttpContext.Items.Add(StringConstants.JwtConstants.Payload, payload);
             return await next(context);

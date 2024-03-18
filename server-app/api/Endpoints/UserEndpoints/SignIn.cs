@@ -4,7 +4,7 @@ using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
-namespace api.Endpoints.User;
+namespace api.Endpoints.UserEndpoints;
 
 public class SignIn : ICarterModule
 {

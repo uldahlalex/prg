@@ -1,8 +1,8 @@
-using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Extensions;
-using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
+
+namespace api.Boilerplate;
 
 public class SwaggerJsonGeneratorService : BackgroundService
 {
@@ -23,9 +23,11 @@ public class SwaggerJsonGeneratorService : BackgroundService
             var swaggerProvider = scope.ServiceProvider.GetRequiredService<ISwaggerProvider>();
             var doc = swaggerProvider.GetSwagger("v1");
             var swaggerFile = doc.SerializeAsJson(OpenApiSpecVersion.OpenApi3_0);
-            var outputPath = Path.Combine(_serviceProvider.GetRequiredService<IWebHostEnvironment>().ContentRootPath+"/../../", "swagger.json");
+            var outputPath =
+                Path.Combine(_serviceProvider.GetRequiredService<IWebHostEnvironment>().ContentRootPath + "/../../",
+                    "swagger.json");
 
-            System.IO.File.WriteAllText(outputPath, swaggerFile);
+            File.WriteAllText(outputPath, swaggerFile);
         }
     }
 }

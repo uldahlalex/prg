@@ -7,6 +7,6 @@ export default function SetDescriptionForNewTodo() {
         <label htmlFor="description">Description</label>
         <input placeholder="Descriptio" value={todoForm.description!} onChange={(e) => {
             setCreateTodoForm({...todoForm, description: e.target.value})
-        }} />
+        }}/>
     </>;
 }

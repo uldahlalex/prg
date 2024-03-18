@@ -27,7 +27,7 @@ export default function Feed() {
 
 
             <div>
-                <FilterFeedByTag />
+                <FilterFeedByTag/>
                 <FeedOrderBy/>
 
             </div>

@@ -1,7 +1,7 @@
 using api.Boilerplate.EndpointFilters;
 using Carter;
 
-namespace api.Endpoints.User;
+namespace api.Endpoints.UserEndpoints;
 
 public class Test : ICarterModule
 {

@@ -15,29 +15,30 @@ namespace tests;
 [TestFixture]
 public class ApiTests
 {
-    private readonly TestSetup _setup = new();
-
     [SetUp]
     public void BeforeEachTest()
     {
         _setup.App.Services.GetService<DbScripts>()!.RebuildDbSchema();
     }
-    
+
+    private readonly TestSetup _setup = new();
+
     [Test]
     public async Task CreateUserTest()
     {
         var response = _setup.HttpClient.PostAsJsonAsync("/api/user", _setup.TestUser).Result;
         var token = await response.Content.ReadAsStringAsync();
-        
+
         using (var conn = _setup.App.Services.GetService<NpgsqlDataSource>().OpenConnection())
         {
             var count = conn.ExecuteScalar("SELECT COUNT(*) FROM todo_manager.user WHERE username = 'Bob'");
             Assert.That(count, Is.EqualTo(1), "Correct insertion to DB");
-        } 
+        }
+
         Assert.DoesNotThrow(() => new TokenService().ValidateJwtAndReturnClaims(token), "Token validation");
-        Assert.True(response.IsSuccessStatusCode, "Http response code"); 
+        Assert.True(response.IsSuccessStatusCode, "Http response code");
     }
-    
+
 
     [Test]
     public async Task CreateTodo()
@@ -49,12 +50,8 @@ public class ApiTests
         Console.WriteLine(response);
         var body = response.Content.ReadAsStringAsync().Result;
         Console.WriteLine(body);
-        TodoWithTags responseTodo = (await response.Content.ReadAsStringAsync()).Deserialize<TodoWithTags>();
+        var responseTodo = (await response.Content.ReadAsStringAsync()).Deserialize<TodoWithTags>();
         _setup.TestTodo.Should().BeEquivalentTo(responseTodo);
-        Assert.True(response.IsSuccessStatusCode, "Http response code"); 
+        Assert.True(response.IsSuccessStatusCode, "Http response code");
     }
-
-    
-    
 }
-

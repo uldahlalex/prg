@@ -4,7 +4,6 @@ using api.Boilerplate.DbHelpers;
 using api.Boilerplate.ReusableHelpers.GlobalValues;
 using api.Boilerplate.ReusableHelpers.Security;
 using Carter;
-using Microsoft.OpenApi.Models;
 
 namespace api;
 
@@ -42,16 +41,13 @@ public class Program
             .AddEndpointsApiExplorer()
             .AddSwaggerDefinition();
         builder.Services.AddHostedService<SwaggerJsonGeneratorService>();
-        
+
         if (Env.ASPNETCORE_ENVIRONMENT.Equals(StringConstants.Environments.Testing))
             builder.WebHost.UseUrls("http://localhost:9999");
         var app = builder.Build();
         app.UseCustomExceptionHandling()
             .UseSwagger()
-            .UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-            })
+            .UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"); })
             .UseCors(options =>
             {
                 options.SetIsOriginAllowed(_ => true)

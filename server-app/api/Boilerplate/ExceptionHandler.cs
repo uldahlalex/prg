@@ -1,3 +1,4 @@
+using System.Security.Authentication;
 using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 
@@ -19,13 +20,13 @@ public static class ExceptionHandler
                     var exception = contextFeature.Error;
                     string message;
                     int statusCode;
-                    if (exception is System.Security.Authentication.AuthenticationException ||
-                        exception is ValidationException || 
-                        exception is System.ComponentModel.DataAnnotations.ValidationException) 
+                    if (exception is AuthenticationException ||
+                        exception is ValidationException ||
+                        exception is System.ComponentModel.DataAnnotations.ValidationException)
                     {
-                        statusCode = exception is System.Security.Authentication.AuthenticationException 
-                            ? StatusCodes.Status401Unauthorized 
-                            : StatusCodes.Status400BadRequest; 
+                        statusCode = exception is AuthenticationException
+                            ? StatusCodes.Status401Unauthorized
+                            : StatusCodes.Status400BadRequest;
                         message = exception.Message;
                     }
                     else

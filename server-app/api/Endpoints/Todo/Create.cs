@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using api.Boilerplate.EndpointFilters;
 using api.Boilerplate.ReusableHelpers.GlobalModels;
 using Carter;
@@ -13,8 +12,8 @@ public class Create : ICarterModule
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPost("/api/todos", (
-            [FromBody]CreateTodoRequestDto req, 
-            [FromServices]NpgsqlDataSource ds, 
+            [FromBody] CreateTodoRequestDto req,
+            [FromServices] NpgsqlDataSource ds,
             HttpContext context) =>
         {
             var user = Boilerplate.ReusableHelpers.GlobalModels.User.FromHttpItemsPayload(context);
