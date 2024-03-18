@@ -17,6 +17,7 @@ export default function Sidebar() {
 
             <NewTodo/>
 
+            <hr />
             <CreateNewTag/>
         </div>
     </>)

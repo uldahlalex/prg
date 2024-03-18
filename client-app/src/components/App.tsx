@@ -36,32 +36,41 @@ export default function App() {
     return (
 
         <>
-
             <Toaster/>
-            <div style={{display: 'flex'}}>
+            <div id="verticalContainer" style={{
+                display: 'flex',
+                marginTop: '50px',
+                flexDirection: 'column',
+                justifyContent: 'space-around',
+                height: '90vh'
+            }}>
+                <div id="topContainer" style={{justifyContent: 'space-between'}}>
+                    <div style={{display: 'flex', height: '90%', justifyContent: 'space-evenly'}}>
+                        <div style={{maxWidth: '30%'}}>
+                            <Sidebar/>
+                        </div>
 
-                <div style={{maxWidth: '30%'}}>
-                    <Sidebar/>
+                        <div>
+                            <RouterProvider router={router}/>
+                        </div>
+                    </div>
+
+                </div>
+                {/*todo fix space horizontal sides*/}
+                <div id="bottomContainer" style={{justifyContent: 'space-around', wordWrap: 'break-word'}}>
+                    <div>                       {
+                        user ? <>
+                            <p>Logged in as {JSON.stringify(user)}</p>
+                            <button onClick={() => {
+                                localStorage.removeItem('token');
+                                setUser(null);
+                            }}>Sign out
+                            </button>
+                        </> : null
+                    }</div>
                 </div>
 
-                <div>
-                    <RouterProvider router={router}/>
-
-                </div>
             </div>
-            <footer>
-                {
-                    user ? <>
-                        <p>Logged in as {JSON.stringify(user)}</p>
-                        <button onClick={() => {
-                            localStorage.removeItem('token');
-                            setUser(null);
-                        }}>Sign out
-                        </button>
-                    </> : null
-                }
-
-            </footer>
         </>
     )
 

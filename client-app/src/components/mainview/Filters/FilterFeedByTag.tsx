@@ -22,14 +22,15 @@ export default function FilterFeedByTag() {
         <h1>Filter by tags</h1>
 
         {tags.map(tag =>
-            <>
-                <span key={tag.id}>               {tag.name}
+            
+                <span key={tag.id}>
+                    {tag.name}
                     <input type="checkbox"
                            checked={queryPreferences.tags.includes(tag.id!)}
                            value={tag.id} onChange={(e) => toggleFilterByTodo(tag)}/></span>
 
 
-            </>
         )}
+
     </>
 }
