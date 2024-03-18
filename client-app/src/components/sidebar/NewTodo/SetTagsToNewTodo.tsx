@@ -40,7 +40,7 @@ export default function SetTagsToNewTodo() {
                                  setNewTodoForm({...newTodoForm, tags: [...e.map(e => e.value as Tag)]});
                              }
                              }
-            />;
+            />
         </>
 
     );

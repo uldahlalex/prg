@@ -47,12 +47,12 @@ export default function App() {
                 paddingRight: "10%"
             }}>
                 <div id="topContainer">
-                    <div style={{display: 'flex', height: '90%', justifyContent: "space-between"}}>
-                        <div style={{maxWidth: '30%'}}>
+                    <div style={{display: 'flex', height: '90%', justifyContent: "space-evenly"}}>
+                        <div style={{width: '30%'}}>
                             <Sidebar/>
                         </div>
 
-                        <div>
+                        <div style={{width: '60%'}}>
                             <RouterProvider router={router}/>
                         </div>
                     </div>
@@ -66,6 +66,11 @@ export default function App() {
                                 localStorage.removeItem('token');
                                 setUser(null);
                             }}>Sign out
+                            </button>
+                            <button onClick={() => {
+
+                            }}>
+                                Switch to other user
                             </button>
                         </> : null
                     }</div>

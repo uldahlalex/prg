@@ -21,16 +21,20 @@ export default function FilterFeedByTag() {
     return <>
         <h1>Filter by tags</h1>
 
-        {tags.map(tag =>
-            
-                <span key={tag.id}>
-                    {tag.name}
+        <div style={{display: "flex", flexDirection: "row", flexWrap: "wrap"}}>
+            {tags.map((tag, index) =>
+                <div key={index} style={{margin: "10px"}}>
+                    <span style={{
+                        transform: "rotate(-45deg)",
+                        display: "block",
+                        textAlign: "right"
+                    }}>&nbsp;{tag.name}</span>
                     <input type="checkbox"
                            checked={queryPreferences.tags.includes(tag.id!)}
-                           value={tag.id} onChange={(e) => toggleFilterByTodo(tag)}/></span>
-
-
-        )}
+                           value={tag.id} onChange={(e) => toggleFilterByTodo(tag)}/>
+                </div>
+                )}
+        </div>
 
     </>
 }
