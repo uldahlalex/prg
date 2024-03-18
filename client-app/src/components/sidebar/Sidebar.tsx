@@ -3,6 +3,7 @@ import CreateNewTag from "./newTag/CreateNewTag.tsx";
 import React from "react";
 import {useAtom} from "jotai/index";
 import {userAtom} from "../../state/atoms/application.state.atoms.ts";
+import EditTags from "./EditTags/EditTags.tsx";
 
 export default function Sidebar() {
 
@@ -17,7 +18,10 @@ export default function Sidebar() {
             <NewTodo/>
 
             <hr/>
-            {/*<CreateNewTag/>*/}
+            <CreateNewTag/>
+            <hr />
+            <EditTags />
+            <hr />
         </div>
     </>)
 }
