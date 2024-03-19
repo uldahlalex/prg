@@ -26,7 +26,6 @@ export default function SetTagsToNewTodo() {
                              onCreateOption={e => {
                                  http.api.tagsCreate({
                                      name: e,
-                                     userId: user!.id
                                  }).then(resp => {
                                      setAvailableTags([...availableTags, resp.data]);
                                      setNewTodoForm({...newTodoForm, tags: [...newTodoForm.tags!, resp.data]});

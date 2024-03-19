@@ -156,6 +156,15 @@
             }
           },
           {
+            "name": "showCompleted",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
             "name": "limit",
             "in": "query",
             "style": "form",

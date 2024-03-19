@@ -20,7 +20,8 @@ export default function StateHooks() {
                 orderBy: todosQueryPreferences.orderBy,
                 direction: todosQueryPreferences.direction,
                 serializedTagArray: JSON.stringify(todosQueryPreferences.tags),
-                limit: todosQueryPreferences.limit
+                limit: todosQueryPreferences.limit,
+                showCompleted: todosQueryPreferences.showCompleted
             })
             .then(resp => setTodos(resp.data))
 

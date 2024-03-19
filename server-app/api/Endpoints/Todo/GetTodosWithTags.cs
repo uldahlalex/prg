@@ -17,11 +17,13 @@ public class GetTodosWithTags : ICarterModule
             [FromQuery] string serializedTagArray,
             [FromQuery] string orderBy,
             [FromQuery] string direction,
+            [FromQuery] bool showCompleted,
             [FromQuery] int limit = 50) =>
         {
             var tags = JsonSerializer.Deserialize<int[]>(serializedTagArray);
             IEnumerable<dynamic> todos;
             var filterByTags = tags == null || tags.Length == 0 ? "" : " WHERE tag.id = ANY(@Tags) ";
+            var filterByNotCompleted = showCompleted ? "" : " AND t.iscompleted = false ";
             await using (var con = ds.OpenConnection())
             {
                 todos = con.Query(@$"
@@ -39,6 +41,7 @@ FROM todo_manager.todo t
 LEFT JOIN todo_manager.todo_tag tt ON t.id = tt.todoid
 LEFT JOIN todo_manager.tag tag ON tt.tagid = tag.id  
 {filterByTags} 
+{filterByNotCompleted}
 AND t.userid = @UserId 
 GROUP BY t.id
 ORDER BY t.{orderBy} {direction}

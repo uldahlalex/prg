@@ -6,6 +6,7 @@ import {todosAtom, userAtom} from "../../state/atoms/application.state.atoms.ts"
 import FeedOrderBy from "./Filters/FeedOrderBy.tsx";
 import FilterFeedByTag from "./Filters/FilterFeedByTag.tsx";
 import {useNavigate} from "react-router-dom";
+import FilterByState from "./Filters/FilterByState.tsx";
 
 export default function Feed() {
     const navigate = useNavigate();
@@ -28,6 +29,7 @@ export default function Feed() {
 
             <div>
                 <FilterFeedByTag/>
+                <FilterByState />
                 <FeedOrderBy/>
 
             </div>
