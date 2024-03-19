@@ -36,44 +36,45 @@ export default function App() {
     return (
 
         <>
+
             <Toaster/>
             <div id="verticalContainer" style={{
                 display: 'flex',
-                marginTop: '50px',
                 flexDirection: 'column',
-                justifyContent: 'space-around',
-                height: '90vh',
-                paddingLeft: "10%",
-                paddingRight: "10%"
+                justifyContent: 'space-between',
+                minHeight: '100vh',
             }}>
                 <div id="topContainer">
-                    <div style={{display: 'flex', height: '90%', justifyContent: "space-evenly"}}>
-                        <div style={{width: '30%'}}>
+                    <div style={{display: 'flex', height: 'auto', justifyContent: "space-evenly"}}>
+                        <div style={{maxWidth: '30%'}}>
                             <Sidebar/>
                         </div>
 
-                        <div style={{width: '60%'}}>
+                        <div style={{maxWidth: '60%'}}>
                             <RouterProvider router={router}/>
                         </div>
                     </div>
 
                 </div>
-                <div id="bottomContainer" style={{justifyContent: 'space-around', wordWrap: 'break-word'}}>
-                    <div>                       {
+                <div id="bottomContainer" style={{backgroundColor: '#9b4dca', justifyContent: 'space-around', wordWrap: 'break-word', bottom: '0'}}>
+                    <div style={{display: "flex", justifyContent: "space-evenly"}}>
+                        {
                         user ? <>
-                            <p>Logged in as {JSON.stringify(user)}</p>
                             <button onClick={() => {
                                 localStorage.removeItem('token');
                                 setUser(null);
                             }}>Sign out
                             </button>
+                            <button className="button-clear button-black">Logged in
+                                as {JSON.stringify(user.username)}</button>
+
                             <button onClick={() => {
 
                             }}>
                                 Switch to other user
                             </button>
                         </> : null
-                    }</div>
+                        }</div>
                 </div>
 
             </div>

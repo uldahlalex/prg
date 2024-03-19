@@ -7,6 +7,7 @@ export default function EditTags() {
     const [openDialog, setOpenDialog] = useState<number | null>(null);
     const [newTagName, setNewTagName] = useState<string>(""); //todo make atom for tag form
     const [dialogCoordinates, setDialogCoordinates] = useState<{x: number, y: number} | null>({x: 0, y: 0});
+const [expanded, setExpanded] = useState(false);
 
     const handleDelete = (index: number) => {
         setTags(tags.filter((_, i) => i !== index));
@@ -26,16 +27,22 @@ export default function EditTags() {
 
     return(
         <>
-            <details style={{cursor: "pointer"}}>
-                <summary>All My Tags</summary>
+
+                <details style={{cursor: "pointer"}}>
+                <summary //toggle expanded state
+                    onClick={() => setExpanded(!expanded)}
+                    style={{cursor: "pointer", fontWeight: "bold"}}>
+
+                   &nbsp;&nbsp;{expanded ? "Show" : "Hide"} All My Tags
+                </summary>
                 <div>
                     {
                         tags.map((tag, index) =>
                             <div key={index}>
-                                <button onClick={(e) => {
+                                <button className="button-clear" onClick={(e) => {
                                     setOpenDialog(index);
                                     setDialogCoordinates({x: e.clientX, y: e.clientY})
-                                }}>{tag.name}</button>
+                                }}>{tag.name}&nbsp;&nbsp;&nbsp;⚙️</button>
                                 {
                                     openDialog === index && (
                                         <div style={{
@@ -48,18 +55,31 @@ export default function EditTags() {
                                             borderRadius: '5px',
                                         }}>
 
-                                            <div style={{marginBottom: '10px', display: 'flex', justifyContent: "center"}}>
-                                                <input style={{ height: '50%', width: '40%'}} type="text" value={newTagName}
-                                                       onChange={(e) => setNewTagName(e.target.value)}
-                                                       placeholder="New tag name"/>
-                                                <button style={{width: "25%"}}  onClick={() => handleRename(index)}>Rename</button>
-                                            </div>
-                                            <div style={{display: "flex", justifyContent: "center"}}>
-                                                <button className="button-outline button-black" style={{width: "25%"}} onClick={() => setOpenDialog(null)}>Close Dialog</button>
-
-                                                <button style={{marginBottom: '10px', width: "25%"}}
+                                            <div style={{
+                                                marginBottom: '10px',
+                                                display: 'flex',
+                                                justifyContent: "center"
+                                            }}>
+                                                <button className="button-black" style={{marginBottom: '10px', width: "25%"}}
                                                         onClick={() => handleDelete(index)}>Delete
                                                 </button>
+
+                                                <button className="button-outline button-black" style={{width: "25%"}}
+                                                        onClick={() => setOpenDialog(null)}>Close Dialog
+                                                </button>
+
+
+                                            </div>
+                                            <div style={{display: "flex", justifyContent: "center"}}>
+                                                <button disabled={!newTagName || newTagName.length==0} style={{width: "25%"}}
+                                                        onClick={() => handleRename(index)}>Rename
+                                                </button>
+                                                <input style={{height: '50%', width: '40%'}} type="text"
+                                                       value={newTagName}
+                                                       onChange={(e) => setNewTagName(e.target.value)}
+                                                       placeholder="New tag name"/>
+
+
                                             </div>
 
                                         </div>
