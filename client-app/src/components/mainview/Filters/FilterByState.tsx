@@ -13,10 +13,9 @@ export default function FilterByState() {
         <label>Show completed</label>
         <input onChange={(e) => {
             if(e.target.checked) {
-                setQueryPreferences({...queryPreferences, showCompleted: !queryPreferences.showCompleted});
-                setTodos(todos.filter(t => !t.isCompleted));
+                setQueryPreferences({...queryPreferences, showCompleted: true});
             } else  {
-                setQueryPreferences({...queryPreferences, showCompleted: !queryPreferences.showCompleted});
+                setQueryPreferences({...queryPreferences, showCompleted: false});
             }
         }}  type="checkbox" />
     </>;
