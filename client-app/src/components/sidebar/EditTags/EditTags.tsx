@@ -9,6 +9,7 @@ export default function EditTags() {
     const [dialogCoordinates, setDialogCoordinates] = useState<{x: number, y: number} | null>({x: 0, y: 0});
 const [expanded, setExpanded] = useState(false);
 
+//todo fix all the crud
     const handleDelete = (index: number) => {
         setTags(tags.filter((_, i) => i !== index));
         setOpenDialog(null);
@@ -54,32 +55,33 @@ const [expanded, setExpanded] = useState(false);
                                             padding: '10px',
                                             borderRadius: '5px',
                                         }}>
-
+  <span style={{position: 'absolute', top: 0, right: 0, cursor: "pointer"}}
+        onClick={() => setOpenDialog(null)}>❌
+                                                </span>
                                             <div style={{
                                                 marginBottom: '10px',
                                                 display: 'flex',
                                                 justifyContent: "center"
                                             }}>
-                                                <button className="button-black" style={{marginBottom: '10px', width: "25%"}}
-                                                        onClick={() => handleDelete(index)}>Delete
-                                                </button>
-
-                                                <button className="button-outline button-black" style={{width: "25%"}}
-                                                        onClick={() => setOpenDialog(null)}>Close Dialog
-                                                </button>
-
-
-                                            </div>
-                                            <div style={{display: "flex", justifyContent: "center"}}>
-                                                <button disabled={!newTagName || newTagName.length==0} style={{width: "25%"}}
+                                                <button disabled={!newTagName || newTagName.length == 0}
+                                                        style={{flex: "1"}}
                                                         onClick={() => handleRename(index)}>Rename
                                                 </button>
-                                                <input style={{height: '50%', width: '40%'}} type="text"
+                                                <input style={{ flex: "1"}} type="text"
                                                        value={newTagName}
                                                        onChange={(e) => setNewTagName(e.target.value)}
                                                        placeholder="New tag name"/>
 
 
+
+
+                                            </div>
+                                            <div style={{display: "flex", justifyContent: "center"}}>
+
+                                                <button className="button-black"
+                                                        style={{marginBottom: '10px' ,width: '70%'}}
+                                                        onClick={() => handleDelete(index)}>Delete Tag '{tag.name}'
+                                                </button>
                                             </div>
 
                                         </div>
@@ -88,7 +90,7 @@ const [expanded, setExpanded] = useState(false);
                         )
                     }
                 </div>
-            </details>
+                </details>
         </>
     )
 }

@@ -9,6 +9,7 @@ import SetPriorityForNewTodo from "./setPriorityForNewTodo.tsx";
 
 import {http} from "../../../functions/setupHttpClient.ts";
 import SetDueDateForNewTodo from "./SetDueDateForNewTodo.tsx";
+import {faker} from "@faker-js/faker";
 
 export default function NewTodo() {
     const [todos, setTodos] = useAtom(todosAtom);
@@ -26,11 +27,11 @@ export default function NewTodo() {
                     http.api.todosCreate(newTodoForm).then(resp => {
                         setTodos([...todos, resp.data]);
                         setNewTodoForm({
-                            dueDate: "",
-                            title: "",
-                            description: "",
-                            priority: 0,
-                            tags: []
+                            title: faker.hacker.phrase(),
+                            description: faker.lorem.paragraph(),
+                            tags: [],
+                            dueDate: new Date().toISOString().slice(0, 10),
+                            priority: 0
                         });
 
                     });
