@@ -34,7 +34,7 @@ const [expanded, setExpanded] = useState(false);
                     onClick={() => setExpanded(!expanded)}
                     style={{cursor: "pointer", fontWeight: "bold"}}>
 
-                   &nbsp;&nbsp;{expanded ? "Show" : "Hide"} All My Tags
+                   &nbsp;&nbsp;{expanded ? "Hide " : "Show "} My Tags
                 </summary>
                 <div>
                     {

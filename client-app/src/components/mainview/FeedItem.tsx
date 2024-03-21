@@ -15,26 +15,29 @@ export default function FeedItem({ todo }: TodoProp) {
 
     return (
         <>
-            <input checked={todo.isCompleted} onChange={(e) => {
-                if(e.target.checked) {
-                    http.api.todosUpdate(todo.id+"", {...todo, isCompleted: true})
-                        .then(resp => {
-                            if(queryPreferences.showCompleted) setTodos(todos.map(t => t.id === todo.id ? resp.data : t));
-                            else setTodos(todos.filter(t => t.id !== todo.id));
-                    });
-                } else {
-                    http.api.todosUpdate(todo.id+"", {...todo, isCompleted: false})
-                        .then(resp => {
-                        setTodos(todos.map(t => t.id === todo.id ? resp.data : t));
-                    });
-                }
-            }} type="checkbox" />
-            <button onClick={() => {
-                toast('Not implemented yet');
-                //Open dialog
-            }} className="button-clear" title={JSON.stringify(todo)}>
-                ID: {todo.id}: {todo.title} {todo.isCompleted ? 'COMPLETEED' : ''}
-            </button>
+            <div>
+                <input checked={todo.isCompleted} onChange={(e) => {
+                    if (e.target.checked) {
+                        http.api.todosUpdate(todo.id + "", {...todo, isCompleted: true})
+                            .then(resp => {
+                                if (queryPreferences.showCompleted) setTodos(todos.map(t => t.id === todo.id ? resp.data : t));
+                                else setTodos(todos.filter(t => t.id !== todo.id));
+                            });
+                    } else {
+                        http.api.todosUpdate(todo.id + "", {...todo, isCompleted: false})
+                            .then(resp => {
+                                setTodos(todos.map(t => t.id === todo.id ? resp.data : t));
+                            });
+                    }
+                }} type="checkbox"/>
+                <button onClick={() => {
+                    toast('Not implemented yet');
+                    //Open dialog
+                }} className="button-clear" title={JSON.stringify(todo)}>
+                    ID: {todo.id}: {todo.title} {todo.isCompleted ? 'COMPLETEED' : ''}
+                </button>
+            </div>
+
         </>);
 
 

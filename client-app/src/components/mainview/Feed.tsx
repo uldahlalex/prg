@@ -34,7 +34,7 @@ export default function Feed() {
 
             </div>
 
-            <div>
+            <div style={{display: 'flex', flexDirection: 'column'}}>
                 {
                     todos.map((todo, index) => <FeedItem key={index} todo={todo}/>)
 

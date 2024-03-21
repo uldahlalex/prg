@@ -3,6 +3,7 @@ import {useAtom} from "jotai";
 import {queryPreferencesAtom} from "../../../state/atoms/queryPreferencesAtom.ts";
 
 import {QueryPreferences} from "../../../types/QueryPreferences.tsx";
+import React from "react";
 
 export default function FilterFeedByTag() {
     const [queryPreferences, setQueryPreferences] = useAtom<QueryPreferences>(queryPreferencesAtom);
@@ -18,8 +19,10 @@ export default function FilterFeedByTag() {
         }
     }
 
+    const value = queryPreferences.tags.map(tag => tags.find(t => t.id === tag)?.name);
     return <>
         <h1>Filter by tags</h1>
+
 
         <div style={{display: "flex", flexDirection: "row", flexWrap: "wrap"}}>
             {tags.map((tag, index) =>

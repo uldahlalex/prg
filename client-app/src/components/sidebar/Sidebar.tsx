@@ -14,11 +14,11 @@ export default function Sidebar() {
     return (<>
         <div style={{maxWidth: '100%'}}>
 
-
+            <img src="https://raw.githubusercontent.com/oxalorg/sakura/master/sakura160.jpg"/>
             <NewTodo/>
 
-            <hr/>
-            <CreateNewTag/>
+            {/*<hr/>*/}
+            {/*<CreateNewTag/>*/}
             <hr />
             <EditTags />
             <hr />
