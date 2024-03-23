@@ -7,6 +7,8 @@ import {userAtom} from "../state/atoms/application.state.atoms.ts";
 import StateHooks from "../functions/hooks/statehooks.ts";
 import Sidebar from "./sidebar/Sidebar.tsx";
 import {User} from "../types/user.ts";
+import { Button } from "@/components/ui/button"
+
 
 
 import {SetupHttpClient} from "../functions/setupHttpClient.ts";
@@ -68,11 +70,11 @@ export default function App() {
                             <button className="button-clear button-black">Logged in
                                 as {JSON.stringify(user.username)}</button>
 
-                            <button onClick={() => {
+                            <Button onClick={() => {
 
                             }}>
                                 Switch to other user
-                            </button>
+                            </Button>
                         </> : null
                         }</div>
                 </div>
