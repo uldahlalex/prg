@@ -2,6 +2,7 @@ import {useAtom} from "jotai";
 import {tagsAtom, userAtom} from "../../../state/atoms/application.state.atoms.ts";
 import React from "react";
 import {createTodoForm} from "../../../state/atoms/createTodoForm.ts";
+import CreatableSelect from "react-select/creatable";
 import {Tag} from "../../../../httpclient/Api.ts";
 import {http} from "../../../functions/setupHttpClient.ts";
 
@@ -21,24 +22,24 @@ export default function SetTagsToNewTodo() {
     return (<>
             <label>Tags</label>
 
-        {/*    <CreatableSelect isMulti*/}
-        {/*                     onCreateOption={e => {*/}
-        {/*                         http.api.tagsCreate({*/}
-        {/*                             name: e,*/}
-        {/*                         }).then(resp => {*/}
-        {/*                             setAvailableTags([...availableTags, resp.data]);*/}
-        {/*                             setNewTodoForm({...newTodoForm, tags: [...newTodoForm.tags!, resp.data]});*/}
-        {/*                         })*/}
-        {/*                     }}*/}
-        {/*                     options={availableTags.map(tag => {*/}
-        {/*                         return {value: tag, label: tag.name}*/}
-        {/*                     })}*/}
+            <CreatableSelect isMulti
+                             onCreateOption={e => {
+                                 http.api.tagsCreate({
+                                     name: e,
+                                 }).then(resp => {
+                                     setAvailableTags([...availableTags, resp.data]);
+                                     setNewTodoForm({...newTodoForm, tags: [...newTodoForm.tags!, resp.data]});
+                                 })
+                             }}
+                             options={availableTags.map(tag => {
+                                 return {value: tag, label: tag.name}
+                             })}
 
-        {/*                     onChange={(e) => {*/}
-        {/*                         setNewTodoForm({...newTodoForm, tags: [...e.map(e => e.value as Tag)]});*/}
-        {/*                     }*/}
-        {/*                     }*/}
-        {/*    />*/}
+                             onChange={(e) => {
+                                 setNewTodoForm({...newTodoForm, tags: [...e.map(e => e.value as Tag)]});
+                             }
+                             }
+            />
         </>
 
     );
