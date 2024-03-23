@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {useAtom} from "jotai/index";
 import {tagsAtom} from "../../../state/atoms/application.state.atoms.ts";
+import {Button} from "@mui/material";
 
 export default function EditTags() {
     const [tags, setTags] = useAtom(tagsAtom);
@@ -40,10 +41,10 @@ const [expanded, setExpanded] = useState(false);
                     {
                         tags.map((tag, index) =>
                             <div key={index}>
-                                <button className="button-clear" onClick={(e) => {
+                                <Button  onClick={(e) => {
                                     setOpenDialog(index);
                                     setDialogCoordinates({x: e.clientX, y: e.clientY})
-                                }}>{tag.name}&nbsp;&nbsp;&nbsp;⚙️</button>
+                                }}>{tag.name}&nbsp;&nbsp;&nbsp;⚙️</Button>
                                 {
                                     openDialog === index && (
                                         <div style={{
@@ -63,10 +64,10 @@ const [expanded, setExpanded] = useState(false);
                                                 display: 'flex',
                                                 justifyContent: "center"
                                             }}>
-                                                <button disabled={!newTagName || newTagName.length == 0}
+                                                <Button disabled={!newTagName || newTagName.length == 0}
                                                         style={{flex: "1"}}
                                                         onClick={() => handleRename(index)}>Rename
-                                                </button>
+                                                </Button>
                                                 <input style={{ flex: "1"}} type="text"
                                                        value={newTagName}
                                                        onChange={(e) => setNewTagName(e.target.value)}
@@ -78,10 +79,10 @@ const [expanded, setExpanded] = useState(false);
                                             </div>
                                             <div style={{display: "flex", justifyContent: "center"}}>
 
-                                                <button className="button-black"
+                                                <Button className="Button-black"
                                                         style={{marginBottom: '10px' ,width: '70%'}}
-                                                        onClick={() => handleDelete(index)}>Delete Tag '{tag.name}'
-                                                </button>
+                                                        onClick={() => handleDelete(index)}>Delete Tag {tag.name}
+                                                </Button>
                                             </div>
 
                                         </div>

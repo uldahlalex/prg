@@ -5,6 +5,7 @@ import {TodoWithTags} from "../../../httpclient/Api.ts";
 import {FunctionComponent} from "react";
 import {queryPreferencesAtom} from "../../state/atoms/queryPreferencesAtom.ts";
 import toast from "react-hot-toast";
+import {Button} from "@mui/material";
 interface TodoProp {
     todo: TodoWithTags;
 }
@@ -30,12 +31,12 @@ export default function FeedItem({ todo }: TodoProp) {
                             });
                     }
                 }} type="checkbox"/>
-                <button onClick={() => {
+                <Button onClick={() => {
                     toast('Not implemented yet');
                     //Open dialog
-                }} className="button-clear" title={JSON.stringify(todo)}>
+                }} className="Button-clear" title={JSON.stringify(todo)}>
                     ID: {todo.id}: {todo.title} {todo.isCompleted ? 'COMPLETEED' : ''}
-                </button>
+                </Button>
             </div>
 
         </>);

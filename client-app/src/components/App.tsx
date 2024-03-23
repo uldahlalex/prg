@@ -8,7 +8,10 @@ import {userAtom} from "../state/atoms/application.state.atoms.ts";
 import StateHooks from "../functions/hooks/statehooks.ts";
 import Sidebar from "./sidebar/Sidebar.tsx";
 import {User} from "../types/user.ts";
-import '@mantine/core/styles.css';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 
 import {SetupHttpClient} from "../functions/setupHttpClient.ts";
