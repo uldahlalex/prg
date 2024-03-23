@@ -3,6 +3,7 @@ import {useState} from "react";
 import {queryPreferencesAtom} from "../../../state/atoms/queryPreferencesAtom.ts";
 
 import {QueryPreferences} from "../../../types/QueryPreferences.tsx";
+import {Button, MenuItem, Select} from "@mui/material";
 
 export default function FeedOrderBy() {
 
@@ -12,17 +13,18 @@ export default function FeedOrderBy() {
 
     return <>
         <h4>Order by</h4>
-        <select value={selectValue} onChange={
-            () => {
-                setQueryPreferences({...queryPreferences, orderBy: selectValue});
+        <Select value={selectValue} onChange={
+            (e) => {
+                console.log(queryPreferences)
+                setQueryPreferences({...queryPreferences, orderBy: e.target.value});
             }}>
-            <option value="dueDate">Due date</option>
-            <option value="title">Title</option>
-            <option value="priority">Priority</option>
-        </select>
-        <button onClick={() => {
+            <MenuItem value="dueDate">Due date</MenuItem>
+            <MenuItem value="title">Title</MenuItem>
+            <MenuItem value="priority">Priority</MenuItem>
+        </Select>
+        <Button onClick={() => {
             setQueryPreferences({...queryPreferences, direction: queryPreferences.direction == "asc" ? "desc" : "asc"})
-        }}>Toggle to {queryPreferences.direction == "asc" ? "Descending" : "Ascending"}</button>
+        }}>Toggle to {queryPreferences.direction == "asc" ? "Descending" : "Ascending"}</Button>
     </>
 
 }
