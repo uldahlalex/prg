@@ -23,7 +23,7 @@ export default function NewTodo() {
                 <SetPriorityForNewTodo/>
                 <SetDueDateForNewTodo/>
                 <SetTagsToNewTodo/>
-                <button style={{width: '100%'}} onClick={async () => {
+                <button className="btn btn-primary" style={{width: '100%'}} onClick={async () => {
                     http.api.todosCreate(newTodoForm).then(resp => {
                         setTodos([...todos, resp.data]);
                         setNewTodoForm({
