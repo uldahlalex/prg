@@ -17,7 +17,7 @@ export default function NewTodo() {
 
     return (
         <>
-            <div>
+            <div className="collapse collapse-arrow">
                 <SetTitleForCreateTodoForm/>
                 <SetDescriptionForNewTodo/>
                 <SetPriorityForNewTodo/>
