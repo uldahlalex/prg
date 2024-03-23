@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import toast from "react-hot-toast";
 import {User} from "../../types/user.ts";
 import {useAtom} from "jotai/index";
 import {userAtom} from "../../state/atoms/application.state.atoms.ts";
@@ -34,7 +33,6 @@ export default function Login() {
         http.api.signinCreate(loginForm).then((r) => {
             localStorage.setItem('token', r.data.token!)
             navigate('/feed');
-            toast("welcome back")
             setUser(decodeJwt(r.data.token!));
         })
     }
@@ -42,7 +40,6 @@ export default function Login() {
         http.api.registerCreate(loginForm).then((r) => {
             localStorage.setItem('token', r.data.token!)
             navigate('/feed');
-            toast("welcome aboard")
             setUser(decodeJwt(r.data.token!));
         });
     }

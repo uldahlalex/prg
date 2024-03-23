@@ -2,7 +2,6 @@ import {useAtom} from "jotai/index";
 import {User} from "../types/user.ts";
 import {userAtom} from "../state/atoms/application.state.atoms.ts";
 import {AxiosError, AxiosResponse} from "axios";
-import toast from "react-hot-toast";
 import {Api} from "../../httpclient/Api.ts";
 
 export const http = new Api({
@@ -25,7 +24,6 @@ export function SetupHttpClient() {
         }
         return response;
     }, (error: AxiosError<any, any>) => {
-        toast(error.response!.data?.message || 'An error occurred', {icon: '🔥'})
         if (error.response && error.response.status === 401) {
             handleUnauthorizedAccess();
         }

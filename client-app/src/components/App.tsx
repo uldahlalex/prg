@@ -2,13 +2,11 @@ import React from "react";
 import Feed from "./mainview/Feed.tsx";
 import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
 import Login from "./mainview/Login.tsx";
-import {Toaster} from "react-hot-toast";
 import {useAtom} from "jotai/index";
 import {userAtom} from "../state/atoms/application.state.atoms.ts";
 import StateHooks from "../functions/hooks/statehooks.ts";
 import Sidebar from "./sidebar/Sidebar.tsx";
 import {User} from "../types/user.ts";
-import '@mantine/core/styles.css';
 
 
 import {SetupHttpClient} from "../functions/setupHttpClient.ts";
@@ -39,7 +37,7 @@ export default function App() {
 
         <>
 
-            <Toaster/>
+            {/*<Toaster/>*/}
             <div id="verticalContainer" style={{
                 display: 'flex',
                 flexDirection: 'column',
