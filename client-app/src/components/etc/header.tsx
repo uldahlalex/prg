@@ -5,7 +5,6 @@ import {userAtom} from "../../state/atoms/application.state.atoms.ts";
 
 export default function Header() {
 
-    const [theme, setTheme] = useState(localStorage.getItem('theme') ?? 'light');
     const [user, setUser] = useAtom(userAtom);
 
     const navigate = useNavigate();
@@ -81,11 +80,9 @@ export default function Header() {
                         <summary className="m-1 btn">Theme</summary>
                         <ul onClick={(e: React.MouseEvent<HTMLElement>) => {
                             const selectedTheme = (e.target as HTMLElement).innerText;
-                            console.log(selectedTheme)
                             document.documentElement.setAttribute('data-theme', selectedTheme);
                             window.dispatchEvent(new Event('theme-change'));
                             localStorage.setItem('theme', selectedTheme);
-                            setTheme(selectedTheme);
                         }} className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
                             {
                                 themes.map((theme, index) => <li key={index}><a>{theme}</a></li>)

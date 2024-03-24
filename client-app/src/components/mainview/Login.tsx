@@ -15,15 +15,6 @@ export default function Login() {
         password: ""
     });
 
-    useEffect(() => {
-        const jwt = localStorage.getItem('token');
-        if (!jwt || jwt.length == 0)
-            setUser(null);
-        else {
-            navigate('/feed')
-            setUser(decodeJwt(jwt));
-        }
-    }, [user]);
 
     const handleInput = (e) => {
         setloginform({...loginForm, [e.target.name]: e.target.value});
@@ -55,17 +46,17 @@ export default function Login() {
 
                     <label className="input input-bordered flex items-center gap-2">
 
-                        <input type="text" className="grow" placeholder="email@address.com"/>
+                        <input type="text"  onChange={handleInput} name="username" className="grow" placeholder="email@address.com"/>
                     </label>
 
                     <label className="input input-bordered flex items-center gap-2">
 
-                        <input type="password" className="grow"  placeholder="••••••••"/>
+                        <input onChange={handleInput} name="password" type="password" className="grow"  placeholder="••••••••"/>
                     </label>
 
                     <div className="card-actions justify-center">
-                        <button className="btn btn-secondary">Sign up</button>
-                        <button className="btn btn-primary">Sign in</button>
+                        <button className="btn btn-secondary" onClick={register}>Sign up</button>
+                        <button  className="btn btn-primary"onClick={signIn}>Sign in</button>
                     </div>
                 </div>
             </div>

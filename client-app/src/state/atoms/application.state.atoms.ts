@@ -7,5 +7,4 @@ export const todosAtom = atom<TodoWithTags[]>([]);
 export const tagsAtom = atom<Tag[]>([]);
 export const userAtom = atom<User | null>(null);
 
-
-
+export const themeAtom = atom<string>(""); //todo
