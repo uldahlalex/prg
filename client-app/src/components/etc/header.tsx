@@ -1,9 +1,12 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {useAtom} from "jotai/index";
+import {userAtom} from "../../state/atoms/application.state.atoms.ts";
 
 export default function Header() {
 
     const [theme, setTheme] = useState(localStorage.getItem('theme') ?? 'light');
+    const [user, setUser] = useAtom(userAtom);
 
     const navigate = useNavigate();
 
@@ -43,7 +46,7 @@ export default function Header() {
     ];
 
     return(<>
-        <div className="navbar bg-base-100">
+        <div className="navbar bg-base-100 bg-transparent">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost">
@@ -58,7 +61,12 @@ export default function Header() {
                         <li><a onClick={() => {
                             navigate('feed');
                         }}>Feed</a></li>
-                        <li><a>Sign In</a></li>
+                        <li><a onClick={() => {
+                            localStorage.removeItem('token');
+                            setUser(null);
+                            navigate('login');
+
+                        }}>Sign In</a></li>
                     </ul>
                 </div>
             </div>
@@ -66,32 +74,27 @@ export default function Header() {
                 <a className="btn btn-ghost text-xl">Tick</a>
             </div>
             <div className="navbar-end">
-                <button className="btn btn-ghost btn-circle">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                         stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                    </svg>
-                </button>
-                <select value={theme} onChange={(e) => {
-                    const selectedTheme = e.target.value;
-                    document.documentElement.setAttribute('data-theme', selectedTheme);
-                    window.dispatchEvent(new Event('theme-change'));
-                    localStorage.setItem('theme', selectedTheme);
-                    setTheme(selectedTheme);
-                }} className="select w-full max-w-xs">
 
-                    {
-                        themes.map((theme, index) => <option key={index} value={theme}>{theme}</option>)
 
-                    }
-                </select>
+                <div className="flex items-stretch">
+                    <details className="dropdown dropdown-end">
+                        <summary className="m-1 btn">Theme</summary>
+                        <ul onClick={(e: React.MouseEvent<HTMLElement>) => {
+                            const selectedTheme = (e.target as HTMLElement).innerText;
+                            console.log(selectedTheme)
+                            document.documentElement.setAttribute('data-theme', selectedTheme);
+                            window.dispatchEvent(new Event('theme-change'));
+                            localStorage.setItem('theme', selectedTheme);
+                            setTheme(selectedTheme);
+                        }} className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+                            {
+                                themes.map((theme, index) => <li key={index}><a>{theme}</a></li>)
+                            }
+                        </ul>
+                    </details>
+                </div>
 
-                <label className="swap swap-rotate">
-                    <input type="checkbox"/>
-                    <div className="swap-on">DARKMODE</div>
-                    <div className="swap-off">LIGHTMODE</div>
-                </label>
+
             </div>
         </div>
 

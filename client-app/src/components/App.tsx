@@ -22,7 +22,7 @@ export default function App() {
 
                 <div style={{display: 'flex', height: 'auto', justifyContent: "space-evenly"}}>
 
-                    <div style={{maxWidth: '30%'}}><Sidebar/></div>
+                    {/*<div style={{maxWidth: '30%'}}><Sidebar/></div>*/}
 
                     <div style={{maxWidth: '60%'}}>
                         <Routes>

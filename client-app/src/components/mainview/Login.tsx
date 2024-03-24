@@ -46,22 +46,30 @@ export default function Login() {
 
     return (
         <div>
-            <h1>Login</h1>
 
-            <div>
-                <label htmlFor="username">Username</label>
-                <input onChange={handleInput} type="text" name="username"/>
+            <div className="card w-96 glass">
+                <figure><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Check_mark_9x9.svg/2048px-Check_mark_9x9.svg.png" alt="car!"/>
+                </figure>
+                <div className="card-body">
+                    <h2 className="card-title">Authenticate</h2>
+
+                    <label className="input input-bordered flex items-center gap-2">
+
+                        <input type="text" className="grow" placeholder="email@address.com"/>
+                    </label>
+
+                    <label className="input input-bordered flex items-center gap-2">
+
+                        <input type="password" className="grow"  placeholder="••••••••"/>
+                    </label>
+
+                    <div className="card-actions justify-center">
+                        <button className="btn btn-secondary">Sign up</button>
+                        <button className="btn btn-primary">Sign in</button>
+                    </div>
+                </div>
             </div>
-            <div>
-                <label htmlFor="password">Password</label>
-                <input onChange={handleInput} onKeyDown={(e) => {
-                    if (e.key === 'Enter') signIn(e);
-                }} type="password" name="password"/>
-            </div>
-            <button onClick={signIn}>Login
-            </button>
-            <button onClick={register}>Register
-            </button>
+
         </div>
     );
 }
