@@ -83,7 +83,8 @@ export default function Header() {
                             document.documentElement.setAttribute('data-theme', selectedTheme);
                             window.dispatchEvent(new Event('theme-change'));
                             localStorage.setItem('theme', selectedTheme);
-                        }} className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+                        }}
+                            className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52 overflow-x-hidden overflow-y-auto max-h-60">
                             {
                                 themes.map((theme, index) => <li key={index}><a>{theme}</a></li>)
                             }

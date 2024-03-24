@@ -16,7 +16,9 @@ export default function StateHooks() {
 
 
 
+    //Get new todos when query preferences change
     useEffect(() => {
+        console.log("triggered todos effect")
         if (!user) return;
         http.api
             .todosList({
@@ -30,35 +32,29 @@ export default function StateHooks() {
 
     }, [user, todosQueryPreferences]);
 
+    //get tags when user changes
     useEffect(() => {
-        const jwt = localStorage.getItem('token');
-        if (!jwt || jwt.length == 0)
-            setUser(null);
-        else {
-            setUser(decodeJwt(jwt));
-        }
-    }, []); //Are there other hooks that impact this??
-
-    useEffect(() => {
+        console.log("triggered get tags effect")
         if (!user) return;
         http.api
             .tagsList()
             .then(resp => setTags(resp.data))
     }, [user]);
 
-
+    //set user when app opens
     useEffect(() => {
+        console.log("triggered user effect")
         const jwt = localStorage.getItem('token');
         if (!jwt || jwt.length == 0)
             setUser(null);
         else {
-          //  navigate('/feed')
             setUser(decodeJwt(jwt));
         }
-    }, [user]);
+    }, []);
 
-
+    //set theme when app opens
     useEffect(() => {
+        console.log("triggered theme effect")
         const theme = localStorage.getItem('theme') ?? "light";
         document.documentElement.setAttribute('data-theme', theme);
         window.dispatchEvent(new Event('theme-change'));
