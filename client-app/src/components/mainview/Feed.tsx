@@ -6,29 +6,24 @@ import {todosAtom, userAtom} from "../../state/atoms/application.state.atoms.ts"
 import FeedPreferences from "./Filters/FeedPreferences.tsx";
 import {useNavigate} from "react-router-dom";
 import NewTodo from "../sidebar/NewTodo/NewTodo.tsx";
+import NewTodoForm from "./NewTodoForm.tsx";
 
 export default function Feed() {
     const navigate = useNavigate();
     const [todos] = useAtom(todosAtom);
     const [user] = useAtom(userAtom);
 
-    useEffect(() => {
-        if (!user) {
-            navigate('/login');
-        }
-    }, [user, navigate]); // Include navigate to satisfy dependency array
 
-    if (!user) {
-        return null;
-    }
 
     return (<>
             <div>
 
 
                 <div>
-
+                    <NewTodoForm />
+                    <div className="divider"></div>
                     <FeedPreferences/>
+
 
 
                 </div>

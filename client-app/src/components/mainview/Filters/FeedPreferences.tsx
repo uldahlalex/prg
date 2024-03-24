@@ -19,8 +19,6 @@ export default function FeedPreferences() {
             }
         }
     }
-
-    const value = queryPreferences.tags.map(tag => tags.find(t => t.id === tag)?.name);
     return <>
 
 

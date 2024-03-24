@@ -15,7 +15,6 @@ export default function Sidebar() {
         <div style={{maxWidth: '100%'}}>
 
             <img src="https://raw.githubusercontent.com/oxalorg/sakura/master/sakura160.jpg"/>
-            <NewTodo/>
 
             {/*<hr/>*/}
             {/*<CreateNewTag/>*/}

@@ -20,11 +20,11 @@ export default function App() {
 
                 <Header/>
 
-                <div style={{display: 'flex', height: 'auto', justifyContent: "space-evenly"}}>
+
 
                     {/*<div style={{maxWidth: '30%'}}><Sidebar/></div>*/}
 
-                    <div style={{maxWidth: '60%'}}>
+                    <div className="display mx-auto w-4/5">
                         <Routes>
                             <Route path="/" element={<Navigate to="/feed" replace/>}/>
                             <Route path="/feed" element={<Feed/>}/>
@@ -32,7 +32,7 @@ export default function App() {
                         </Routes>
                     </div>
 
-                </div>
+
 
 
         </Router>
