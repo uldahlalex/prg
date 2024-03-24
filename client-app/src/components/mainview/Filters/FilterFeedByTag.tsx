@@ -21,23 +21,37 @@ export default function FilterFeedByTag() {
 
     const value = queryPreferences.tags.map(tag => tags.find(t => t.id === tag)?.name);
     return <>
-        <h1>Filter by tags</h1>
 
 
-        <div style={{display: "flex", flexDirection: "row", flexWrap: "wrap"}}>
-            {tags.map((tag, index) =>
-                <div key={index} style={{margin: "10px"}}>
-                    <span style={{
-                        transform: "rotate(-45deg)",
-                        display: "block",
-                        textAlign: "right"
-                    }}>&nbsp;{tag.name}</span>
-                    <input type="checkbox"
-                           checked={queryPreferences.tags.includes(tag.id!)}
-                           value={tag.id} onChange={(e) => toggleFilterByTodo(tag)}/>
-                </div>
-                )}
+
+
+        <div className="flex items-stretch">
+            <details className="dropdown dropdown-end">
+                <summary className="m-1 btn">Include tags</summary>
+
+                {
+
+                    <>
+                    <div
+                        className="form-control p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52 overflow-x-hidden overflow-y-auto max-h-60">
+                        {tags.map((tag, index) =>
+
+                            <span key={index}><label className="label cursor-pointer">{tag.name}</label><input className="checkbox"
+                                                                                               key={index}
+                                                                                               type="checkbox"
+                                                                                               checked={queryPreferences.tags.includes(tag.id!)}
+                                                                                               onChange={(e) => toggleFilterByTodo(tag)}/></span>
+                   )}
         </div>
+            </>
 
-    </>
+
+            }
+
+
+        </details>
+    </div>
+
+
+</>
 }
