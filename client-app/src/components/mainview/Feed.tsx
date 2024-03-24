@@ -3,10 +3,9 @@ import {useAtom} from 'jotai';
 import FeedItem from "./FeedItem.tsx";
 import {todosAtom, userAtom} from "../../state/atoms/application.state.atoms.ts";
 
-import FeedOrderBy from "./Filters/FeedOrderBy.tsx";
-import FilterFeedByTag from "./Filters/FilterFeedByTag.tsx";
+import FeedPreferences from "./Filters/FeedPreferences.tsx";
 import {useNavigate} from "react-router-dom";
-import FilterByState from "./Filters/FilterByState.tsx";
+import NewTodo from "../sidebar/NewTodo/NewTodo.tsx";
 
 export default function Feed() {
     const navigate = useNavigate();
@@ -29,9 +28,8 @@ export default function Feed() {
 
                 <div>
 
-                    <FilterFeedByTag/>
-                    <FilterByState/>
-                    <FeedOrderBy/>
+                    <FeedPreferences/>
+
 
                 </div>
 
