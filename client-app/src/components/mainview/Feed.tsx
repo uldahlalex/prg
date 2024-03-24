@@ -23,23 +23,26 @@ export default function Feed() {
         return null;
     }
 
-    return (
-        <div>
-
-
+    return (<>
             <div>
-                <FilterFeedByTag/>
-                <FilterByState />
-                <FeedOrderBy/>
 
+
+                <div>
+
+                    <FilterFeedByTag/>
+                    <FilterByState/>
+                    <FeedOrderBy/>
+
+                </div>
+
+                <div style={{display: 'flex', flexDirection: 'column'}}>
+                    {
+                        todos.map((todo, index) => <FeedItem key={index} todo={todo}/>)
+
+                    }
+                </div>
             </div>
+        </>
 
-            <div style={{display: 'flex', flexDirection: 'column'}}>
-                {
-                    todos.map((todo, index) => <FeedItem key={index} todo={todo}/>)
-
-                }
-            </div>
-        </div>
     );
 }
