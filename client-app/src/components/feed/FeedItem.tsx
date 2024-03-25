@@ -2,12 +2,13 @@ import {http} from "../../functions/setupHttpClient.ts";
 import {todosAtom} from "../../state/atoms/application.state.atoms.ts";
 import {useAtom} from "jotai/index";
 import {TodoWithTags} from "../../../httpclient/Api.ts";
-import {FunctionComponent} from "react";
 import {queryPreferencesAtom} from "../../state/atoms/queryPreferencesAtom.ts";
+
 interface TodoProp {
     todo: TodoWithTags;
 }
-export default function FeedItem({ todo }: TodoProp) {
+
+export default function FeedItem({todo}: TodoProp) {
 
     const [queryPreferences] = useAtom(queryPreferencesAtom);
     const [todos, setTodos] = useAtom(todosAtom);

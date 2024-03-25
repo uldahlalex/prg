@@ -1,11 +1,10 @@
 import {useAtom} from "jotai/index";
 import {useEffect} from "react";
 import {queryPreferencesAtom} from "../../state/atoms/queryPreferencesAtom.ts";
-import {tagsAtom, themeAtom, todosAtom, userAtom} from "../../state/atoms/application.state.atoms.ts";
+import {tagsAtom, todosAtom, userAtom} from "../../state/atoms/application.state.atoms.ts";
 import {decodeJwt} from "../jwtDecoder.ts";
 import {User} from "../../types/user.ts";
 import {http} from "../setupHttpClient.ts";
-import {useNavigate} from "react-router-dom";
 
 export default function StateHooks() {
     const [todosQueryPreferences] = useAtom(queryPreferencesAtom);
@@ -13,7 +12,6 @@ export default function StateHooks() {
 
     const [, setTodos] = useAtom(todosAtom);
     const [, setTags] = useAtom(tagsAtom);
-
 
 
     //Get new todos when query preferences change

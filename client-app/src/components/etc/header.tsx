@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {useNavigate} from "react-router-dom";
 import {useAtom} from "jotai/index";
 import {userAtom} from "../../state/atoms/application.state.atoms.ts";
@@ -44,7 +44,7 @@ export default function Header() {
         "sunset",
     ];
 
-    return(<>
+    return (<>
         <div className="navbar bg-base-100 bg-transparent">
             <div className="navbar-start">
                 <div className="dropdown">

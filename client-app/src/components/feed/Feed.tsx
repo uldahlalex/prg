@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useAtom} from 'jotai';
 import FeedItem from "./FeedItem.tsx";
 import {todosAtom, userAtom} from "../../state/atoms/application.state.atoms.ts";
@@ -13,16 +13,14 @@ export default function Feed() {
     const [user] = useAtom(userAtom);
 
 
-
     return (<>
             <div>
 
 
                 <div>
-                    <NewTodoForm />
+                    <NewTodoForm/>
                     <div className="divider"></div>
                     <FeedPreferences/>
-
 
 
                 </div>
