@@ -8,10 +8,7 @@ import {useNavigate} from "react-router-dom";
 import NewTodoForm from "./NewTodoForm.tsx";
 
 export default function Feed() {
-    const navigate = useNavigate();
     const [todos] = useAtom(todosAtom);
-    const [user] = useAtom(userAtom);
-
 
     return (<>
             <div>

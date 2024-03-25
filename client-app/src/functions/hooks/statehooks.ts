@@ -1,7 +1,7 @@
 import {useAtom} from "jotai/index";
 import {useEffect} from "react";
 import {queryPreferencesAtom} from "../../state/atoms/queryPreferencesAtom.ts";
-import {addToastAtom, tagsAtom, todosAtom, userAtom} from "../../state/atoms/application.state.atoms.ts";
+import {toastsAtom, tagsAtom, todosAtom, userAtom} from "../../state/atoms/application.state.atoms.ts";
 import {decodeJwt} from "../jwtDecoder.ts";
 import {User} from "../../types/user.ts";
 import {http} from "../setupHttpClient.ts";
@@ -13,7 +13,7 @@ export default function StateHooks() {
     const [, setTodos] = useAtom(todosAtom);
     const [, setTags] = useAtom(tagsAtom);
 
-    const [, addToast] = useAtom(addToastAtom);
+    const [, addToast] = useAtom(toastsAtom);
 
 
     //Get new todos when query preferences change
@@ -61,5 +61,6 @@ export default function StateHooks() {
         document.documentElement.setAttribute('data-theme', theme);
         window.dispatchEvent(new Event('theme-change'));
         localStorage.setItem('theme', theme);
+        addToast({ message: 'Theme set to '+theme, type: 'info'});
     }, []);
 }
