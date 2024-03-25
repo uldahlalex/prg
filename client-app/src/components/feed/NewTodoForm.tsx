@@ -12,25 +12,40 @@ export default function NewTodoForm() {
 
 
     function DateInput() {
-        return <input value={todoForm.dueDate} className="mx-auto w-1/5" type="date"/>;
+        return <>
+            <label>
+                <div className="label">
+                    <span className="label-text">Due date</span>
+                </div>
+                <input value={todoForm.dueDate} className="mx-auto w-full bg-transparent" type="date"/>
+            </label>
+
+        </>;
     }
 
     function getInput() {
-        return <input onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-                http.api.todosCreate(todoForm).then(resp => {
-                    setTodos([...todos, resp.data]);
-                    setCreateTodoForm({
-                        title: '',
-                        description: '',
-                        tags: [],
-                        dueDate: new Date().toISOString().slice(0, 10),
-                        priority: 0
-                    });
+        return <>
+            <label className="form-control w-full max-w-xs">
 
-                });
-            }
-        }} placeholder={todoForm.title!} className="input input-bordered w-full max-w-xs"/>;
+
+                <input className="input w-full max-w-xs" onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        http.api.todosCreate(todoForm).then(resp => {
+                            setTodos([...todos, resp.data]);
+                            setCreateTodoForm({
+                                title: '',
+                                description: '',
+                                tags: [],
+                                dueDate: new Date().toISOString().slice(0, 10),
+                                priority: 0
+                            });
+
+                        });
+                    }
+                }} placeholder={"TO-DO: "+todoForm.title!}/>
+
+            </label>
+        </>
     }
 
     function AddTags() {

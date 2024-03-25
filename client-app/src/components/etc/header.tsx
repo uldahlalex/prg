@@ -44,6 +44,16 @@ export default function Header() {
         "sunset",
     ];
 
+    function authHeaderTab() {
+        return <details className="dropdown dropdown-end">
+            <summary className="m-1 btn btn-info btn-outline">Signed in as: {user!.username}</summary>
+            <div
+                className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52 overflow-x-hidden overflow-y-auto max-h-60">
+                <button className="btn">Sign out</button>
+            </div>
+        </details>;
+    }
+
     return (<>
         <div className="navbar bg-base-100 bg-transparent">
             <div className="navbar-start">
@@ -76,6 +86,9 @@ export default function Header() {
 
 
                 <div className="flex items-stretch">
+
+                    {user && authHeaderTab()}
+
                     <details className="dropdown dropdown-end">
                         <summary className="m-1 btn">Theme</summary>
                         <ul onClick={(e: React.MouseEvent<HTMLElement>) => {

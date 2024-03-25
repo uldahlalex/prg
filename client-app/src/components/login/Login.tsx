@@ -36,7 +36,7 @@ export default function Login() {
     }
 
     return (
-        <div>
+        <div className="flex justify-center">
 
             <div className="card w-96 glass">
                 <figure><img

@@ -10,8 +10,9 @@ export default function EditTags() {
     const [expanded, setExpanded] = useState(false);
 
 //todo fix all the crud
+
     const handleDelete = (index: number) => {
-        setTags(tags.filter((_, i) => i !== index));
+        setTags(tags.filter((_, i) => i !== index)); //todo def change
         setOpenDialog(null);
     }
 
