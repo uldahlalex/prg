@@ -23,16 +23,17 @@ export default function FeedPreferences() {
     return <>
         <div className="flex items-stretch">
             <details className="dropdown dropdown-end">
-                <summary className="m-1 btn">Filter output</summary>
-                {
+                <summary className="m-1 btn flex">Filter output</summary>
+
                         <div
-                            className="p-2 shadow menu dropdown-right bg-base-200 rounded-box max-h-60 min-w-64">
+                            className="p-2 shadow menu dropdown-right
+                           rounded-box max-h-60 min-w-64">
 
                             {includeTags()}
                             {showCompleted()}
                             {orderBy()}
                         </div>
-                }
+
             </details>
         </div>
 

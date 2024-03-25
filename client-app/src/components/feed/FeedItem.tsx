@@ -3,6 +3,7 @@ import {todosAtom} from "../../state/atoms/application.state.atoms.ts";
 import {useAtom} from "jotai/index";
 import {TodoWithTags} from "../../../httpclient/Api.ts";
 import {queryPreferencesAtom} from "../../state/atoms/queryPreferencesAtom.ts";
+import React from "react";
 
 interface TodoProp {
     todo: TodoWithTags;
@@ -15,23 +16,31 @@ export default function FeedItem({todo}: TodoProp) {
 
     return (
         <>
-            <details className="dropdown" data-tip={JSON.stringify(todo)}><
-                input type="checkbox" className="checkbox"
-                      checked={todo.isCompleted}
-                      onChange={toggleDone}/>
-                <button className="btn-outline">
-                    {
-                        TodoText(todo)
-                    }
-                </button>
-                <summary className="m-1">
-                    <span className="badge badge-primary">{todo.tags!.map(t => t.name).join(", ")}</span>
 
 
-                </summary>
-            </details>
+                <details className="flex dropdown dropdown-end" data-tip={JSON.stringify(todo)}>
+                    <summary className="m-1 btn ">
+                        <input type="checkbox" className="checkbox"
+                               checked={todo.isCompleted}
+                               onChange={toggleDone}/>
 
-        </>);
+                        {
+                            TodoText(todo)
+                        }
+
+
+                    </summary>
+                    <div
+                        className="p-2 shadow menu dropdown rounded-box max-h-60 min-w-64">
+                        <span className="badge badge-primary">{todo.tags!.map(t => t.name).join(", ")}</span>
+
+                    </div>
+                </details>
+
+
+
+        </>
+    );
 
 
     function TodoText(todo) {
