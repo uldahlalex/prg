@@ -1,7 +1,7 @@
 import {useAtom} from "jotai/index";
 import {useEffect} from "react";
 import {queryPreferencesAtom} from "../../state/atoms/queryPreferencesAtom.ts";
-import {tagsAtom, todosAtom, userAtom} from "../../state/atoms/application.state.atoms.ts";
+import {addToastAtom, tagsAtom, todosAtom, userAtom} from "../../state/atoms/application.state.atoms.ts";
 import {decodeJwt} from "../jwtDecoder.ts";
 import {User} from "../../types/user.ts";
 import {http} from "../setupHttpClient.ts";
@@ -12,6 +12,8 @@ export default function StateHooks() {
 
     const [, setTodos] = useAtom(todosAtom);
     const [, setTags] = useAtom(tagsAtom);
+
+    const [, addToast] = useAtom(addToastAtom);
 
 
     //Get new todos when query preferences change
@@ -46,7 +48,9 @@ export default function StateHooks() {
         if (!jwt || jwt.length == 0)
             setUser(null);
         else {
-            setUser(decodeJwt(jwt));
+            const u = decodeJwt(jwt);
+            addToast({ message: 'Welcome back, '+u.username, type: 'info'});
+            setUser(u);
         }
     }, []);
 

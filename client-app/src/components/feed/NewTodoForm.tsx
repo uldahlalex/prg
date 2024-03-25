@@ -17,7 +17,9 @@ export default function NewTodoForm() {
                 <div className="label">
                     <span className="label-text">Due date</span>
                 </div>
-                <input value={todoForm.dueDate} className="mx-auto w-full bg-transparent" type="date"/>
+                <input value={todoForm.dueDate} onChange={(e) => {
+                    setCreateTodoForm({...todoForm, dueDate: e.target.value})
+                }} className="mx-auto w-full bg-transparent" type="date"/>
             </label>
 
         </>;

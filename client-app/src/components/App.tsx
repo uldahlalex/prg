@@ -5,6 +5,7 @@ import Login from "./login/Login.tsx";
 import StateHooks from "../functions/hooks/statehooks.ts";
 import {SetupHttpClient} from "../functions/setupHttpClient.ts";
 import Header from "./etc/header.tsx";
+import ToastContainer from "./etc/Toasts.tsx";
 
 export default function App() {
 
@@ -26,6 +27,8 @@ export default function App() {
                     <Route path="/login" element={<Login/>}/>
                 </Routes>
             </div>
+
+            <ToastContainer />
 
 
         </Router>
