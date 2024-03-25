@@ -15,29 +15,42 @@ export default function FeedItem({todo}: TodoProp) {
 
     return (
         <>
-            <div>
-                <input checked={todo.isCompleted} onChange={(e) => {
-                    if (e.target.checked) {
-                        http.api.todosUpdate(todo.id + "", {...todo, isCompleted: true})
-                            .then(resp => {
-                                if (queryPreferences.showCompleted) setTodos(todos.map(t => t.id === todo.id ? resp.data : t));
-                                else setTodos(todos.filter(t => t.id !== todo.id));
-                            });
-                    } else {
-                        http.api.todosUpdate(todo.id + "", {...todo, isCompleted: false})
-                            .then(resp => {
-                                setTodos(todos.map(t => t.id === todo.id ? resp.data : t));
-                            });
-                    }
-                }} type="checkbox"/>
-                <button onClick={() => {
-                    //Open dialog
-                }} className="button-clear" title={JSON.stringify(todo)}>
-                    ID: {todo.id}: {todo.title} {todo.isCompleted ? 'COMPLETEED' : ''}
-                </button>
+            <div className="flex justify-start m-1 btn tooltip" data-tip={JSON.stringify(todo)}>
+               <input type="checkbox"  className="checkbox" checked={todo.isCompleted} onChange={toggleDone}/>
+                    <button className="btn-outline" onClick={openDialog} >
+                        {
+                            TodoText(todo)
+                        }
+                    </button>
+
             </div>
 
         </>);
+
+    function openDialog(e) {
+        //Open dialog
+    }
+
+    function TodoText(todo) {
+        return (<>
+            ID: {todo.id}: {todo.title} {todo.isCompleted ? 'COMPLETEED' : ''}
+        </>);
+    }
+
+    function toggleDone(e) {
+        if (e.target.checked) {
+            http.api.todosUpdate(todo.id + "", {...todo, isCompleted: true})
+                .then(resp => {
+                    if (queryPreferences.showCompleted) setTodos(todos.map(t => t.id === todo.id ? resp.data : t));
+                    else setTodos(todos.filter(t => t.id !== todo.id));
+                });
+        } else {
+            http.api.todosUpdate(todo.id + "", {...todo, isCompleted: false})
+                .then(resp => {
+                    setTodos(todos.map(t => t.id === todo.id ? resp.data : t));
+                });
+        }
+    }
 
 
 }
