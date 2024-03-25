@@ -1,11 +1,13 @@
 import {createTodoForm} from "../../state/atoms/createTodoForm.ts";
 import {useAtom} from "jotai/index";
 import React from "react";
-import {tagsAtom} from "../../state/atoms/application.state.atoms.ts";
+import {tagsAtom, todosAtom} from "../../state/atoms/application.state.atoms.ts";
+import {http} from "../../functions/setupHttpClient.ts";
 
 export default function NewTodoForm() {
 
     const [todoForm, setCreateTodoForm] = useAtom(createTodoForm);
+    const [todos, setTodos] = useAtom(todosAtom);
     const [tags, setTags] = useAtom(tagsAtom);
 
 
@@ -13,7 +15,21 @@ export default function NewTodoForm() {
         <div className="flex">
 
             <label className=" flex items-center gap-2 max-auto w-full">
-                <input placeholder={todoForm.title!} className="input input-bordered w-full max-w-xs"/>
+                <input            onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        http.api.todosCreate(todoForm).then(resp => {
+                            setTodos([...todos, resp.data]);
+                            setCreateTodoForm({
+                                title: '',
+                                description: '',
+                                tags: [],
+                                dueDate: new Date().toISOString().slice(0, 10),
+                                priority: 0
+                            });
+
+                        });
+                    }
+                }} placeholder={todoForm.title!} className="input input-bordered w-full max-w-xs"/>
                 <input className="mx-auto w-1/5" type="date"/>
 
                 <details className="dropdown dropdown-end">
@@ -29,6 +45,7 @@ export default function NewTodoForm() {
                                 <label key={index}><label
                                     className="label cursor-pointer -rotate-45">{tag.name}</label>
                                     <input className="checkbox"
+
                                            key={index}
                                            type="checkbox"
                                            checked={todoForm.tags!.map(t => t.id).includes(tag.id!)}

@@ -1,8 +1,8 @@
-import {tagsAtom} from "../../../state/atoms/application.state.atoms.ts";
+import {tagsAtom} from "../../state/atoms/application.state.atoms.ts";
 import {useAtom} from "jotai";
 import {useState} from "react";
-import {Tag} from "../../../../httpclient/Api.ts";
-import {http} from "../../../functions/setupHttpClient.ts";
+import {Tag} from "../../../httpclient/Api.ts";
+import {http} from "../../functions/setupHttpClient.ts";
 
 export default function CreateNewTag() {
     const [tags, setTags] = useAtom(tagsAtom);

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import {useAtom} from "jotai/index";
-import {tagsAtom} from "../../../state/atoms/application.state.atoms.ts";
+import {tagsAtom} from "../../state/atoms/application.state.atoms.ts";
 
 export default function EditTags() {
     const [tags, setTags] = useAtom(tagsAtom);

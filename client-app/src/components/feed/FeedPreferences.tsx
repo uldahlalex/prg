@@ -1,8 +1,8 @@
-import {tagsAtom} from "../../../state/atoms/application.state.atoms.ts";
+import {tagsAtom} from "../../state/atoms/application.state.atoms.ts";
 import {useAtom} from "jotai";
-import {queryPreferencesAtom} from "../../../state/atoms/queryPreferencesAtom.ts";
+import {queryPreferencesAtom} from "../../state/atoms/queryPreferencesAtom.ts";
 
-import {QueryPreferences} from "../../../types/QueryPreferences.tsx";
+import {QueryPreferences} from "../../types/QueryPreferences.tsx";
 import React from "react";
 
 export default function FeedPreferences() {

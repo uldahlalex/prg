@@ -1,9 +1,8 @@
-import NewTodo from "./NewTodo/NewTodo.tsx";
-import CreateNewTag from "./newTag/CreateNewTag.tsx";
+import CreateNewTag from "./CreateNewTag.tsx";
 import React from "react";
 import {useAtom} from "jotai/index";
 import {userAtom} from "../../state/atoms/application.state.atoms.ts";
-import EditTags from "./EditTags/EditTags.tsx";
+import EditTags from "./EditTags.tsx";
 
 export default function Sidebar() {
 

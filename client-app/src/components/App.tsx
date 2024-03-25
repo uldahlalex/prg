@@ -1,7 +1,7 @@
 import React from "react";
 import {BrowserRouter as Router, Navigate, Route, Routes} from "react-router-dom";
-import Feed from "./mainview/Feed.tsx";
-import Login from "./mainview/Login.tsx";
+import Feed from "./feed/Feed.tsx";
+import Login from "./login/Login.tsx";
 import {useAtom} from "jotai/index";
 import {userAtom} from "../state/atoms/application.state.atoms.ts";
 import StateHooks from "../functions/hooks/statehooks.ts";
