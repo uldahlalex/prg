@@ -15,21 +15,24 @@ export default function FeedItem({todo}: TodoProp) {
 
     return (
         <>
-            <div className="flex justify-start m-1 btn tooltip" data-tip={JSON.stringify(todo)}>
-               <input type="checkbox"  className="checkbox" checked={todo.isCompleted} onChange={toggleDone}/>
-                    <button className="btn-outline" onClick={openDialog} >
-                        {
-                            TodoText(todo)
-                        }
-                    </button>
+            <details className="dropdown" data-tip={JSON.stringify(todo)}><
+                input type="checkbox" className="checkbox"
+                      checked={todo.isCompleted}
+                      onChange={toggleDone}/>
+                <button className="btn-outline">
+                    {
+                        TodoText(todo)
+                    }
+                </button>
+                <summary className="m-1">
+                    <span className="badge badge-primary">{todo.tags!.map(t => t.name).join(", ")}</span>
 
-            </div>
+
+                </summary>
+            </details>
 
         </>);
 
-    function openDialog(e) {
-        //Open dialog
-    }
 
     function TodoText(todo) {
         return (<>

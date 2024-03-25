@@ -1,16 +1,19 @@
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: ['./src/**/*.{tsx}'], // make sure this matches your actual file paths
+module.exports = {
+  purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {
-      // your theme extensions
-    },
+    extend: {},
+  },
+  variants: {
+    extend: {},
   },
   plugins: [
+    require('@tailwindcss/forms'),
     require('daisyui'),
   ],
   daisyui: {
     themes: [
+
       "light",
       "dark",
       "cupcake",

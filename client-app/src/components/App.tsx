@@ -16,10 +16,6 @@ export default function App() {
         <Router>
 
             <Header/>
-
-
-            {/*<div style={{maxWidth: '30%'}}><Sidebar/></div>*/}
-
             <div className="display mx-auto w-4/5">
                 <Routes>
                     <Route path="/" element={<Navigate to="/feed" replace/>}/>
