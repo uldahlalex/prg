@@ -10,17 +10,34 @@ export default function NewTodoForm() {
     const [todos, setTodos] = useAtom(todosAtom);
     const [tags, setTags] = useAtom(tagsAtom);
 
+    return (<>
+
+
+            <label className=" flex w-full">
+                {getInput()}
+
+                {DateInput()}
+                {AddPriority()}
+                {AddTags()}
+                <button className="btn btn-primary">Add!</button>
+
+
+            </label>
+
+
+
+        </>
+    )
+
 
     function DateInput() {
         return <>
-            <label>
-                <div className="label">
-                    <span className="label-text">Due date</span>
-                </div>
+
+
                 <input value={todoForm.dueDate} onChange={(e) => {
                     setCreateTodoForm({...todoForm, dueDate: e.target.value})
-                }} className="mx-auto w-full bg-transparent" type="date"/>
-            </label>
+                }} className="mx-auto w-60 bg-transparent" type="date"/>
+
 
         </>;
     }
@@ -28,9 +45,7 @@ export default function NewTodoForm() {
     function getInput() {
         return <>
             <label className="form-control w-full max-w-xs">
-
-
-                <input className="input w-full max-w-xs" onKeyDown={(e) => {
+                <input value={todoForm.title!} className="input w-full max-w-xs" onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                         http.api.todosCreate(todoForm).then(resp => {
                             setTodos([...todos, resp.data]);
@@ -50,17 +65,37 @@ export default function NewTodoForm() {
         </>
     }
 
+    function AddPriority() {
+        return <details className="dropdown dropdown-end">
+            <summary className="m-1 btn">❗</summary>
+            <div
+                className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-auto overflow-x-hidden overflow-y-auto max-h-60">
+                <div className="flex">
+                    {[0,1,2,3,4].map((priority) =>
+                        <label key={priority}><label
+                            className="label cursor-pointer -rotate-45">{priority}</label>
+                            <input className="radio"
+                                    name="priority"
+                                   key={priority}
+                                   type="radio"
+                                   onChange={(e) => {
+                                           setCreateTodoForm({
+                                               ...todoForm,
+                                               priority: priority
+                                           });
+                                   }}/></label>
+                    )} </div>
+            </div>
+        </details>;
+    }
+
     function AddTags() {
         return <details className="dropdown dropdown-end">
             <summary className="m-1 btn">🏷️</summary>
             <div
-                className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52 overflow-x-hidden overflow-y-auto max-h-60">
-
+                className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-auto overflow-x-hidden overflow-y-auto max-h-60">
                 <div className="flex">
-
                     {tags.map((tag, index) =>
-
-
                         <label key={index}><label
                             className="label cursor-pointer -rotate-45">{tag.name}</label>
                             <input className="checkbox"
@@ -80,27 +115,11 @@ export default function NewTodoForm() {
                                                tags: todoForm.tags!.filter(t => t.id !== tag.id)
                                            });
                                        }
-
                                    }}/></label>
                     )} </div>
             </div>
         </details>;
     }
 
-    return (<>
 
-
-                <label className=" flex items-center gap-2 max-auto w-full">
-                    {getInput()}
-
-                    {DateInput()}
-
-                    {AddTags()}
-
-                </label>
-
-
-
-        </>
-    )
 }

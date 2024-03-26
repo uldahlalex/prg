@@ -21,18 +21,29 @@ export default function FeedPreferences() {
     }
 
     return <>
-        <div className="flex items-stretch">
-            <details className="dropdown dropdown-end">
-                <summary className="m-1 btn flex">Filter output</summary>
+        <div className="flex flex-nowrap">
+            <details className="dropdown dropdown-end w-full">
+                <summary className="m-1 btn flex">Filter</summary>
 
-                        <div
-                            className="p-2 shadow menu dropdown-right
+                <div
+                    className="p-2 shadow menu dropdown-right
                            rounded-box max-h-60 min-w-64">
 
-                            {includeTags()}
-                            {showCompleted()}
-                            {orderBy()}
-                        </div>
+                    {includeTags()}
+                    {showCompleted()}
+                </div>
+
+            </details>
+
+            <details className="dropdown dropdown-end w-full">
+                <summary className="m-1 btn flex">Order</summary>
+
+                <div
+                    className="p-2 shadow menu dropdown-right
+                           rounded-box max-h-60 min-w-64">
+
+                    {orderBy()}
+                </div>
 
             </details>
         </div>
@@ -63,7 +74,7 @@ export default function FeedPreferences() {
     function showCompleted() {
         return <div className="flex items-center">
             <label className="label cursor-pointer">Show completed?</label>
-            <input className="checkbox" type="checkbox" onChange={(e) => {
+            <input className="checkbox" type="checkbox" checked={queryPreferences.showCompleted} onChange={(e) => {
                 if (e.target.checked) {
                     setQueryPreferences({...queryPreferences, showCompleted: true});
                 } else {
@@ -77,7 +88,7 @@ export default function FeedPreferences() {
 
     function orderBy() {
         return <>
-            <h4 className="card-title">Ordering</h4>
+
             <div className="flex flex-row">
                 <select className="select" value={selectValue} onChange={() => {
                     setQueryPreferences({...queryPreferences, orderBy: selectValue});

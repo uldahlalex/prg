@@ -5,8 +5,8 @@ import {QueryPreferences} from "../../types/QueryPreferences.tsx";
 export const queryPreferencesAtom = atom<QueryPreferences>({
     orderBy: "title",
     direction: "asc",
-    showCompleted: false,
+    showCompleted: true,
     limit: 50,
-    tags: [1]
+    tags: [1,2]
 
 });
