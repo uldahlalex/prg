@@ -26,7 +26,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/String<>f__AnonymousType7"
+                  "$ref": "#/components/schemas/String<>f__AnonymousType9"
                 }
               }
             }
@@ -55,7 +55,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/String<>f__AnonymousType7"
+                  "$ref": "#/components/schemas/String<>f__AnonymousType9"
                 }
               }
             }
@@ -245,6 +245,86 @@
         }
       }
     },
+    "/api/todos/{todoId}/addTag/{tagId}": {
+      "post": {
+        "tags": [
+          "api"
+        ],
+        "parameters": [
+          {
+            "name": "tagId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "todoId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Boolean<>f__AnonymousType2"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "api"
+        ],
+        "parameters": [
+          {
+            "name": "tagId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "todoId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Boolean<>f__AnonymousType2"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/tags": {
       "post": {
         "tags": [
@@ -335,6 +415,15 @@
         },
         "additionalProperties": false
       },
+      "Boolean<>f__AnonymousType2": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "CreateTagRequestDto": {
         "type": "object",
         "properties": {
@@ -374,7 +463,7 @@
         },
         "additionalProperties": false
       },
-      "String<>f__AnonymousType7": {
+      "String<>f__AnonymousType9": {
         "type": "object",
         "properties": {
           "token": {

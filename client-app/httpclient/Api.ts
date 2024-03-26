@@ -14,6 +14,10 @@ export interface AuthenticationRequestDto {
   password?: string | null;
 }
 
+export interface BooleanFAnonymousType2 {
+  success?: boolean;
+}
+
 export interface CreateTagRequestDto {
   name?: string | null;
 }
@@ -28,7 +32,7 @@ export interface CreateTodoRequestDto {
   tags?: Tag[] | null;
 }
 
-export interface StringFAnonymousType7 {
+export interface StringFAnonymousType9 {
   token?: string | null;
 }
 
@@ -215,7 +219,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     registerCreate: (data: AuthenticationRequestDto, params: RequestParams = {}) =>
-      this.request<StringFAnonymousType7, any>({
+      this.request<StringFAnonymousType9, any>({
         path: `/api/register`,
         method: "POST",
         body: data,
@@ -234,7 +238,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     signinCreate: (data: AuthenticationRequestDto, params: RequestParams = {}) =>
-      this.request<StringFAnonymousType7, any>({
+      this.request<StringFAnonymousType9, any>({
         path: `/api/signin`,
         method: "POST",
         body: data,
@@ -325,6 +329,40 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         body: data,
         secure: true,
         type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags api
+     * @name TodosAddTagCreate
+     * @request POST:/api/todos/{todoId}/addTag/{tagId}
+     * @secure
+     */
+    todosAddTagCreate: (tagId: number, todoId: number, params: RequestParams = {}) =>
+      this.request<BooleanFAnonymousType2, any>({
+        path: `/api/todos/${todoId}/addTag/${tagId}`,
+        method: "POST",
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags api
+     * @name TodosAddTagDelete
+     * @request DELETE:/api/todos/{todoId}/addTag/{tagId}
+     * @secure
+     */
+    todosAddTagDelete: (tagId: number, todoId: number, params: RequestParams = {}) =>
+      this.request<BooleanFAnonymousType2, any>({
+        path: `/api/todos/${todoId}/addTag/${tagId}`,
+        method: "DELETE",
+        secure: true,
         format: "json",
         ...params,
       }),
