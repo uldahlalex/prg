@@ -10,15 +10,15 @@ public class RemoveTagToTodo : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapDelete("/api/todos/{todoId}/addTag/{tagId}",
+        app.MapDelete("/api/tags/{tagId}/removeFromTodo/{todoId}",
             (HttpContext context,
                 [FromServices] NpgsqlDataSource dataSource,
                 [FromRoute] int tagId,
-                [FromRouteAttribute] int todoId) =>
+                [FromRoute] int todoId) =>
             {
                 var sql = @"
 DELETE FROM todo_manager.todo_tag
-WHERE todoid = @todoId AND tagid = @tagId;
+WHERE todoid = @todoId AND tagId = @tagId;
 ";
                 using var conn = dataSource.OpenConnection();
                 {

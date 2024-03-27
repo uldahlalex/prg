@@ -45,7 +45,8 @@ public class Program
         if (Env.ASPNETCORE_ENVIRONMENT.Equals(StringConstants.Environments.Testing))
             builder.WebHost.UseUrls("http://localhost:9999");
         var app = builder.Build();
-        app.UseCustomExceptionHandling()
+        app
+            //.UseCustomExceptionHandling()
             .UseSwagger()
             .UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"); })
             .UseCors(options =>

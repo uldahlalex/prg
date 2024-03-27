@@ -337,31 +337,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags api
-     * @name TodosAddTagCreate
-     * @request POST:/api/todos/{todoId}/addTag/{tagId}
+     * @name TagsAddToTodoCreate
+     * @request POST:/api/tags/{tagId}/addToTodo/{todoId}
      * @secure
      */
-    todosAddTagCreate: (tagId: number, todoId: number, params: RequestParams = {}) =>
+    tagsAddToTodoCreate: (tagId: number, todoId: number, params: RequestParams = {}) =>
       this.request<BooleanFAnonymousType2, any>({
-        path: `/api/todos/${todoId}/addTag/${tagId}`,
+        path: `/api/tags/${tagId}/addToTodo/${todoId}`,
         method: "POST",
-        secure: true,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags api
-     * @name TodosAddTagDelete
-     * @request DELETE:/api/todos/{todoId}/addTag/{tagId}
-     * @secure
-     */
-    todosAddTagDelete: (tagId: number, todoId: number, params: RequestParams = {}) =>
-      this.request<BooleanFAnonymousType2, any>({
-        path: `/api/todos/${todoId}/addTag/${tagId}`,
-        method: "DELETE",
         secure: true,
         format: "json",
         ...params,
@@ -416,6 +399,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/api/tag/${id}`,
         method: "DELETE",
         secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags api
+     * @name TagsRemoveFromTodoDelete
+     * @request DELETE:/api/tags/{tagId}/removeFromTodo/{todoId}
+     * @secure
+     */
+    tagsRemoveFromTodoDelete: (tagId: number, todoId: number, params: RequestParams = {}) =>
+      this.request<BooleanFAnonymousType2, any>({
+        path: `/api/tags/${tagId}/removeFromTodo/${todoId}`,
+        method: "DELETE",
+        secure: true,
+        format: "json",
         ...params,
       }),
   };

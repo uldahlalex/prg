@@ -14,7 +14,7 @@ export default function NewTodoForm() {
 
 
             <label className=" flex w-full">
-                {getInput()}
+                {AddTitle()}
 
                 {DateInput()}
                 {AddPriority()}
@@ -42,10 +42,13 @@ export default function NewTodoForm() {
         </>;
     }
 
-    function getInput() {
+    function AddTitle() {
         return <>
             <label className="form-control w-full max-w-xs">
-                <input value={todoForm.title!} className="input w-full max-w-xs" onKeyDown={(e) => {
+                <input value={todoForm.title!} onChange={e => setCreateTodoForm({
+                    ...todoForm,
+                    title: todoForm.title
+                })} className="input w-full max-w-xs" onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                         http.api.todosCreate(todoForm).then(resp => {
                             setTodos([...todos, resp.data]);

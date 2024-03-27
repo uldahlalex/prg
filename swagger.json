@@ -245,47 +245,8 @@
         }
       }
     },
-    "/api/todos/{todoId}/addTag/{tagId}": {
+    "/api/tags/{tagId}/addToTodo/{todoId}": {
       "post": {
-        "tags": [
-          "api"
-        ],
-        "parameters": [
-          {
-            "name": "tagId",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "todoId",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Boolean<>f__AnonymousType2"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
         "tags": [
           "api"
         ],
@@ -394,6 +355,47 @@
         "responses": {
           "200": {
             "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/tags/{tagId}/removeFromTodo/{todoId}": {
+      "delete": {
+        "tags": [
+          "api"
+        ],
+        "parameters": [
+          {
+            "name": "tagId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "todoId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Boolean<>f__AnonymousType2"
+                }
+              }
+            }
           }
         }
       }

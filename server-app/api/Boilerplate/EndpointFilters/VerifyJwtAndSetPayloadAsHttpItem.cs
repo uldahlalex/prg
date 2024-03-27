@@ -8,6 +8,7 @@ public class VerifyJwtAndSetPayloadAsHttpItem(TokenService tokenService) : IEndp
 {
     public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
     {
+        //todo fix
         try
         {
             var jwt = context.HttpContext.Request.Headers[StringConstants.JwtConstants.Authorization][0] ??

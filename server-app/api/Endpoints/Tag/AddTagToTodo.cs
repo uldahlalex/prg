@@ -11,7 +11,7 @@ public class AddTagToTodo : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("/api/todos/{todoId}/addTag/{tagId}",
+        app.MapPost("/api/tags/{tagId}/addToTodo/{todoId}",
             (HttpContext context,
                 [FromServices] NpgsqlDataSource dataSource,
                 [FromRoute] int tagId,
@@ -27,6 +27,7 @@ VALUES (@todoId, @tagId);";
                         throw new InvalidOperationException("Could not add tag to todo.");
                 }
 
+                throw new InvalidOperationException("sadæksad");
                 return new { success = true };
             }).AddEndpointFilter<VerifyJwtAndSetPayloadAsHttpItem>();
     }
