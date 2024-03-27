@@ -1,4 +1,4 @@
-using api.Boilerplate.EndpointFilters;
+using api.Boilerplate.EndpointHelpers;
 using api.Boilerplate.ReusableHelpers.GlobalModels;
 using Carter;
 using Dapper;
@@ -20,8 +20,10 @@ public class UpdateTodo : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPut("/api/todos/{id}", (UpdateTodoRequestDto req, NpgsqlDataSource ds) =>
+        app.MapPut("/api/todos/{id}", (UpdateTodoRequestDto req, NpgsqlDataSource ds, HttpContext context) =>
         {
+            ApiHelper.TriggerJwtValidationAndGetUserDetails(context);
+
             var conn = ds.OpenConnection();
             var userId = 1;
             var todo = conn.QueryFirstOrDefault<TodoWithTags>(@"
@@ -32,6 +34,6 @@ RETURNING *;
 ", req);
             conn.Close();
             return todo;
-        }).AddEndpointFilter<VerifyJwtAndSetPayloadAsHttpItem>();
+        });
     }
 }

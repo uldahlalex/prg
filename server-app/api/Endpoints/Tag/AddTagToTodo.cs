@@ -1,4 +1,4 @@
-using api.Boilerplate.EndpointFilters;
+using api.Boilerplate.EndpointHelpers;
 using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +17,7 @@ public class AddTagToTodo : ICarterModule
                 [FromRoute] int tagId,
                 [FromRouteAttribute] int todoId) =>
             {
+                ApiHelper.TriggerJwtValidationAndGetUserDetails(context);
                 var sql = @"
 INSERT INTO todo_manager.todo_tag (todoid, tagid)
 VALUES (@todoId, @tagId);";
@@ -28,7 +29,8 @@ VALUES (@todoId, @tagId);";
                 }
 
                 throw new InvalidOperationException("sadæksad");
-                return new { success = true };
-            }).AddEndpointFilter<VerifyJwtAndSetPayloadAsHttpItem>();
+            });
+
+
     }
 }

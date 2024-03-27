@@ -1,5 +1,5 @@
 using System.Text.Json;
-using api.Boilerplate.EndpointFilters;
+using api.Boilerplate.EndpointHelpers;
 using api.Boilerplate.ReusableHelpers.GlobalModels;
 using Carter;
 using Dapper;
@@ -12,7 +12,8 @@ public class GetTodosWithTags : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/api/todos", async (HttpContext context,
+        app.MapGet("/api/todos", async (
+            HttpContext context,
             [FromServices] NpgsqlDataSource ds,
             [FromQuery] string serializedTagArray,
             [FromQuery] string orderBy,
@@ -20,6 +21,8 @@ public class GetTodosWithTags : ICarterModule
             [FromQuery] bool showCompleted,
             [FromQuery] int limit = 50) =>
         {
+            var user = ApiHelper.TriggerJwtValidationAndGetUserDetails(context);
+
             var tags = JsonSerializer.Deserialize<int[]>(serializedTagArray);
             IEnumerable<dynamic> todos;
             var filterByTags = tags == null || tags.Length == 0 ? "" : " WHERE tag.id = ANY(@Tags) ";
@@ -48,9 +51,10 @@ ORDER BY t.{orderBy} {direction}
 LIMIT {limit};
 ", new
                 {
-                    UserId = User.FromHttpItemsPayload(context).Id, Tags = tags
+                    UserId = user.Id, Tags = tags
                 });
             }
+
 //todo sql exc returned 401
             return todos.Select(row =>
             {
@@ -69,6 +73,6 @@ LIMIT {limit};
 
                 return todo;
             }).ToList();
-        }).AddEndpointFilter<VerifyJwtAndSetPayloadAsHttpItem>();
+        });
     }
 }

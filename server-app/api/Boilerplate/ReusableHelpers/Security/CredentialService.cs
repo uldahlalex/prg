@@ -5,7 +5,7 @@ namespace api.Boilerplate.ReusableHelpers.Security;
 
 public class CredentialService
 {
-    public string? GenerateSalt()
+    public static string? GenerateSalt()
     {
         var bytes = new byte[128 / 8];
         using var keyGenerator = RandomNumberGenerator.Create();
@@ -13,7 +13,7 @@ public class CredentialService
         return Convert.ToBase64String(bytes);
     }
 
-    public string? Hash(string? password, string? salt)
+    public static string? Hash(string? password, string? salt)
     {
         try
         {

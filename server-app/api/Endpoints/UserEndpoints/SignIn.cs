@@ -25,12 +25,12 @@ public class SignIn : ICarterModule
                 }) ?? throw new InvalidOperationException("Could not create user");
             conn.Close();
 
-            if (credService.Hash(req.Password, userToCheck.Salt) != userToCheck.PasswordHash)
+            if (CredentialService.Hash(req.Password, userToCheck.Salt) != userToCheck.PasswordHash)
                 throw new InvalidOperationException("Invalid password");
 
             return new
             {
-                token = tokenService.IssueJwt(new { userToCheck.Username, userToCheck.Id })
+                token = TokenService.IssueJwt(new { userToCheck.Username, userToCheck.Id })
             };
         });
     }

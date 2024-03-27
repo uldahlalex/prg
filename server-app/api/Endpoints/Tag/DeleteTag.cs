@@ -1,4 +1,4 @@
-using api.Boilerplate.EndpointFilters;
+using api.Boilerplate.EndpointHelpers;
 using Carter;
 using Dapper;
 using Npgsql;
@@ -9,12 +9,13 @@ public class DeleteTag : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapDelete("api/tag/{id}", (int id, NpgsqlDataSource ds) =>
+        app.MapDelete("api/tag/{id}", (int id, HttpContext context, NpgsqlDataSource ds) =>
         {
+            ApiHelper.TriggerJwtValidationAndGetUserDetails(context);
             using var conn = ds.OpenConnection();
             var impactedRows = conn.Execute("delete from todo_manager.todo where id = @id", new { id });
             if (impactedRows == 0) throw new InvalidOperationException("Could not delete");
             conn.Close();
-        }).AddEndpointFilter<VerifyJwtAndSetPayloadAsHttpItem>();
+        });
     }
 }

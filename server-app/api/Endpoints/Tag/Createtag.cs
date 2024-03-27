@@ -1,4 +1,4 @@
-using api.Boilerplate.EndpointFilters;
+using api.Boilerplate.EndpointHelpers;
 using api.Boilerplate.ReusableHelpers.GlobalModels;
 using Carter;
 using Dapper;
@@ -21,19 +21,19 @@ public class Createtag : ICarterModule
             HttpContext context,
             [FromServices] NpgsqlDataSource ds) =>
         {
+            User user = ApiHelper.TriggerJwtValidationAndGetUserDetails(context);
             using (var conn = ds.OpenConnection())
             {
-                var userId = User.FromHttpItemsPayload(context).Id;
-
                 var insertedTag = conn.QueryFirst<Boilerplate.ReusableHelpers.GlobalModels.Tag>(
                     "insert into todo_manager.tag (name, userid) values (@name, @userid) returning *;",
-                new {
-                    name = dto.Name,
-                    userid = userId
-                }) ?? throw new InvalidOperationException("Could not create tag");
-                conn.Close();
+                    new
+                    {
+                        name = dto.Name,
+                        userid = user.Id
+                    }) ?? throw new InvalidOperationException("Could not create tag");
+               
                 return insertedTag;
             }
-        }).AddEndpointFilter<VerifyJwtAndSetPayloadAsHttpItem>();
+        });
     }
 }

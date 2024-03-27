@@ -1,15 +1,13 @@
-using System.Security.Authentication;
 using api.Boilerplate.ReusableHelpers.GlobalValues;
 using JWT;
 using JWT.Algorithms;
 using JWT.Serializers;
-using Newtonsoft.Json;
 
 namespace api.Boilerplate.ReusableHelpers.Security;
 
 public class TokenService
 {
-    public string IssueJwt(object o)
+    public static string IssueJwt(object o)
     {
         try
         {
@@ -27,24 +25,5 @@ public class TokenService
         }
     }
 
-    public Dictionary<string, object> ValidateJwtAndReturnClaims(string jwt)
-    {
-        try
-        {
-            IJsonSerializer serializer = new JsonNetSerializer();
-            var provider = new UtcDateTimeProvider();
-            IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
-            IJwtValidator validator = new JwtValidator(serializer, provider);
-            IJwtDecoder decoder = new JwtDecoder(serializer, validator, urlEncoder, new HMACSHA512Algorithm());
-            var json = decoder.Decode(jwt, Env.JWT_KEY);
-            return JsonConvert.DeserializeObject<Dictionary<string, object>>(json)!;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-            Console.WriteLine(e.InnerException);
-            Console.WriteLine(e.StackTrace);
-            throw new AuthenticationException("Authentication failed.");
-        }
-    }
+
 }

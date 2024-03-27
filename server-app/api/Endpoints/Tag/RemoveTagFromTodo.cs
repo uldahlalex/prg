@@ -1,4 +1,4 @@
-using api.Boilerplate.EndpointFilters;
+using api.Boilerplate.EndpointHelpers;
 using Carter;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +16,8 @@ public class RemoveTagToTodo : ICarterModule
                 [FromRoute] int tagId,
                 [FromRoute] int todoId) =>
             {
+                ApiHelper.TriggerJwtValidationAndGetUserDetails(context);
+
                 var sql = @"
 DELETE FROM todo_manager.todo_tag
 WHERE todoid = @todoId AND tagId = @tagId;
@@ -28,6 +30,6 @@ WHERE todoid = @todoId AND tagId = @tagId;
                 }
 
                 return new { success = true };
-            }).AddEndpointFilter<VerifyJwtAndSetPayloadAsHttpItem>();
+    });
     }
 }

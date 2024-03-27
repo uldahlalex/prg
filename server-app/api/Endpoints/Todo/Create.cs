@@ -1,4 +1,4 @@
-using api.Boilerplate.EndpointFilters;
+using api.Boilerplate.EndpointHelpers;
 using api.Boilerplate.ReusableHelpers.GlobalModels;
 using Carter;
 using Dapper;
@@ -16,7 +16,7 @@ public class Create : ICarterModule
             [FromServices] NpgsqlDataSource ds,
             HttpContext context) =>
         {
-            var user = Boilerplate.ReusableHelpers.GlobalModels.User.FromHttpItemsPayload(context);
+            var user = ApiHelper.TriggerJwtValidationAndGetUserDetails(context);
             var transaction = ds.OpenConnection().BeginTransaction();
             var todo = transaction.Connection!.QueryFirstOrDefault<TodoWithTags>(@"
 insert into todo_manager.todo (title, description, duedate, userid, priority)
@@ -44,7 +44,7 @@ VALUES (@Title, @Description, @DueDate, @UserId, @Priority) returning *;
             transaction.Commit();
             transaction.Connection!.Close();
             return todo;
-        }).AddEndpointFilter<VerifyJwtAndSetPayloadAsHttpItem>();
+        });
     }
 }
 

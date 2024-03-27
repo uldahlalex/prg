@@ -18,10 +18,10 @@ public class Register : ICarterModule
     {
         app.MapPost("/api/register",
             ([FromBody] AuthenticationRequestDto req, [FromServices] NpgsqlDataSource ds,
-                [FromServices] CredentialService credService, [FromServices] TokenService tokenservice) =>
+                 [FromServices] TokenService tokenservice) =>
             {
-                var salt = credService.GenerateSalt();
-                var hash = credService.Hash(req.Password, salt);
+                var salt = CredentialService.GenerateSalt();
+                var hash = CredentialService.Hash(req.Password, salt);
                 using var conn = ds.OpenConnection();
                 var user = conn.QueryFirstOrDefault<Boilerplate.ReusableHelpers.GlobalModels.User>(
                     "insert into todo_manager.user (username, passwordhash, salt) values (@Username, @PasswordHash, @Salt) RETURNING *;",
@@ -35,7 +35,7 @@ public class Register : ICarterModule
 
                 return new
                 {
-                    token = tokenservice.IssueJwt(new { user.Username, user.Id })
+                    token = TokenService.IssueJwt(new { user.Username, user.Id })
                 };
             });
     }
