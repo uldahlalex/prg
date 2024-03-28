@@ -21,7 +21,7 @@ export default function FeedPreferences() {
     }
 
     return <>
-        <div className="flex flex-nowrap">
+        <div className="flex flex-nowrap w-full">
             <details className="dropdown dropdown-end w-full">
                 <summary className="m-1 btn flex">Filter</summary>
 

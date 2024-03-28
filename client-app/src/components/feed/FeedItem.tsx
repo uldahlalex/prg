@@ -18,9 +18,6 @@ export default function FeedItem({todo}: TodoProp) {
 
     const [updateTodoForm, setUpdateTodoForm] = useState<TodoWithTags>(todo);
 
-
-   // todo = todo = todos.find(t => t.id === todo.id)!;
-
     function toggleDetails() {
         setIsOpen(!isOpen);
     }
@@ -47,8 +44,6 @@ export default function FeedItem({todo}: TodoProp) {
                         const todosCopy = [...todos];
                         todosCopy[todosCopy.findIndex(t => t.id === todo.id)] = newTodo;
                         setTodos([...todosCopy]);
-                    console.log(todosCopy)
-                    console.log(todos)
                 })
             } else {
                 http.api.tagsRemoveFromTodoDelete(tag.id!,todo.id! ).then(resp => {
@@ -72,13 +67,13 @@ export default function FeedItem({todo}: TodoProp) {
 
     return (
         <>
-            <details className="dropdown dropdown-end w-full m-2" data-tip={JSON.stringify(todo)}>
+            <details className="dropdown dropdown-end w-full my-2" data-tip={JSON.stringify(todo)}>
                 <summary
                     className={`btn w-full flex-nowrap flex !important justify-start ${isOpen ? 'bg-base-300' : 'bg-base-100'}`}
                     onClick={toggleDetails}>
                     <input type="checkbox" className="checkbox checkbox-lg" checked={todo.isCompleted}
                            onChange={toggleDone}/>
-                    <p>{TodoText(todo)}</p>
+                    <p>{todo.title}</p>
                 </summary>
                 <div className="p-2 shadow menu dropdown rounded-box min-w-64 gap-4">
 
@@ -91,13 +86,12 @@ export default function FeedItem({todo}: TodoProp) {
                     }} value={todo.title!} placeholder="Title empty"/>
 
                     <textarea
-                        className="textarea textarea-bordered" onChange={() => {
-
-                        setUpdateTodoForm({
+                        className="textarea textarea-bordered" value={todo.description!}  placeholder="Description empty"
+                        onChange={() => { setUpdateTodoForm({
                             ...todo,
                             description: todo.description
                         })
-                    }} value={todo.description!} placeholder="Description empty"/>
+                    }} />
 
                     <div className="flex justify-around">
                         <div className="flex items-center">
@@ -143,11 +137,6 @@ export default function FeedItem({todo}: TodoProp) {
         ;
 
 
-    function TodoText(todo) {
-        return (<>
-            ID: {todo.id}: {todo.title} {todo.isCompleted ? 'COMPLETEED' : ''}
-        </>);
-    }
 
     function toggleDone(e) {
         if (e.target.checked) {

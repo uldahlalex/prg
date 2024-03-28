@@ -46,7 +46,7 @@ export default function Header() {
 
     function authHeaderTab() {
         return <details className="dropdown dropdown-end">
-            <summary className="m-1 btn btn-info btn-outline">Signed in as: {user!.username}</summary>
+            <summary className="m-1 btn ">Signed in as: {user!.username}</summary>
             <div
                 className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52 overflow-x-hidden overflow-y-auto max-h-60">
                 <button className="btn">Sign out</button>
@@ -55,7 +55,7 @@ export default function Header() {
     }
 
     return (<>
-        <div className="navbar bg-base-100 bg-transparent">
+        <div className="navbar bg-base-200 mb-5">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost">

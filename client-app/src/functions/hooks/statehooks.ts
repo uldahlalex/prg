@@ -1,10 +1,11 @@
 import {useAtom} from "jotai/index";
 import {useEffect} from "react";
 import {queryPreferencesAtom} from "../../state/atoms/queryPreferencesAtom.ts";
-import {toastsAtom, tagsAtom, todosAtom, userAtom} from "../../state/atoms/application.state.atoms.ts";
+import { tagsAtom, todosAtom, userAtom} from "../../state/atoms/application.state.atoms.ts";
 import {decodeJwt} from "../jwtDecoder.ts";
 import {User} from "../../types/user.ts";
 import {http} from "../setupHttpClient.ts";
+import toast from "react-hot-toast";
 
 export default function StateHooks() {
     const [todosQueryPreferences] = useAtom(queryPreferencesAtom);
@@ -13,7 +14,6 @@ export default function StateHooks() {
     const [, setTodos] = useAtom(todosAtom);
     const [, setTags] = useAtom(tagsAtom);
 
-    const [, addToast] = useAtom(toastsAtom);
 
 
     //Get new todos when query preferences change
@@ -49,18 +49,17 @@ export default function StateHooks() {
             setUser(null);
         else {
             const u = decodeJwt(jwt);
-            addToast({ message: 'Welcome back, '+u.username, type: 'info'});
+            toast.success('Welcome back, ' + u.username!, {position: 'bottom-center'});
+
             setUser(u);
         }
     }, []);
 
-    //set theme when app opens
     useEffect(() => {
         console.log("triggered theme effect")
         const theme = localStorage.getItem('theme') ?? "light";
         document.documentElement.setAttribute('data-theme', theme);
         window.dispatchEvent(new Event('theme-change'));
         localStorage.setItem('theme', theme);
-        addToast({ message: 'Theme set to '+theme, type: 'info'});
     }, []);
 }

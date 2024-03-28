@@ -13,17 +13,18 @@ export default function NewTodoForm() {
     return (<>
 
 
-            <label className=" flex w-full">
+            <label className=" flex w-full items-center">
                 {AddTitle()}
 
                 {DateInput()}
                 {AddPriority()}
                 {AddTags()}
-                <button className="btn btn-primary">Add!</button>
+
+                    <button onClick={createNewTodo}  className="btn btn-primary">Add!</button>
+
 
 
             </label>
-
 
 
         </>
@@ -42,26 +43,30 @@ export default function NewTodoForm() {
         </>;
     }
 
+    function createNewTodo() {
+        {
+            http.api.todosCreate(todoForm).then(resp => {
+                setTodos([...todos, resp.data]);
+                setCreateTodoForm({
+                    title: '',
+                    description: '',
+                    tags: [],
+                    dueDate: new Date().toISOString().slice(0, 10),
+                    priority: 0
+                });
+
+            });
+        }
+    }
+
     function AddTitle() {
         return <>
             <label className="form-control w-full max-w-xs">
                 <input value={todoForm.title!} onChange={e => setCreateTodoForm({
                     ...todoForm,
-                    title: todoForm.title
+                    title: e.target.value
                 })} className="input w-full max-w-xs" onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                        http.api.todosCreate(todoForm).then(resp => {
-                            setTodos([...todos, resp.data]);
-                            setCreateTodoForm({
-                                title: '',
-                                description: '',
-                                tags: [],
-                                dueDate: new Date().toISOString().slice(0, 10),
-                                priority: 0
-                            });
-
-                        });
-                    }
+                    if (e.key === 'Enter') createNewTodo();
                 }} placeholder={"TO-DO: "+todoForm.title!}/>
 
             </label>

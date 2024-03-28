@@ -21,16 +21,17 @@ public class AddTagToTodo : ICarterModule
                 var sql = @"
 INSERT INTO todo_manager.todo_tag (todoid, tagid)
 VALUES (@todoId, @tagId);";
-                using var conn = dataSource.OpenConnection();
+                using (var conn = dataSource.OpenConnection())
                 {
-                    var execution = conn.Execute(sql, new { todoId, tagId });
-                    if (execution == 0)
-                        throw new InvalidOperationException("Could not add tag to todo.");
+                                   var execution = conn.Execute(sql, new { todoId, tagId });
+                                        if (execution == 0)
+                                            throw new InvalidOperationException("Could not add tag to todo.");
                 }
-
-                throw new InvalidOperationException("sadæksad");
+                
+     
+                return new { success = true };
             });
-
-
     }
+
+
 }

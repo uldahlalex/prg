@@ -5,7 +5,7 @@ import Login from "./login/Login.tsx";
 import StateHooks from "../functions/hooks/statehooks.ts";
 import {SetupHttpClient} from "../functions/setupHttpClient.ts";
 import Header from "./etc/header.tsx";
-import ToastContainer from "./etc/Toasts.tsx";
+import {Toaster} from "react-hot-toast";
 
 export default function App() {
 
@@ -15,6 +15,7 @@ export default function App() {
     return (
         <Router>
 
+            <Toaster />
             <Header/>
             <div className="display mx-auto w-4/5">
                 <Routes>
@@ -24,7 +25,6 @@ export default function App() {
                 </Routes>
             </div>
 
-            <ToastContainer />
 
 
         </Router>

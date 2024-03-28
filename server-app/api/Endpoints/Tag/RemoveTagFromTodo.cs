@@ -22,14 +22,16 @@ public class RemoveTagToTodo : ICarterModule
 DELETE FROM todo_manager.todo_tag
 WHERE todoid = @todoId AND tagId = @tagId;
 ";
-                using var conn = dataSource.OpenConnection();
+                using (var conn = dataSource.OpenConnection())
                 {
-                    var execution = conn.Execute(sql, new { todoId, tagId });
-                    if (execution == 0)
-                        throw new InvalidOperationException("Could not delete tag to todo.");
+                             var execution = conn.Execute(sql, new { todoId, tagId });
+                                    if (execution == 0)
+                                        throw new InvalidOperationException("Could not delete tag to todo.");
                 }
 
+                
+
                 return new { success = true };
-    });
+            });
     }
 }

@@ -63,38 +63,6 @@
         }
       }
     },
-    "/test": {
-      "get": {
-        "tags": [
-          "api"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "style": "form",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": { }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/todos": {
       "post": {
         "tags": [
