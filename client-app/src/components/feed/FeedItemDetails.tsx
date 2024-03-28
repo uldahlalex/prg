@@ -4,8 +4,9 @@ import {Tag, TodoWithTags} from "../../../httpclient/Api.ts";
 import {useAtom} from "jotai/index";
 import {tagsAtom, todosAtom} from "../../state/atoms/application.state.atoms.ts";
 import {TodoProp} from "../../types/TodoProp.ts";
+import toast from "react-hot-toast";
 
-export default function UpdateFeedItem({todo}: TodoProp) {
+export default function FeedItemDetails({todo}: TodoProp) {
 
     const [todos, setTodos] = useAtom(todosAtom);
     const [tags] = useAtom(tagsAtom);
@@ -15,9 +16,6 @@ export default function UpdateFeedItem({todo}: TodoProp) {
 
     function setPriority(priority: number) {
         return (e) => {
-            console.log("Update form: "+updateTodoForm)
-            console.log("prop in inner comp: "+todo)
-            console.log("atom from inner comp: "+todos)
             setUpdateTodoForm({
                 ...updateTodoForm, priority: priority
             });
@@ -32,6 +30,7 @@ export default function UpdateFeedItem({todo}: TodoProp) {
                         return t;
                     });
                 });
+                toast.success("Priority updated!")
 
             });
         }
@@ -45,6 +44,7 @@ export default function UpdateFeedItem({todo}: TodoProp) {
                     const todosCopy = [...todos];
                     todosCopy[todosCopy.findIndex(t => t.id === todo.id)] = newTodo;
                     setTodos([...todosCopy]);
+                    toast.success("Tag added to todo!");
                 })
             } else {
                 http.api.tagsRemoveFromTodoDelete(tag.id!, todo.id!).then(resp => {
@@ -52,25 +52,30 @@ export default function UpdateFeedItem({todo}: TodoProp) {
                     const todosCopy = [...todos];
                     todosCopy[todosCopy.findIndex(t => t.id === todo.id)] = newTodo;
                     setTodos(todosCopy);
+                    toast.success("Tag removed from todo!");
                 })
             }
         };
     }
 
     function saveTodo() {
-        return () => {
+
             http.api.todosUpdate(todo.id + "", updateTodoForm)
                 .then(resp => {
                     const newTodo: TodoWithTags = {...resp.data, tags: todo.tags};
                     const copy = [...todos];
                     copy[copy.findIndex(t => t.id === todo.id)] = newTodo;
                     setTodos(copy);
+                    toast.success("Todo updated!");
                 });
-        };
+
     }
 
     function deleteTodo() {
-        return undefined; //todo implement
+            http.api.todoDelete(todo.id!).then(resp => {
+                setTodos(todos.filter(t => t.id !== todo.id));
+                toast.success("Todo deleted!");
+            });
     }
 
     return(<>
@@ -127,7 +132,7 @@ export default function UpdateFeedItem({todo}: TodoProp) {
 
 
             <div className="flex w-full">
-                <button onClick={saveTodo()} className="btn btn-primary w-1/2">Save</button>
+                <button onClick={saveTodo} className="btn btn-primary w-1/2">Save</button>
 
                 <details className="w-1/2">
                     <summary className="btn btn-error w-full">Delete</summary>

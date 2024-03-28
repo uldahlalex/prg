@@ -29,6 +29,7 @@ export function SetupHttpClient() {
         if (error.response && error.response.status === 401) {
             handleUnauthorizedAccess();
         }
+        toast.error(error.message);
         return Promise.reject(error);
     });
     const handleUnauthorizedAccess = () => {

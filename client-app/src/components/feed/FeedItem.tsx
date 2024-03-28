@@ -3,7 +3,7 @@ import {todosAtom} from "../../state/atoms/application.state.atoms.ts";
 import {useAtom} from "jotai/index";
 import {queryPreferencesAtom} from "../../state/atoms/queryPreferencesAtom.ts";
 import React, {useState} from "react";
-import UpdateFeedItem from "./UpdaetFeedItem.tsx";
+import FeedItemDetails from "./FeedItemDetails.tsx";
 import {TodoProp} from "../../types/TodoProp.ts";
 
 export default function FeedItem({todo}: TodoProp) {
@@ -24,7 +24,7 @@ export default function FeedItem({todo}: TodoProp) {
                     <p>{todo.title}</p>
                 </summary>
 
-                <UpdateFeedItem todo={todo}/>
+                <FeedItemDetails todo={todo}/>
 
             </details>
         </>

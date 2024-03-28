@@ -81,28 +81,32 @@ export default function NewTodoForm() {
                 className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-auto overflow-x-hidden overflow-y-auto max-h-60">
                 <div className="flex">
                     {[0,1,2,3,4].map((priority) =>
-                        <label key={priority}><label
-                            className="label cursor-pointer -rotate-45">{priority}</label>
+                        <div key={priority}>
+                            <label className="label cursor-pointer -rotate-45">{priority}</label>
                             <input className="radio"
-                                    name="priority"
+                                   name="priority"
                                    key={priority}
                                    type="radio"
                                    onChange={(e) => {
-                                           setCreateTodoForm({
-                                               ...todoForm,
-                                               priority: priority
-                                           });
-                                   }}/></label>
+                                       setCreateTodoForm({
+                                           ...todoForm,
+                                           priority: priority
+                                       });
+                                   }}/></div>
                     )} </div>
             </div>
         </details>;
+    }
+
+    function createTag(value: any) {
+
     }
 
     function AddTags() {
         return <details className="dropdown dropdown-end">
             <summary className="m-1 btn">🏷️</summary>
             <div
-                className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-auto overflow-x-hidden overflow-y-auto max-h-60">
+                className="flex gap-4 flex-col p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-auto h-auto">
                 <div className="flex">
                     {tags.map((tag, index) =>
                         <label key={index}><label
@@ -126,6 +130,12 @@ export default function NewTodoForm() {
                                        }
                                    }}/></label>
                     )} </div>
+                <div className="flex">
+                    <input className="input input-bordered w-30" placeholder="Create new tag" onKeyDown={(e) => {
+                        if (e.key === 'Enter') createTag(e.target.value);
+                    }}/>
+                    <button onClick={() => createTag(null)} className="btn btn-primary">Add</button>
+                </div>
             </div>
         </details>;
     }
