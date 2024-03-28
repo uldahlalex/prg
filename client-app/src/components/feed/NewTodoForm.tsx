@@ -3,6 +3,7 @@ import {useAtom} from "jotai/index";
 import React from "react";
 import {tagsAtom, todosAtom} from "../../state/atoms/application.state.atoms.ts";
 import {http} from "../../functions/setupHttpClient.ts";
+import {faker} from "@faker-js/faker";
 
 export default function NewTodoForm() {
 
@@ -48,8 +49,8 @@ export default function NewTodoForm() {
             http.api.todosCreate(todoForm).then(resp => {
                 setTodos([...todos, resp.data]);
                 setCreateTodoForm({
-                    title: '',
-                    description: '',
+                    title: faker.hacker.phrase(),
+                    description: faker.lorem.paragraph(),
                     tags: [],
                     dueDate: new Date().toISOString().slice(0, 10),
                     priority: 0

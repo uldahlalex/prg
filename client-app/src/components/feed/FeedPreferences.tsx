@@ -53,7 +53,7 @@ export default function FeedPreferences() {
 
     function includeTags() {
         return <>
-            <h4 className="card-title">Include tags</h4>
+            <h4 className="card-title">Filter by tags:</h4>
             <div className="flex">
 
                 {tags.map((tag) =>

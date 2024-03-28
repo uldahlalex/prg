@@ -69,6 +69,10 @@ export default function UpdateFeedItem({todo}: TodoProp) {
         };
     }
 
+    function deleteTodo() {
+        return undefined; //todo implement
+    }
+
     return(<>
 
         <div className="p-2 shadow menu dropdown rounded-box min-w-64 gap-4">
@@ -122,8 +126,18 @@ export default function UpdateFeedItem({todo}: TodoProp) {
             </div>
 
 
-            <div className="flex">
-                <button onClick={saveTodo()} className="btn btn-primary w-full">Save</button>
+            <div className="flex w-full">
+                <button onClick={saveTodo()} className="btn btn-primary w-1/2">Save</button>
+
+                <details className="w-1/2">
+                    <summary className="btn btn-error w-full">Delete</summary>
+                    <div
+                        className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52 overflow-x-hidden overflow-y-auto max-h-60">
+                        <button className="btn">No, cancel</button>
+                        <button onClick={deleteTodo} className="btn btn-error">Yes, delete</button>
+                    </div>
+                </details>
+
             </div>
 
 

@@ -7,6 +7,6 @@ export const queryPreferencesAtom = atom<QueryPreferences>({
     direction: "asc",
     showCompleted: true,
     limit: 50,
-    tags: [1,2]
+    tags: []
 
 });
