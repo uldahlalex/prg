@@ -4,10 +4,14 @@ import React from "react";
 import {tagsAtom, todosAtom} from "../../state/atoms/application.state.atoms.ts";
 import {http} from "../../functions/setupHttpClient.ts";
 import {faker} from "@faker-js/faker";
+import {Tag} from "../../../httpclient/Api.ts";
+import toast from "react-hot-toast";
 
 export default function NewTodoForm() {
 
     const [todoForm, setCreateTodoForm] = useAtom(createTodoForm);
+    const [createTagForm, setCreateTagForm] = React.useState('');
+
     const [todos, setTodos] = useAtom(todosAtom);
     const [tags, setTags] = useAtom(tagsAtom);
 
@@ -21,8 +25,7 @@ export default function NewTodoForm() {
                 {AddPriority()}
                 {AddTags()}
 
-                    <button onClick={createNewTodo}  className="btn btn-primary">Add!</button>
-
+                <button onClick={createNewTodo} className="btn btn-primary">Add!</button>
 
 
             </label>
@@ -36,9 +39,9 @@ export default function NewTodoForm() {
         return <>
 
 
-                <input value={todoForm.dueDate} onChange={(e) => {
-                    setCreateTodoForm({...todoForm, dueDate: e.target.value})
-                }} className="mx-auto w-60 bg-transparent" type="date"/>
+            <input value={todoForm.dueDate} onChange={(e) => {
+                setCreateTodoForm({...todoForm, dueDate: e.target.value})
+            }} className="mx-auto w-60 bg-transparent" type="date"/>
 
 
         </>;
@@ -68,7 +71,7 @@ export default function NewTodoForm() {
                     title: e.target.value
                 })} className="input w-full max-w-xs" onKeyDown={(e) => {
                     if (e.key === 'Enter') createNewTodo();
-                }} placeholder={"TO-DO: "+todoForm.title!}/>
+                }} placeholder={"TO-DO: " + todoForm.title!}/>
 
             </label>
         </>
@@ -80,7 +83,7 @@ export default function NewTodoForm() {
             <div
                 className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-auto overflow-x-hidden overflow-y-auto max-h-60">
                 <div className="flex">
-                    {[0,1,2,3,4].map((priority) =>
+                    {[0, 1, 2, 3, 4].map((priority) =>
                         <div key={priority}>
                             <label className="label cursor-pointer -rotate-45">{priority}</label>
                             <input className="radio"
@@ -99,7 +102,17 @@ export default function NewTodoForm() {
     }
 
     function createTag(value: any) {
+        http.api.tagsCreate({name: value}).then(resp => {
+            setTags([...tags, resp.data]);
+            toast.success('Tag "'+value+'" created!')
+        });
+    }
 
+    function AddTagToCreationForm(e: React.ChangeEvent<HTMLInputElement>, tag: Tag) {
+        setCreateTodoForm({
+            ...todoForm,
+            tags: e.target.checked ? [...todoForm.tags!, tag] : todoForm.tags!.filter(t => t.id !== tag.id)
+        })
     }
 
     function AddTags() {
@@ -112,29 +125,19 @@ export default function NewTodoForm() {
                         <label key={index}><label
                             className="label cursor-pointer -rotate-45">{tag.name}</label>
                             <input className="checkbox"
-
                                    key={index}
                                    type="checkbox"
                                    checked={todoForm.tags!.map(t => t.id).includes(tag.id!)}
-                                   onChange={(e) => {
-                                       if (e.target.checked) {
-                                           setCreateTodoForm({
-                                               ...todoForm,
-                                               tags: [...todoForm.tags!, tag]
-                                           });
-                                       } else {
-                                           setCreateTodoForm({
-                                               ...todoForm,
-                                               tags: todoForm.tags!.filter(t => t.id !== tag.id)
-                                           });
-                                       }
-                                   }}/></label>
+                                   onChange={(e) => AddTagToCreationForm(e, tag)}/></label>
                     )} </div>
                 <div className="flex">
-                    <input className="input input-bordered w-30" placeholder="Create new tag" onKeyDown={(e) => {
-                        if (e.key === 'Enter') createTag(e.target.value);
-                    }}/>
-                    <button onClick={() => createTag(null)} className="btn btn-primary">Add</button>
+                    <input value={createTagForm} onChange={(e) => setCreateTagForm(e.target.value)} className="input input-bordered w-30" placeholder="Create new tag"
+                           onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                               if (e.key === 'Enter') { // @ts-ignore
+                                   createTag(e.target.value!);
+                               }
+                           }}/>
+                    <button onClick={() => createTag(createTagForm)} className="btn btn-primary">Add</button>
                 </div>
             </div>
         </details>;
