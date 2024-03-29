@@ -38,17 +38,12 @@ export default function NewTodoForm() {
     function DateInput() {
         return <>
 
-        <details className="dropdown dropdown-end">
-            <summary className="m-1 btn">🗓️</summary>
-            <div
-                className="p-2 shadow-2xl menu dropdown-content z-[1] bg-base-100 rounded-box w-auto overflow-x-hidden overflow-y-auto max-h-60">
 
             <input value={todoForm.dueDate} onChange={(e) => {
                 setCreateTodoForm({...todoForm, dueDate: e.target.value})
             }} className="mx-auto w-60 bg-transparent" type="date"/>
 
-            </div>
-        </details>
+
         </>;
     }
 

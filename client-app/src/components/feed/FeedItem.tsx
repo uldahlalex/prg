@@ -16,15 +16,12 @@ export default function FeedItem({todo}: TodoProp) {
     return (
         <>
             <details className="dropdown dropdown-end w-full my-2" data-tip={JSON.stringify(todo)}>
-                <summary className={`btn w-full flex-nowrap flex !important justify-start ${isOpen ? 'bg-base-300' : 'bg-base-100'}`} onClick={() => setIsOpen(!isOpen)}>
+                <summary
+                    className={`btn w-full flex-nowrap flex !important justify-start ${isOpen ? 'bg-base-300' : 'bg-base-100'}`}
+                    onClick={() => setIsOpen(!isOpen)}>
                     <input type="checkbox" className="checkbox checkbox-lg" checked={todo.isCompleted}
                            onChange={toggleDone}/>
-                    <div className="flex justify-between w-full">
-                       <b>{todo.title}</b>
-                        <p className="text-primary">Due {new Date(todo.dueDate!).toLocaleDateString()}</p>
-
-                    </div>
-
+                    <p>{todo.title}</p>
                 </summary>
 
                 <FeedItemDetails todo={todo}/>
