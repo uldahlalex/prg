@@ -104,7 +104,7 @@ export default function NewTodoForm() {
     function createTag(value: any) {
         http.api.tagsCreate({name: value}).then(resp => {
             setTags([...tags, resp.data]);
-            toast.success('Tag "'+value+'" created!')
+            toast.success('Tag "' + value + '" created!')
         });
     }
 
@@ -118,28 +118,44 @@ export default function NewTodoForm() {
     function AddTags() {
         return <details className="dropdown dropdown-end">
             <summary className="m-1 btn">🏷️</summary>
-            <div
-                className="flex gap-4 flex-col p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-auto h-auto">
-                <div className="flex">
-                    {tags.map((tag, index) =>
-                        <label key={index}><label
-                            className="label cursor-pointer -rotate-45">{tag.name}</label>
-                            <input className="checkbox"
-                                   key={index}
-                                   type="checkbox"
-                                   checked={todoForm.tags!.map(t => t.id).includes(tag.id!)}
-                                   onChange={(e) => AddTagToCreationForm(e, tag)}/></label>
-                    )} </div>
-                <div className="flex">
-                    <input value={createTagForm} onChange={(e) => setCreateTagForm(e.target.value)} className="input input-bordered w-30" placeholder="Create new tag"
-                           onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-                               if (e.key === 'Enter') { // @ts-ignore
-                                   createTag(e.target.value!);
-                               }
-                           }}/>
-                    <button onClick={() => createTag(createTagForm)} className="btn btn-primary">Add</button>
+            <div className=" shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-auto h-auto">
+                <div className="grid grid-cols-5 gap-4 gap-x-20 p-10">
+                    {tags.map((tag, index) => (
+                        <div key={index} className="flex flex-col items-center rotate-45">
+                            <label className="btn m-3 cursor-pointer flex-nowrap">
+                                {tag.name}
+                                <input
+                                    className="checkbox"
+                                    type="checkbox"
+                                    checked={todoForm.tags!.map(t => t.id).includes(tag.id)}
+                                    onChange={(e) => AddTagToCreationForm(e, tag)}
+                                />
+                            </label>
+
+                        </div>
+                    ))}
+                </div>
+                <div className="flex mt-4">
+                    <input
+                        value={createTagForm}
+                        onChange={(e) => setCreateTagForm(e.target.value)}
+                        className="input input-bordered w-full mr-2"
+                        placeholder="Create new tag"
+                        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                createTag(createTagForm);
+                            }
+                        }}
+                    />
+                    <button
+                        onClick={() => createTag(createTagForm)}
+                        className="btn btn-primary">
+                        Add
+                    </button>
                 </div>
             </div>
+
         </details>;
     }
 
