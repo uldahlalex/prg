@@ -16,6 +16,7 @@ export default function StateHooks() {
 
 
 
+
     //Get new todos when query preferences change
     useEffect(() => {
         console.log("triggered todos effect")

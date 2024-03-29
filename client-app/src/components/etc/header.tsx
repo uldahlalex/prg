@@ -76,6 +76,12 @@ export default function Header() {
                             navigate('login');
 
                         }}>Sign In</a></li>
+                        <li><a onClick={() => {
+                            navigate('fullstack');
+                        }}>Fullstack 2024</a></li>
+                        <li><a onClick={() => {
+                            navigate('programmingii2024');
+                        }}>Programming II 2024</a></li>
                     </ul>
                 </div>
             </div>
@@ -85,7 +91,7 @@ export default function Header() {
             <div className="navbar-end">
 
 
-                <div className="flex items-stretch">
+            <div className="flex items-stretch">
 
                     {user && authHeaderTab()}
 
