@@ -87,7 +87,6 @@ export default function NewTodoForm() {
                         <div key={priority}>
                             <label className="label cursor-pointer -rotate-45">{priority}</label>
                             <input className="radio"
-                                   name="priority"
                                    key={priority}
                                    type="radio"
                                    onChange={(e) => {

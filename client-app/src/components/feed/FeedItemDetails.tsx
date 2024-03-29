@@ -130,7 +130,6 @@ export default function FeedItemDetails({todo}: TodoProp) {
                                 <div key={priority}>
                                     <label className="label cursor-pointer -rotate-45">{priority}</label>
                                     <input className="radio"
-                                           name="priority"
                                            checked={updateTodoForm.priority === priority}
                                            key={priority}
                                            type="radio"
