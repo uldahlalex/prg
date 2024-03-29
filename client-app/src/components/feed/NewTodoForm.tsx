@@ -81,7 +81,7 @@ export default function NewTodoForm() {
         return <details className="dropdown dropdown-end">
             <summary className="m-1 btn">❗</summary>
             <div
-                className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-auto overflow-x-hidden overflow-y-auto max-h-60">
+                className="p-2 shadow-2xl menu dropdown-content z-[1] bg-base-100 rounded-box w-auto overflow-x-hidden overflow-y-auto max-h-60">
                 <div className="flex">
                     {[0, 1, 2, 3, 4].map((priority) =>
                         <div key={priority}>
@@ -118,7 +118,7 @@ export default function NewTodoForm() {
     function AddTags() {
         return <details className="dropdown dropdown-end">
             <summary className="m-1 btn">🏷️</summary>
-            <div className=" shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-auto h-auto">
+            <div className=" shadow-2xl menu dropdown-content z-[1] bg-base-100 rounded-box w-auto h-auto">
                 <div className="grid grid-cols-5 gap-4 gap-x-20 p-10">
                     {tags.map((tag, index) => (
                         <div key={index} className="flex flex-col items-center rotate-45">

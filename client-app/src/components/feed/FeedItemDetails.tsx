@@ -13,7 +13,6 @@ export default function FeedItemDetails({todo}: TodoProp) {
     const [updateTodoForm, setUpdateTodoForm] = useState<TodoWithTags>(todo);
 
 
-
     function setPriority(priority: number) {
         return (e) => {
             setUpdateTodoForm({
@@ -60,27 +59,27 @@ export default function FeedItemDetails({todo}: TodoProp) {
 
     function saveTodo() {
 
-            http.api.todosUpdate(todo.id + "", updateTodoForm)
-                .then(resp => {
-                    const newTodo: TodoWithTags = {...resp.data, tags: todo.tags};
-                    const copy = [...todos];
-                    copy[copy.findIndex(t => t.id === todo.id)] = newTodo;
-                    setTodos(copy);
-                    toast.success("Todo updated!");
-                });
+        http.api.todosUpdate(todo.id + "", updateTodoForm)
+            .then(resp => {
+                const newTodo: TodoWithTags = {...resp.data, tags: todo.tags};
+                const copy = [...todos];
+                copy[copy.findIndex(t => t.id === todo.id)] = newTodo;
+                setTodos(copy);
+                toast.success("Todo updated!");
+            });
 
     }
 
     function deleteTodo() {
-            http.api.todoDelete(todo.id!).then(resp => {
-                setTodos(todos.filter(t => t.id !== todo.id));
-                toast.success("Todo deleted!");
-            });
+        http.api.todoDelete(todo.id!).then(resp => {
+            setTodos(todos.filter(t => t.id !== todo.id));
+            toast.success("Todo deleted!");
+        });
     }
 
-    return(<>
+    return (<>
 
-        <div className="p-2 shadow menu dropdown rounded-box min-w-64 gap-4">
+        <div className="p-2 shadow menu dropdown rounded-box bg-base-200 min-w-64 gap-4">
 
             <input
                 className="input textarea-bordered" onChange={(e) => {
@@ -99,35 +98,59 @@ export default function FeedItemDetails({todo}: TodoProp) {
                     }));
                 }} value={updateTodoForm.description!}/>
 
-            <div className="flex justify-around">
-                <div className="flex items-center">
-                    <p className="card-title">🏷Tags</p>{
-                    <div className="flex">
-                        {tags.map((tag, index) =>
-                            <label key={index}><label
-                                className="label cursor-pointer -rotate-45">{tag.name}</label>
-                                <input className="checkbox"
-                                       key={index}
-                                       type="checkbox"
-                                       checked={todo.tags?.map(t => t.id).includes(tag.id)}
-                                       onChange={setTags(tag)}/></label>
-                        )} </div>
-                }
+            <div className="flex justify-center flex-nowrap  w-full">
 
-                </div>
+                <details className="dropdow dropdown-end w-full">
+                    <summary className="m-1 bg-base-100 btn w-full">Edit tags🏷️</summary>
+                    <div className=" shadow-2xl menu  z-[1] bg-base-100 rounded-box w-auto h-auto">
+                        <div className="grid grid-cols-5 gap-4 gap-x-20 p-10">
+                            {tags.map((tag, index) => (
+                                <div key={index} className="flex flex-col items-center rotate-45">
+                                    <label className="btn m-3 cursor-pointer flex-nowrap">
+                                        {tag.name}
+                                        <input className="checkbox"
+                                               key={index}
+                                               type="checkbox"
+                                               checked={todo.tags?.map(t => t.id).includes(tag.id)}
+                                               onChange={setTags(tag)}/>
+                                    </label>
 
-                <div className="flex items-stretch">
-                    <p className="card-title">❗Priority:</p>
-                    {[0, 1, 2, 3, 4].map((priority) =>
-                        <label key={priority}><label
-                            className="label cursor-pointer -rotate-45">{priority}</label>
-                            <input className="radio"
-                                   name="priority"
-                                   key={priority}
-                                   type="radio"
-                                   onChange={setPriority(priority)}/></label>
-                    )}
-                </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </details>
+
+                <details className="dropdown dropdown-end w-full">
+                    <summary className="m-1 bg-base-100 btn w-full">Edit priority❗</summary>
+                    <div
+                        className="p-2 shadow-2xl menu dropdown-content z-[1] bg-base-100 rounded-box w-auto overflow-x-hidden overflow-y-auto max-h-60">
+                        <div className="flex">
+                            {[0, 1, 2, 3, 4].map((priority) =>
+                                <div key={priority}>
+                                    <label className="label cursor-pointer -rotate-45">{priority}</label>
+                                    <input className="radio"
+                                           name="priority"
+                                           checked={updateTodoForm.priority === priority}
+                                           key={priority}
+                                           type="radio"
+                                           onChange={setPriority(priority)}/></div>
+                            )} </div>
+                    </div>
+                </details>
+
+                {/*<div className="flex items-stretch">*/}
+                {/*    <p className="card-title">❗Priority:</p>*/}
+                {/*    {[0, 1, 2, 3, 4].map((priority) =>*/}
+                {/*        <label key={priority}><label*/}
+                {/*            className="label cursor-pointer -rotate-45">{priority}</label>*/}
+                {/*            <input className="radio"*/}
+                {/*                   name="priority"*/}
+                {/*                   key={priority}*/}
+                {/*                   type="radio"*/}
+                {/*                   onChange={setPriority(priority)}/></label>*/}
+                {/*    )}*/}
+                {/*</div>*/}
             </div>
 
 
@@ -149,5 +172,6 @@ export default function FeedItemDetails({todo}: TodoProp) {
         </div>
 
 
-    </>)
+        </>
+    )
 }
