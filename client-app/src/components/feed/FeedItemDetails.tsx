@@ -16,7 +16,8 @@ export default function FeedItemDetails({todo}: TodoProp) {
         setIsDetailsOpen(!isDetailsOpen);
     };
 
-    function setPriority(priority) {
+    function setPriority(e, priority) {
+        console.log(e)
         setTodos(todos.map(t => t.id === todo.id ? {
             ...todo,
             priority: priority
@@ -198,14 +199,13 @@ export default function FeedItemDetails({todo}: TodoProp) {
                                         <label className="label cursor-pointer -rotate-45">{priority}</label>
                                         <input className="radio"
                                                name="priority"
-                                               checked={todo.priority === priority}
-                                               value={priority}
+                                               checked={todos.find(t => t.id == todo.id)!.priority === priority}
+                                               value={Number(priority)}
                                                type="radio"
-                                               onChange={(e) => setPriority(e.target.value)}/></div>
+                                               onChange={(e) => setPriority(e, Number(e.target.value))}/></div>
                                 )} </div>
                         </div>
                     </details>
-                    <button onClick={() => setPriority(2)}>click me</button>
 
                 </div>
 
