@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using api.Boilerplate.EndpointHelpers;
 using api.Boilerplate.ReusableHelpers.GlobalModels;
 using Carter;
@@ -16,7 +18,9 @@ public class Create : ICarterModule
             [FromServices] NpgsqlDataSource ds,
             HttpContext context) =>
         {
+   
             var user = ApiHelper.TriggerJwtValidationAndGetUserDetails(context);
+            ApiHelper.ValidateModel(req);
             var transaction = ds.OpenConnection().BeginTransaction();
             var todo = transaction.Connection!.QueryFirstOrDefault<TodoWithTags>(@"
 insert into todo_manager.todo (title, description, duedate, userid, priority)
@@ -50,6 +54,7 @@ VALUES (@Title, @Description, @DueDate, @UserId, @Priority) returning *;
 
 public class CreateTodoRequestDto
 {
+    [NotNull][MinLength(1)]
     public string Title { get; set; } = default!;
     public string Description { get; set; } = default!;
     public DateTime DueDate { get; set; }

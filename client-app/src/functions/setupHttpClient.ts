@@ -4,6 +4,7 @@ import {userAtom} from "../state/atoms/application.state.atoms.ts";
 import {AxiosError, AxiosResponse} from "axios";
 import {Api} from "../../httpclient/Api.ts";
 import toast from "react-hot-toast";
+import {ProblemDetails} from "../types/problemDetails.ts";
 
 export const http = new Api({
     baseURL: 'http://localhost:5000',
@@ -29,8 +30,11 @@ export function SetupHttpClient() {
         if (error.response && error.response.status === 401) {
             handleUnauthorizedAccess();
         }
-        toast.error(error.message);
-        return Promise.reject(error);
+        const problemDetails = error.response?.data as ProblemDetails;
+        if (problemDetails) {
+            toast.error(problemDetails.detail!, { id: `error-${problemDetails.detail}` });
+        }
+            return Promise.reject(error);
     });
     const handleUnauthorizedAccess = () => {
         localStorage.removeItem('token');

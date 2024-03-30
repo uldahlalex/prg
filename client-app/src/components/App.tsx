@@ -12,6 +12,7 @@ import {useMessageHandler} from "../functions/hooks/navigateToCourse.tsx";
 import ProgrammingII2024 from "./lessons/programmingII2024.tsx";
 import {courseIdAtom, fullstackId, sys} from "../state/atoms/application.state.atoms.ts";
 import {useAtom} from "jotai/index";
+import {CheckIdProp} from "../types/TodoProp.ts";
 
 
 export default function App() {
@@ -34,11 +35,10 @@ export default function App() {
 
             <div className="display mx-auto w-4/5">
                 <Routes>
-                    <Route path="/" element={<Navigate to="/fullstack" replace/>}/>
+                    <Route path="/" element={<Navigate to={'/'+(courseId || 'feed')} replace/>}/>
 
                     <Route path="/feed" element={
                         <Feed/>
-
                     }/>
                     <Route path="/login" element={
 
@@ -49,7 +49,7 @@ export default function App() {
                             <Fullstack/>
 
                     }/>
-                    <Route path={"/"+sys}element={
+                    <Route path={"/"+sys} element={
                         <ProgrammingII2024/>
                     }/>
                 </Routes>
@@ -64,13 +64,14 @@ export default function App() {
         return null; // This component doesn't need to render anything itself
     }
 
-    // function CheckId({ children }) {
-    //     const [courseId] = useAtom(courseIdAtom);
-    //     if (courseId==fullstackId) {
-    //         console.log("TOAST HERE"); //todo toast not displaying
-    //         toast.error("You're only allowed to see Fullstack 2024 course content", {position: "top-right"});
-    //         return <Navigate to="/fullstack" replace />;
-    //     }
-    //     return children;
-    // }
+
+    function CheckId({disallowedPageIds, children}: CheckIdProp) {
+        const [courseId] = useAtom(courseIdAtom);
+        if (disallowedPageIds.includes(courseId!)) {
+            console.log("TOAST HERE"); //todo toast not displaying
+            toast.error("This section in particular is not visible on this Moodle course", {position: "top-right"});
+            return <Navigate to={'/'+courseId} replace />;
+        }
+        return children;
+    }
 }

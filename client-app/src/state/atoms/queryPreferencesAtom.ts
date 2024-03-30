@@ -1,6 +1,6 @@
 import {atom} from "jotai/index";
 
-import {QueryPreferences} from "../../types/QueryPreferences.tsx";
+import {QueryPreferences} from "../../types/QueryPreferences.ts";
 
 export const queryPreferencesAtom = atom<QueryPreferences>({
     orderBy: "title",

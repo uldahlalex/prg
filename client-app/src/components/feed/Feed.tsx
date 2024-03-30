@@ -10,6 +10,15 @@ import toast from "react-hot-toast";
 
 export default function Feed() {
     const [todos] = useAtom(todosAtom);
+    const [courseId] = useAtom(courseIdAtom);
+
+    if(courseId==fullstackId)
+    {
+        const navigate = useNavigate();
+        navigate("/"+fullstackId);
+        toast("Hey, it looks like you're on the Fullstack 2024 course, I'll take you there!");
+    }
+
 
 
     return (<>

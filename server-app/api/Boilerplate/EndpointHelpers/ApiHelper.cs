@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Security.Authentication;
 using System.Text.Json;
 using api.Boilerplate.ReusableHelpers.GlobalModels;
@@ -36,6 +37,12 @@ public static class ApiHelper
             Console.WriteLine(e.StackTrace);
             throw new AuthenticationException("Authentication error regarding token");
         }
+    }
+    
+    public static void ValidateModel<T>(T model)
+    {
+        var context = new ValidationContext(model, serviceProvider: null, items: null);
+        Validator.ValidateObject(model, context, true);
     }
     
  

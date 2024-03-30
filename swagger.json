@@ -26,7 +26,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/String<>f__AnonymousType9"
+                  "$ref": "#/components/schemas/String<>f__AnonymousType8"
                 }
               }
             }
@@ -55,7 +55,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/String<>f__AnonymousType9"
+                  "$ref": "#/components/schemas/String<>f__AnonymousType8"
                 }
               }
             }
@@ -183,7 +183,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Boolean<>f__AnonymousType2"
+                  "$ref": "#/components/schemas/Boolean<>f__AnonymousType1"
                 }
               }
             }
@@ -253,7 +253,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Boolean<>f__AnonymousType2"
+                  "$ref": "#/components/schemas/Boolean<>f__AnonymousType1"
                 }
               }
             }
@@ -367,7 +367,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Boolean<>f__AnonymousType2"
+                  "$ref": "#/components/schemas/Boolean<>f__AnonymousType1"
                 }
               }
             }
@@ -392,7 +392,7 @@
         },
         "additionalProperties": false
       },
-      "Boolean<>f__AnonymousType2": {
+      "Boolean<>f__AnonymousType1": {
         "type": "object",
         "properties": {
           "success": {
@@ -415,6 +415,7 @@
         "type": "object",
         "properties": {
           "title": {
+            "minLength": 1,
             "type": "string",
             "nullable": true
           },
@@ -440,7 +441,7 @@
         },
         "additionalProperties": false
       },
-      "String<>f__AnonymousType9": {
+      "String<>f__AnonymousType8": {
         "type": "object",
         "properties": {
           "token": {

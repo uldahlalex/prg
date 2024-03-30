@@ -78,7 +78,7 @@ export default function Header() {
                         className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                         <li><a onClick={() => {
                             navigate('feed');
-                        }}>Feed</a></li>
+                        }}>Demo to-do app for Programming II 2024</a></li>
                         <li><a onClick={() => {
                             localStorage.removeItem('token');
                             setUser(null);
