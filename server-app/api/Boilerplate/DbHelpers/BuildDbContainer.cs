@@ -123,7 +123,12 @@ public static class BuildDbContainer
     {
         if (OperatingSystem.IsWindows()) return "npipe://./pipe/docker_engine";
         if (OperatingSystem.IsLinux())
-            return "unix:///home/alex/.docker/desktop/docker.sock"; //"unix:///var/run/docker.sock"; todo fix the linux path for the average user and not just me lol
+        {
+            //if running on github actions:
+            if(Environment.GetEnvironmentVariable("GITHUB_ACTIONS") == "true") return "unix:///var/run/docker.sock";
+                         return "unix:///home/alex/.docker/desktop/docker.sock"; //"unix:///var/run/docker.sock"; todo fix the linux path for the average user and not just me lol
+
+        }
         if (OperatingSystem.IsMacOS()) return "unix:///var/run/docker.sock";
         throw new PlatformNotSupportedException("Unsupported operating system");
     }
