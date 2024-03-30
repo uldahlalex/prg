@@ -1,3 +1,4 @@
+using api.Boilerplate.ReusableHelpers.GlobalModels;
 using api.Boilerplate.ReusableHelpers.Security;
 using Carter;
 using Dapper;
@@ -33,9 +34,11 @@ public class Register : ICarterModule
                     }) ?? throw new InvalidOperationException("Could not create user");
                 conn.Close();
 
-                return new
+                return new AuthenticationResponseDto()
                 {
-                    token = TokenService.IssueJwt(new { user.Username, user.Id })
+                    token = TokenService.IssueJwt([
+                        new KeyValuePair<string, object>(nameof(user.Username), user.Username), 
+                        new KeyValuePair<string, object>(nameof(user.Id), user.Id)])
                 };
             });
     }

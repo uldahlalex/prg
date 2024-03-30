@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 using api.Boilerplate.EndpointHelpers;
 using api.Boilerplate.ReusableHelpers.GlobalModels;
 using Carter;
@@ -34,19 +35,33 @@ VALUES (@Title, @Description, @DueDate, @UserId, @Priority) returning *;
                     req.Priority
                 }
             ) ?? throw new InvalidOperationException("Could not insert todo");
-            req.Tags.ForEach(e =>
+            if (req.Tags == null && req.Tags.Count > 0)
             {
-                if (transaction.Connection!.Execute(
-                        "insert into todo_manager.todo_tag (todoid, tagid) values (@TodoId, @TagId);",
-                        new { TodoId = todo.Id, TagId = e.Id }) == 0)
-                    throw new InvalidOperationException("Could not associate tag with todo");
-            });
-            todo.Tags = transaction.Connection!.Query<Boilerplate.ReusableHelpers.GlobalModels.Tag>(
-                "select * from todo_manager.tag join todo_manager.todo_tag tt on tag.id = tt.tagid where tt.todoid = @id;",
-                new { id = todo.Id }).ToList() ?? throw new InvalidOperationException("Could not retrieve tags");
+                            req.Tags.ForEach(tag =>
+                            {
+                                if (transaction.Connection!.Execute(
+                                        "insert into todo_manager.todo_tag (todoid, tagid) values (@TodoId, @TagId);",
+                                        new { TodoId = todo.Id, TagId = tag.Id }) == 0)
+                                    throw new InvalidOperationException("Could not associate tag with todo");
+                            });
+                           
+            }
+
 
             transaction.Commit();
             transaction.Connection!.Close();
+
+            using (var conn = ds.OpenConnection())
+            {
+                var tags = conn.Query<Boilerplate.ReusableHelpers.GlobalModels.Tag>(
+                    @"
+SELECT * FROM todo_manager.tag WHERE id IN (SELECT tagid FROM todo_manager.todo_tag WHERE todoid = @id);
+",
+                    new { id = todo.Id }).ToList() ?? throw new InvalidOperationException("Could not retrieve tags");
+                var str = JsonSerializer.Serialize(tags);
+                Console.WriteLine("HERE THEY ARE: "+str);
+                todo.Tags = tags;
+            }
             return todo;
         });
     }

@@ -1,13 +1,10 @@
-﻿using System.Net.Http.Json;
-using System.Text.Json;
+﻿using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using api.Boilerplate.DbHelpers;
 using api.Boilerplate.ReusableHelpers.GlobalModels;
-using api.Boilerplate.ReusableHelpers.Security;
 using api.Boilerplate.UtilityFunctions;
-using Dapper;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
-using Npgsql;
 using NUnit.Framework;
 
 namespace tests;
@@ -15,42 +12,48 @@ namespace tests;
 [TestFixture]
 public class ApiTests
 {
+    private readonly TestSetup _setup = new();
+
     [SetUp]
     public void BeforeEachTest()
     {
         _setup.App.Services.GetService<DbScripts>()!.RebuildDbSchema();
+        _setup.App.Services.GetService<DbScripts>()!.SeedDB();
+        _setup.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(TestSetup.JwtForTestUser);
     }
 
-    private readonly TestSetup _setup = new();
+    [Test]
+    public void SignInTest()
+    {
+        _setup.HttpClient.DefaultRequestHeaders.Authorization = null;
+        var response = _setup.HttpClient.PostAsJsonAsync("/api/signin", _setup.TestUser).Result;
+        response.IsSuccessStatusCode.Should().BeTrue();
+        response.Content.ReadAsStringAsync().Result.Deserialize<AuthenticationResponseDto>().token.Should()
+            .NotBeNullOrEmpty();
+    }
 
     [Test]
-    public async Task CreateUserTest()
+    public async Task RegisterTest()
     {
-        var response = _setup.HttpClient.PostAsJsonAsync("/api/user", _setup.TestUser).Result;
-        var token = await response.Content.ReadAsStringAsync();
-
-        using (var conn = _setup.App.Services.GetService<NpgsqlDataSource>().OpenConnection())
+        _setup.HttpClient.DefaultRequestHeaders.Authorization = null;
+        var u = new User()
         {
-            var count = conn.ExecuteScalar("SELECT COUNT(*) FROM todo_manager.user WHERE username = 'Bob'");
-            Assert.That(count, Is.EqualTo(1), "Correct insertion to DB");
-        }
-        //todo maybe verify jwt
-        Assert.True(response.IsSuccessStatusCode, "Http response code");
+            Id = 42,
+            Username = _setup.TestUser.Username + "2",
+            Password = _setup.TestUser.Password + "2"
+        };
+        var response = _setup.HttpClient.PostAsJsonAsync("/api/register", u).Result;
+        response.IsSuccessStatusCode.Should().BeTrue();
+        response.Content.ReadAsStringAsync().Result.Deserialize<AuthenticationResponseDto>().token.Should()
+            .NotBeNullOrEmpty();
     }
 
 
     [Test]
     public async Task CreateTodo()
     {
-        //dont forget token
-        _setup.HttpClient.PostAsJsonAsync("/api/register", _setup.TestUser).Wait();
         var response = _setup.HttpClient.PostAsJsonAsync("/api/todos", _setup.TestTodo).Result;
-        Console.WriteLine(JsonSerializer.Serialize(response));
-        Console.WriteLine(response);
-        var body = response.Content.ReadAsStringAsync().Result;
-        Console.WriteLine(body);
-        var responseTodo = (await response.Content.ReadAsStringAsync()).Deserialize<TodoWithTags>();
-        _setup.TestTodo.Should().BeEquivalentTo(responseTodo);
-        Assert.True(response.IsSuccessStatusCode, "Http response code");
+        response.IsSuccessStatusCode.Should().BeTrue();
+        response.Content.ReadAsStringAsync().Result.Deserialize<TodoWithTags>().ShouldNotContainNulls();
     }
 }

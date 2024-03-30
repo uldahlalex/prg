@@ -1,3 +1,4 @@
+using api.Boilerplate.ReusableHelpers.GlobalModels;
 using api.Boilerplate.ReusableHelpers.Security;
 using Carter;
 using Dapper;
@@ -28,9 +29,11 @@ public class SignIn : ICarterModule
             if (CredentialService.Hash(req.Password, userToCheck.Salt) != userToCheck.PasswordHash)
                 throw new InvalidOperationException("Invalid password");
 
-            return new
+            return new AuthenticationResponseDto()
             {
-                token = TokenService.IssueJwt(new { userToCheck.Username, userToCheck.Id })
+                token = TokenService.IssueJwt([
+                    new KeyValuePair<string, object>(nameof(userToCheck.Username), userToCheck.Username), 
+                    new KeyValuePair<string, object>(nameof(userToCheck.Id), userToCheck.Id)])
             };
         });
     }

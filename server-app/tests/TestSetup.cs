@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using api;
 using api.Boilerplate.ReusableHelpers.GlobalModels;
 using api.Boilerplate.ReusableHelpers.Security;
@@ -11,18 +12,31 @@ public class TestSetup
     public CredentialService CredentialService = new();
     public HttpClient HttpClient = new();
 
-    public Tag TestTag = new()
+    public static string JwtForTestUser =
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJVc2VybmFtZSI6ImJsYWFhaCIsIklkIjoxfQ.1aQtDZb0Vi8tSIt5YGtgEXCtWSh_9asIMLjzFkbwrN2QOGzA4d4kMFo9MtYfTepQ2k5e5PqTGmZt46HmMxKa3A";
+    
+    
+    public Tag TestTagHome = new Tag()
     {
-        Name = "TestTag",
+        Name = "home",
         UserId = 1
     };
 
-    public TodoWithTags TestTodo = new()
+    public Tag TestTagWork = new Tag()
+    {
+        Name = "work",
+        UserId = 1
+    };
+
+    
+    public TodoWithTags TestTodo = new TodoWithTags
     {
         Title = "TestTodo",
         Description = "TestDescription",
-        Tags = new List<Tag>(),
-        DueDate = DateTime.Now
+        Tags = [new Tag() {Id = 1, Name = "home"}],
+        DueDate = DateTime.Today,
+        Id = 4,
+        UserId = 1,
     };
 
 

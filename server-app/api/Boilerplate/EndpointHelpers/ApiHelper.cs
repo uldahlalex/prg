@@ -5,6 +5,7 @@ using api.Boilerplate.ReusableHelpers.GlobalModels;
 using api.Boilerplate.ReusableHelpers.GlobalValues;
 using JWT;
 using JWT.Algorithms;
+using JWT.Builder;
 using JWT.Serializers;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
@@ -18,13 +19,13 @@ public static class ApiHelper
         {
             var jwt = context.Request.Headers[StringConstants.JwtConstants.Authorization][0] ??
                       throw new InvalidOperationException("Could not find token in headers!");
-            IJsonSerializer serializer = new JsonNetSerializer();
-            var provider = new UtcDateTimeProvider();
-            IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
-            IJwtValidator validator = new JwtValidator(serializer, provider);
-            IJwtDecoder decoder = new JwtDecoder(serializer, validator, urlEncoder, new HMACSHA512Algorithm());
-            var claims = decoder.Decode(jwt, Env.JWT_KEY);
-            return JsonSerializer.Deserialize<User>(claims, new JsonSerializerOptions()
+            var token = JwtBuilder.Create()
+                .WithAlgorithm(new HMACSHA512Algorithm())
+                .WithSecret(Env.JWT_KEY)
+                .MustVerifySignature()
+                .Decode<IDictionary<string, object>>(jwt);
+
+            return JsonSerializer.Deserialize<User>(JsonSerializer.Serialize(token), new JsonSerializerOptions()
             {
                 PropertyNameCaseInsensitive = false
             }) ?? throw new InvalidOperationException("Could not deserialize user from claims");
@@ -38,6 +39,7 @@ public static class ApiHelper
             throw new AuthenticationException("Authentication error regarding token");
         }
     }
+
     
     public static void ValidateModel<T>(T model)
     {
