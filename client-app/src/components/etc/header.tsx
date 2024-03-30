@@ -1,11 +1,13 @@
 import React from "react";
 import {useNavigate} from "react-router-dom";
 import {useAtom} from "jotai/index";
-import {userAtom} from "../../state/atoms/application.state.atoms.ts";
+import {courseIdAtom, fullstackId, sys, userAtom} from "../../state/atoms/application.state.atoms.ts";
+import toast from "react-hot-toast";
 
 export default function Header() {
 
     const [user, setUser] = useAtom(userAtom);
+    const [courseId] = useAtom(courseIdAtom);
 
     const navigate = useNavigate();
 
@@ -53,6 +55,13 @@ export default function Header() {
             </div>
         </details>;
     }
+    function goToCorrectTab() {
+        return         <button onClick={() =>{
+            navigate('/'+courseId)
+            toast.success('Navigating to current course')
+        }} className="btn">Go to current Moodle course</button>
+
+    }
 
     return (<>
         <div className="navbar bg-base-200 mb-5">
@@ -74,13 +83,12 @@ export default function Header() {
                             localStorage.removeItem('token');
                             setUser(null);
                             navigate('login');
-
                         }}>Sign In</a></li>
                         <li><a onClick={() => {
-                            navigate('fullstack');
+                            navigate('/'+fullstackId);
                         }}>Fullstack 2024</a></li>
                         <li><a onClick={() => {
-                            navigate('programmingii2024');
+                            navigate('/'+sys);
                         }}>Programming II 2024</a></li>
                     </ul>
                 </div>
@@ -93,6 +101,7 @@ export default function Header() {
 
             <div className="flex items-stretch">
 
+                {courseId && goToCorrectTab()}
                     {user && authHeaderTab()}
 
                     <details className="dropdown dropdown-end">

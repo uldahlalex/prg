@@ -10,7 +10,7 @@ import Fullstack from "./lessons/fullstack2024.tsx";
 import FAQ from "./etc/faq.tsx";
 import {useMessageHandler} from "../functions/hooks/navigateToCourse.tsx";
 import ProgrammingII2024 from "./lessons/programmingII2024.tsx";
-import {courseIdAtom, fullstackId} from "../state/atoms/application.state.atoms.ts";
+import {courseIdAtom, fullstackId, sys} from "../state/atoms/application.state.atoms.ts";
 import {useAtom} from "jotai/index";
 
 
@@ -37,23 +37,20 @@ export default function App() {
                     <Route path="/" element={<Navigate to="/fullstack" replace/>}/>
 
                     <Route path="/feed" element={
-                        <CheckId>
                         <Feed/>
-                        </CheckId>
+
                     }/>
                     <Route path="/login" element={
-                        <CheckId>
+
                         <Login/>
-                        </CheckId>                    }/>
-                    <Route path="/fullstack" element={
+                                   }/>
+                    <Route path={"/"+fullstackId} element={
 
                             <Fullstack/>
 
                     }/>
-                    <Route path="/programmingii2024" element={
-                        <CheckId>
+                    <Route path={"/"+sys}element={
                         <ProgrammingII2024/>
-                        </CheckId>
                     }/>
                 </Routes>
             </div>
@@ -67,13 +64,13 @@ export default function App() {
         return null; // This component doesn't need to render anything itself
     }
 
-    function CheckId({ children }) {
-        const [courseId] = useAtom(courseIdAtom);
-        if (courseId==fullstackId) {
-            console.log("TOAST HERE"); //todo toast not displaying
-            toast.error("You're only allowed to see Fullstack 2024 course content", {position: "top-right"});
-            return <Navigate to="/fullstack" replace />;
-        }
-        return children;
-    }
+    // function CheckId({ children }) {
+    //     const [courseId] = useAtom(courseIdAtom);
+    //     if (courseId==fullstackId) {
+    //         console.log("TOAST HERE"); //todo toast not displaying
+    //         toast.error("You're only allowed to see Fullstack 2024 course content", {position: "top-right"});
+    //         return <Navigate to="/fullstack" replace />;
+    //     }
+    //     return children;
+    // }
 }

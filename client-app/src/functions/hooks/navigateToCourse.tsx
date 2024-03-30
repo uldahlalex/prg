@@ -3,10 +3,11 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {useAtom} from "jotai/index";
 import {courseIdAtom, fullstackId, sys} from "../../state/atoms/application.state.atoms.ts";
+import toast from "react-hot-toast";
 
 export const useMessageHandler = () => {
     const navigate = useNavigate();
-    const [courseId, setCourseId] = useAtom(courseIdAtom);
+    const [, setCourseId] = useAtom(courseIdAtom);
 
     useEffect(() => {
         const handleMessage = (event) => {
@@ -16,11 +17,9 @@ export const useMessageHandler = () => {
             if (event.origin !== "https://moodle.easv.dk") {
                 return;
             }
-            if (event.data.courseId == fullstackId) {
-                navigate('fullstack');
-            } else if (event.data.courseId == sys //todo
-            ) {
-                navigate('programmingii2024');
+            if (event.data.courseId) {
+                navigate(event.data.courseId);
+                toast('Welcome back')
             }
         };
 
