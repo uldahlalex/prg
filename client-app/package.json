@@ -9,7 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "swagger": "npx swagger-typescript-api -p ../swagger.json -o ./httpclient -n Api.ts --axios",
-  "deploy": "npm run build && firebase deploy --only hosting"
+  "deploy": "npm run swagger && npm run build && firebase deploy --only hosting"
   },
   "dependencies": {
     "@faker-js/faker": "^8.4.1",

@@ -14,7 +14,11 @@ export interface AuthenticationRequestDto {
   password?: string | null;
 }
 
-export interface BooleanFAnonymousType2 {
+export interface AuthenticationResponseDto {
+  token?: string | null;
+}
+
+export interface BooleanFAnonymousType1 {
   success?: boolean;
 }
 
@@ -23,6 +27,7 @@ export interface CreateTagRequestDto {
 }
 
 export interface CreateTodoRequestDto {
+  /** @minLength 1 */
   title?: string | null;
   description?: string | null;
   /** @format date-time */
@@ -30,10 +35,6 @@ export interface CreateTodoRequestDto {
   /** @format int32 */
   priority?: number;
   tags?: Tag[] | null;
-}
-
-export interface StringFAnonymousType9 {
-  token?: string | null;
 }
 
 export interface Tag {
@@ -219,7 +220,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     registerCreate: (data: AuthenticationRequestDto, params: RequestParams = {}) =>
-      this.request<StringFAnonymousType9, any>({
+      this.request<AuthenticationResponseDto, any>({
         path: `/api/register`,
         method: "POST",
         body: data,
@@ -238,7 +239,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     signinCreate: (data: AuthenticationRequestDto, params: RequestParams = {}) =>
-      this.request<StringFAnonymousType9, any>({
+      this.request<AuthenticationResponseDto, any>({
         path: `/api/signin`,
         method: "POST",
         body: data,
@@ -307,10 +308,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     todoDelete: (id: number, params: RequestParams = {}) =>
-      this.request<void, any>({
+      this.request<BooleanFAnonymousType1, any>({
         path: `/api/todo/${id}`,
         method: "DELETE",
         secure: true,
+        format: "json",
         ...params,
       }),
 
@@ -342,7 +344,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     tagsAddToTodoCreate: (tagId: number, todoId: number, params: RequestParams = {}) =>
-      this.request<BooleanFAnonymousType2, any>({
+      this.request<BooleanFAnonymousType1, any>({
         path: `/api/tags/${tagId}/addToTodo/${todoId}`,
         method: "POST",
         secure: true,
@@ -411,34 +413,9 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     tagsRemoveFromTodoDelete: (tagId: number, todoId: number, params: RequestParams = {}) =>
-      this.request<BooleanFAnonymousType2, any>({
+      this.request<BooleanFAnonymousType1, any>({
         path: `/api/tags/${tagId}/removeFromTodo/${todoId}`,
         method: "DELETE",
-        secure: true,
-        format: "json",
-        ...params,
-      }),
-  };
-  test = {
-    /**
-     * No description
-     *
-     * @tags api
-     * @name TestList
-     * @request GET:/test
-     * @secure
-     */
-    testList: (
-      query: {
-        /** @format int32 */
-        id: number;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<Record<string, any>, any>({
-        path: `/test`,
-        method: "GET",
-        query: query,
         secure: true,
         format: "json",
         ...params,
