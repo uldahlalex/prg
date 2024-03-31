@@ -14,7 +14,7 @@ jobs:
             channelId: live
             
             #THE NAME OF THE DIRECTORY YOU GET BY RUNNING npm run build
-            entryPoint: 'client-app/dist'
+            entryPoint: 'client-app'
             
             #GO TO DEVELOPER SETTINGS ON GITHUB TO MAKE A TOKEN
             repoToken: '${{ secrets.TOKEN }}'
