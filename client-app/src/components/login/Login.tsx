@@ -2,9 +2,9 @@ import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {User} from "../../types/user.ts";
 import {useAtom} from "jotai/index";
-import {userAtom} from "../../state/atoms/application.state.atoms.ts";
 import {decodeJwt} from "../../functions/jwtDecoder.ts";
 import {http} from "../../functions/setupHttpClient.ts";
+import {userAtom} from "../../state/atoms/user.ts";
 
 export default function Login() {
 
@@ -54,7 +54,11 @@ export default function Login() {
 
                     <label className="input input-bordered flex items-center gap-2">
 
-                        <input onChange={handleInput} name="password" type="password" className="grow"
+                        <input onChange={handleInput} name="password" type="password" className="grow" onKeyDown={e => {
+                            if (e.key === 'Enter') {
+                                signIn(e);
+                            }
+                        }}
                                placeholder="••••••••"/>
                     </label>
 

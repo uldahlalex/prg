@@ -13,13 +13,13 @@ import ProgrammingII2024 from "./lessons/programmingII2024.tsx";
 import {courseIdAtom, fullstackId, sys} from "../state/atoms/application.state.atoms.ts";
 import {useAtom} from "jotai/index";
 import {CheckIdProp} from "../types/TodoProp.ts";
+import {useInitializeApp} from "../state/useInitializeApp.tsx";
 
 
 export default function App() {
 
     SetupHttpClient();
-    StateHooks();
-
+    useInitializeApp();
 
 
     const [courseId] = useAtom(courseIdAtom);
@@ -27,36 +27,18 @@ export default function App() {
 
     return (
         <Router>
-
             <Toaster />
-            <Header/>
-            <MessageHandler />
-
-
+            <Header />
+            <StateHooks />
             <div className="display mx-auto w-4/5">
                 <Routes>
-                    <Route path="/" element={<Navigate to={'/'+(courseId || 'feed')} replace/>}/>
-
-                    <Route path="/feed" element={
-                        <Feed/>
-                    }/>
-                    <Route path="/login" element={
-
-                        <Login/>
-                                   }/>
-                    <Route path={"/"+fullstackId} element={
-
-                            <Fullstack/>
-
-                    }/>
-                    <Route path={"/"+sys} element={
-                        <ProgrammingII2024/>
-                    }/>
+                    <Route path="/" element={<Navigate to={'/' + (courseId || 'feed')} replace />} />
+                    <Route path="/feed" element={<Feed />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path={"/" + fullstackId} element={<Fullstack />} />
+                    <Route path={"/" + sys} element={<ProgrammingII2024 />} />
                 </Routes>
             </div>
-
-
-
         </Router>
     );
     function MessageHandler() {
@@ -65,13 +47,4 @@ export default function App() {
     }
 
 
-    function CheckId({disallowedPageIds, children}: CheckIdProp) {
-        const [courseId] = useAtom(courseIdAtom);
-        if (disallowedPageIds.includes(courseId!)) {
-            console.log("TOAST HERE"); //todo toast not displaying
-            toast.error("This section in particular is not visible on this Moodle course", {position: "top-right"});
-            return <Navigate to={'/'+courseId} replace />;
-        }
-        return children;
-    }
 }

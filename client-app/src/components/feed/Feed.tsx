@@ -1,23 +1,32 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useAtom} from 'jotai';
 import FeedItem from "./FeedItem.tsx";
-import {courseIdAtom, fullstackId, todosAtom, userAtom} from "../../state/atoms/application.state.atoms.ts";
+import {courseIdAtom, fullstackId, todosAtom} from "../../state/atoms/application.state.atoms.ts";
 
 import FeedPreferences from "./FeedPreferences.tsx";
 import {Navigate, useNavigate} from "react-router-dom";
 import NewTodoForm from "./NewTodoForm.tsx";
 import toast from "react-hot-toast";
+import {userAtom} from "../../state/atoms/user.ts";
 
 export default function Feed() {
     const [todos] = useAtom(todosAtom);
     const [courseId] = useAtom(courseIdAtom);
+    const [user] = useAtom(userAtom);
+    const navigate = useNavigate();
 
-    if(courseId==fullstackId)
-    {
-        const navigate = useNavigate();
-        navigate("/"+fullstackId);
-        toast("Hey, it looks like you're on the Fullstack 2024 course, I'll take you there!");
-    }
+
+    useEffect(() => {
+
+        //todo refactor to state
+        if(courseId==fullstackId)
+        {
+            navigate("/"+fullstackId);
+            toast("Hey, it looks like you're on the Fullstack 2024 course, I'll take you there!");
+        }
+    }, []);
+
+
 
 
 

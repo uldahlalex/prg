@@ -9,12 +9,13 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "swagger": "npx swagger-typescript-api -p ../swagger.json -o ./httpclient -n Api.ts --axios",
-  "deploy": "npm run swagger && npm run build && firebase deploy --only hosting"
+    "deploy": "npm run swagger && npm run build && firebase deploy --only hosting"
   },
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
     "daisyui": "^4.8.0",
     "jotai": "^2.7.0",
+    "jotai-effect": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
@@ -36,7 +37,7 @@
     "swagger-typescript-api": "13.0.3",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.2.2",
-    "vite": "^5.1.4",
+    "vite": "^5.1.5",
     "vite-plugin-singlefile": "^2.0.1"
   }
 }

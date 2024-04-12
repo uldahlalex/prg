@@ -1,10 +1,10 @@
 import {useAtom} from "jotai/index";
 import {User} from "../types/user.ts";
-import {userAtom} from "../state/atoms/application.state.atoms.ts";
 import {AxiosError, AxiosResponse} from "axios";
 import {Api} from "../../httpclient/Api.ts";
 import toast from "react-hot-toast";
 import {ProblemDetails} from "../types/problemDetails.ts";
+import {userAtom} from "../state/atoms/user.ts";
 
 export const http = new Api({
     baseURL: 'http://localhost:5000',

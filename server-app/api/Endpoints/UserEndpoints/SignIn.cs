@@ -23,11 +23,11 @@ public class SignIn : ICarterModule
                 new
                 {
                     req.Username
-                }) ?? throw new InvalidOperationException("Could not create user");
+                }) ?? throw new InvalidOperationException("Invalid sign-in");
             conn.Close();
 
             if (CredentialService.Hash(req.Password, userToCheck.Salt) != userToCheck.PasswordHash)
-                throw new InvalidOperationException("Invalid password");
+                throw new InvalidOperationException("Invalid sign-in");
 
             return new AuthenticationResponseDto()
             {

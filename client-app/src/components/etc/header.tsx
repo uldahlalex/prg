@@ -1,13 +1,17 @@
 import React from "react";
 import {useNavigate} from "react-router-dom";
 import {useAtom} from "jotai/index";
-import {courseIdAtom, fullstackId, sys, userAtom} from "../../state/atoms/application.state.atoms.ts";
+import {courseIdAtom, fullstackId, sys} from "../../state/atoms/application.state.atoms.ts";
 import toast from "react-hot-toast";
+import {userAtom} from "../../state/atoms/user.ts";
+import {themeAtom, themeEffect} from "../../state/atoms/themeAtom.tsx";
 
 export default function Header() {
 
     const [user, setUser] = useAtom(userAtom);
     const [courseId] = useAtom(courseIdAtom);
+    const [selectedTheme, setSelectedTheme] = useAtom(themeAtom);
+    useAtom(themeEffect); // Activates the effect to update the DOM
 
     const navigate = useNavigate();
 
@@ -51,7 +55,12 @@ export default function Header() {
             <summary className="m-1 btn ">Signed in as: {user!.username}</summary>
             <div
                 className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52 overflow-x-hidden overflow-y-auto max-h-60">
-                <button className="btn">Sign out</button>
+                <button onClick={e => {
+                    localStorage.removeItem('token');
+                    setUser(null);
+                    navigate('login');
+
+                }} className="btn">Sign out</button>
             </div>
         </details>;
     }
@@ -108,13 +117,11 @@ export default function Header() {
                         <summary className="m-1 btn">Theme</summary>
                         <ul onClick={(e: React.MouseEvent<HTMLElement>) => {
                             const selectedTheme = (e.target as HTMLElement).innerText;
-                            document.documentElement.setAttribute('data-theme', selectedTheme);
-                            window.dispatchEvent(new Event('theme-change'));
-                            localStorage.setItem('theme', selectedTheme);
+                            setSelectedTheme(selectedTheme);
                         }}
                             className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-96 overflow-x-hidden overflow-y-auto max-h-80">
                             {
-                                themes.map((theme, index) => <li key={index}><a>{theme}</a></li>)
+                                themes.map((theme, index) => <li key={index}><a>{theme == selectedTheme ? 'SELECTED: '+theme : theme}</a></li>)
                             }
                         </ul>
                     </details>

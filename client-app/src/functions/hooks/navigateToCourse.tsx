@@ -26,9 +26,7 @@ export const useMessageHandler = () => {
         try {
             window.addEventListener('message', handleMessage);
             return () => window.removeEventListener('message', handleMessage);
-        } catch (e) {
-            
-        }
+        } catch (e) { /* empty */ }
         
     }, [navigate]);
 };
