@@ -1,3 +1,9 @@
+# Repository Deprecated ⚠️
+
+**Due to recent structural changes, I'm building over here instead: uldahlalex/template_draft**
+Once I'm satisfied with my changes, I will author the final template for programming II 2024
+
+
 # Programming II, Technology II, Systems Development II pilot program 2024
 
 - "Contract based" API Development
